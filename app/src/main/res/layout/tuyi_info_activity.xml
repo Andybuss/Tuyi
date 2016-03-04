@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/chat_bg"
+    >
+
+    <include
+        android:id="@+id/info_bar"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        layout="@layout/action_bar"/>
+    <ScrollView
+        android:layout_below="@id/info_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:minHeight="400dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:onClick="ImgClick"
+                    android:padding="2dp"
+                    android:id="@+id/info_head"
+                    android:minHeight="100dp"
+                    android:minWidth="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/gallery" />
+
+                <TextView
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:drawableLeft="@drawable/nav"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/text_size_18"
+                    android:id="@+id/locDes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:typeface="serif"
+                    android:textColor="@color/md_blue_900"
+                    android:id="@+id/info_tittle"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="center|start"
+                    android:maxLines="2"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:textSize="@dimen/text_size_17" />
+            </LinearLayout>
+
+            <TextView
+                android:typeface="serif"
+                android:textColor="@color/md_grey_900"
+                android:id="@+id/info_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/info_head"
+                android:gravity="start"
+                android:minHeight="80dp"
+                android:paddingBottom="@dimen/text_size_15"
+                android:paddingLeft="@dimen/text_size_15"
+                android:paddingRight="@dimen/text_size_15"
+                android:paddingTop="@dimen/text_size_15"
+                />
+
+
+            <LinearLayout
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <CheckBox
+                    android:textColor="@color/md_grey_900"
+                    android:id="@+id/like_checkBox"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/like_check"
+                    android:button="@null"
+                    android:checked="false" />
+
+                <TextView
+                    android:typeface="serif"
+                    android:textColor="@color/md_grey_900"
+                    android:id="@+id/like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="8dp" />
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:textColor="@color/md_white_1000"
+                    android:id="@+id/tuyiTag"
+                    android:gravity="center"
+                    android:background="@drawable/circle_green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+                <dong.lan.tuyi.xlist.XListView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/comment_xlist"
+                    android:fadingEdgeLength="15dp"
+                    android:fadingEdge="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp">
+                </dong.lan.tuyi.xlist.XListView>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/comment_tuyi"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/add_tu" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/comment_layout_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_red_400"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="20dp"
+        >
+
+        <TextView
+            android:textSize="@dimen/text_size_17"
+            android:textColor="@color/md_white_1000"
+            android:gravity="center"
+            android:text="Write Your Comment Here"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_marginTop="12dp"
+            android:id="@+id/comment_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_bg"
+            android:minHeight="100dp"
+            android:textColor="@color/md_brown_900"
+            android:textSize="@dimen/text_size_15" />
+
+        <TextView
+            android:id="@+id/comment_done"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/done_blue" />
+        <TextView
+            android:id="@+id/comment_cancel"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shutdown" />
+    </LinearLayout>
+
+
+</RelativeLayout>

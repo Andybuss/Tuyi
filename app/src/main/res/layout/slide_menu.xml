@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/chat_bg"
+    android:gravity="center"
+    android:layout_gravity="start"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <View
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+    <ImageView
+        android:id="@+id/user_head"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center"
+        android:src="@drawable/default_avatar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+
+        <ProgressBar
+            android:indeterminate="false"
+            android:indeterminateDuration="2000"
+            android:indeterminateDrawable="@drawable/refresh_progress_bar"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:id="@+id/user_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:gravity="center|start"
+            android:maxLines="3"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/slide_menu_text"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/user_center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:drawableLeft="@drawable/user_center"
+        android:drawablePadding="8dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="个人中心"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/my_interested"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:drawableLeft="@drawable/navigation"
+        android:drawablePadding="8dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="兴趣设置"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/my_Favorite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:drawableLeft="@drawable/love"
+        android:drawablePadding="8dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="Mine收藏"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/user_community"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:drawableLeft="@drawable/trophy"
+        android:drawablePadding="8dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="图忆Top"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/user_albums"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:drawableLeft="@drawable/tuyi_home"
+        android:drawablePadding="8dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="途忆"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/user_setting"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:drawableLeft="@drawable/radar"
+        android:drawablePadding="10dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="雷达"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:typeface="serif"
+        android:id="@+id/offline_tuyi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:drawableLeft="@drawable/icon_offline"
+        android:drawablePadding="10dp"
+        android:gravity="center|start"
+        android:padding="10dp"
+        android:text="离线图忆"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+</LinearLayout>

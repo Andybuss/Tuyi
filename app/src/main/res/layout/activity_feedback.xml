@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:typeface="serif"
+        android:background="@drawable/chat_bg"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="聊聊你的看法吧"
+        android:textColor="@color/md_brown_800"
+        android:textSize="30sp" />
+    <TextView
+        android:gravity="center"
+        android:text="返回"
+        android:drawableLeft="@drawable/umeng_comm_back"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/feed_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
+
+    <dong.lan.tuyi.xlist.XListView
+        android:dividerHeight="10dp"
+        android:divider="#00ffffff"
+        android:background="@color/md_blue_50"
+        android:id="@+id/feed_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <LinearLayout
+        android:background="@color/md_orange_100"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/feed_edit"
+            android:hint="写下你的心声"
+            android:maxLines="4"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/circle_rect_alph_white"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/feed_send"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:text="发送"
+            android:textColor="#aaffffff"
+            android:gravity="center"
+            android:background="@drawable/circle_green"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/action_bar"/>
+
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/recyclerView"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       />
+    <!--
+    <dong.lan.tuyi.xlist.XListView
+        android:id="@+id/like_tuyi_list"
+        android:fadingEdgeLength="15dp"
+        android:fadingEdge="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </dong.lan.tuyi.xlist.XListView>
+    -->
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:id="@+id/radar_user_parent"
+    android:layout_margin="20dp"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/radar_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Guo"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:layout_below="@id/radar_user_name"
+        android:id="@+id/radar_user_head"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/default_avatar" />
+
+    <TextView
+        android:layout_below="@id/radar_user_head"
+        android:id="@+id/radar_user_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:textSize="20sp" />
+</RelativeLayout>

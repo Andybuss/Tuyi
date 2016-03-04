@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pop_bg"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="@dimen/text_size_15">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/pop_head"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/default_avatar" />
+
+
+            <TextView
+                android:id="@+id/pop_tittle"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_toRightOf="@id/pop_head"
+                android:gravity="center|start"
+                android:maxLines="2"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                />
+
+            <TextView
+                android:id="@+id/pop_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pop_head"
+                android:gravity="start"
+                android:minHeight="40dp"
+                android:paddingBottom="@dimen/text_size_15"
+                android:paddingLeft="@dimen/text_size_15"
+                android:paddingRight="@dimen/text_size_15"
+                android:paddingTop="@dimen/text_size_15"
+                />
+
+            <ImageView
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:id="@+id/pop_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pop_content"
+                android:layout_marginTop="10dp"
+                />
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        >
+
+        <ImageView
+            android:id="@+id/shut_down_pop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/circle_red"
+            android:gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/bar_left"
+            android:textColor="@color/md_white_1000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:textSize="@dimen/text_big18_size"
+            android:gravity="center"
+            android:textColor="@color/md_brown_800"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_soild_whiel"
+            android:id="@+id/pop_tuyiTag"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+
+        <TextView
+            android:id="@+id/pop_add_favorite"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
+            android:text="收藏"
+            android:textColor="@color/md_white_1000"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</LinearLayout>

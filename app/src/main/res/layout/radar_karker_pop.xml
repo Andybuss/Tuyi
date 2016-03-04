@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="@drawable/circle_rect_blue"
+    >
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_mood_emotion4"
+        android:id="@+id/radar_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <TextView
+        android:gravity="center"
+        android:textSize="20sp"
+        android:id="@+id/radar_name"
+        android:layout_marginTop="20dp"
+        android:text="USER"
+        android:layout_below="@id/radar_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="@color/md_brown_900"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/radar_name"
+        android:id="@+id/radar_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

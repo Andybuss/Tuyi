@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include android:id="@+id/offline_bar"
+        layout="@layout/action_bar"/>
+    <dong.lan.tuyi.xlist.XListView
+        android:layout_below="@id/offline_bar"
+        android:background="@color/md_grey_100"
+        android:id="@+id/offline_list"
+        android:fadingEdgeLength="15dp"
+        android:fadingEdge="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </dong.lan.tuyi.xlist.XListView>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/offline_null_tip"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:typeface="serif"
+        android:text="没有上传的的离线图忆"
+        android:textColor="@color/md_white_1000"
+        android:background="@color/md_green_500"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <TextView
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/offline_upload"
+        android:id="@+id/offline_upload"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+<LinearLayout
+    android:id="@+id/upload_tip_layout"
+    android:layout_marginRight="30sp"
+    android:layout_marginLeft="30sp"
+    android:background="@color/md_green_500"
+    android:layout_centerInParent="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ProgressBar
+        android:layout_gravity="center"
+        android:indeterminate="false"
+        android:indeterminateDrawable="@drawable/progress_brown"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/upload_tip_text"
+        android:textSize="@dimen/text_size_17"
+        android:gravity="center"
+        android:textColor="@color/md_grey_100"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+</RelativeLayout>

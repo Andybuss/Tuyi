@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <FrameLayout
+        android:paddingRight="8dp"
+        android:paddingLeft="8dp"
+        android:id="@+id/radar_bar"
+        android:orientation="horizontal"
+        android:background="@color/md_red_300"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/radar_back"
+            android:padding="10dp"
+            android:layout_gravity="left"
+            android:gravity="center"
+            android:drawableLeft="@drawable/bar_left"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <EditText
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="45dp"
+            android:id="@+id/radar_search_et"
+            android:hint="搜索附近好友"
+            android:padding="10dp"
+            android:background="@drawable/circle_rect_alph_white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+
+        </EditText>
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:layout_gravity="end"
+            android:id="@+id/radar_search_bt"
+            android:background="@drawable/find_person"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </FrameLayout>
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_below="@id/radar_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/md_red_300"
+        android:id="@+id/radar_add_des"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:hint="备注信息"
+            android:id="@+id/add_des_et"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="match_parent"
+            android:maxLines="2"
+            android:maxLength="50"
+            android:background="@drawable/circle_soild_whiel"
+            />
+        <TextView
+            android:id="@+id/add_des_done"
+            android:background="@drawable/send_done_btn_pressed_dark"
+            android:layout_gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="38dp" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/radar_user_list"
+        android:padding="16dp"
+        android:background="@drawable/circle_soild_whiel"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="gone"
+
+        />
+
+</RelativeLayout>

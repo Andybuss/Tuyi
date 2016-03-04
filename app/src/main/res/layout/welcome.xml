@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewflit_activity"
+    >
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:id="@+id/pic1"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/pic1"
+        />
+    <ImageView
+        android:id="@+id/pic2"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/pic2"
+        />
+
+    <ImageView
+        android:id="@+id/pic3"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/pic3"
+        />
+
+</ViewFlipper>

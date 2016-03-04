@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/circle_soild_whiel"
+    >
+
+    <include layout="@layout/action_bar"/>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:typeface="serif"
+        android:textSize="20sp"
+        android:text="设置您感兴趣的标签"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <FrameLayout
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+       <CheckBox
+           android:id="@+id/interested_lewan"
+           android:layout_gravity="center_horizontal"
+           android:button="@null"
+           android:text="乐玩"
+           android:textColor="@color/md_white_1000"
+           android:textSize="20sp"
+           android:gravity="center"
+           android:layout_width="60dp"
+           android:layout_height="60dp"
+           android:background="@drawable/circle_red"
+           />
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/interested_renqing"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:button="@null"
+                android:text="人情"
+                android:textColor="@color/md_white_1000"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/circle_orange"
+                />
+            <CheckBox
+                android:id="@+id/interested_meishi"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_gravity="center"
+                android:button="@null"
+                android:text="美食"
+                android:textColor="@color/md_white_1000"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/circle_green"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="120dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/interested_meijing"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:button="@null"
+                android:text="美景"
+                android:textColor="@color/md_white_1000"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/circle_dark_blue"
+                />
+            <CheckBox
+                android:id="@+id/interested_zaji"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:button="@null"
+                android:text="杂记"
+                android:textColor="@color/md_white_1000"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/circle_blue"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
+        android:padding="12dp"
+        android:layout_marginTop="12dp"
+        android:id="@+id/interested_status"
+        android:typeface="serif"
+        android:textSize="@dimen/text_big18_size"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

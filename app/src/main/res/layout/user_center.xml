@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+    <ImageView
+        android:id="@+id/wall_image_switcher"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:background="@drawable/chat_bg"
+        android:scaleType="centerCrop">
+
+    </ImageView>
+
+
+    <LinearLayout
+        android:layout_marginBottom="4dp"
+        android:background="#eaeaea"
+        android:id="@+id/head_layout"
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/user_center_head"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/default_avatar" />
+
+        <TextView
+            android:id="@+id/user_center_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:text="fassad0000"
+            android:textColor="#aa000000"
+            android:textSize="30sp"
+            android:typeface="serif" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <dong.lan.tuyi.xlist.XListView
+            android:id="@+id/user_centre_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/chat_bg"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="15dp">
+
+        </dong.lan.tuyi.xlist.XListView>
+
+
+        <TextView
+            android:id="@+id/user_center_buttonClick"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/circle_green"
+            android:gravity="center"
+            android:onClick="IntentClick"
+            android:textColor="#aaffffff"
+            android:textSize="@dimen/text_big16_size" />
+    </RelativeLayout>
+</LinearLayout>

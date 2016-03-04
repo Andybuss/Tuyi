@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:background="@color/md_white_1000"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/load_pic"
+            android:id="@+id/playImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alwaysDrawnWithCache="true"
+            android:animateFirstView="true" />
+
+        <TextView
+            android:id="@+id/playText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center"
+            android:padding="16dp"
+            android:text="meii"
+            android:textColor="@color/md_white_1000"
+            android:textSize="20sp"
+            android:maxLines="5"
+            android:typeface="serif" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/addPlay"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/add_tu"
+            android:gravity="center"
+            android:textColor="@color/md_white_1000" />
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/prePlay"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_red"
+            android:gravity="center"
+            android:text="预览"
+            android:textColor="@color/md_white_1000" />
+        <Button
+            android:id="@+id/savePlay"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/md_white_1000" />
+    </LinearLayout>
+</LinearLayout>

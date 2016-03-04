@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_green_50"
+    android:gravity="center"
+    android:padding="30dp"
+    android:layout_marginTop="50dp"
+    android:id="@+id/wait_dialog"
+    >
+
+    <TextView
+        android:id="@+id/wait_text"
+        android:textSize="@dimen/text_size_17"
+        android:text="将数据加载从网络加载到本地中，请耐心等待...."
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:indeterminateDrawable="@drawable/upload_progress_style"
+        android:indeterminate="false"
+        android:layout_marginTop="15dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/abar"
+        layout="@layout/action_bar" />
+
+    <dong.lan.tuyi.xlist.XListView
+        android:id="@+id/favorite_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/abar"
+        android:divider="@color/md_grey_100"
+        android:dividerHeight="4dp">
+
+    </dong.lan.tuyi.xlist.XListView>
+</RelativeLayout>
