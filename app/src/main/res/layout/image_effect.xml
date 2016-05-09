@@ -22,7 +22,7 @@
         android:layout_height="40dp">
         <TextView
             android:id="@+id/easy_mode"
-            android:textColor="@color/md_brown_900"
+            android:textColor="@color/md_white_1000"
             android:textSize="@dimen/text_size_18"
             android:text="简单模式"
             android:background="@drawable/circle_rect_green"
@@ -34,7 +34,7 @@
             android:layout_height="match_parent" />
         <TextView
             android:id="@+id/hard_mode"
-            android:textColor="@color/md_brown_900"
+            android:textColor="@color/md_white_1000"
             android:textSize="@dimen/text_size_18"
             android:text="复杂模式"
             android:background="@drawable/circle_rect_blue"

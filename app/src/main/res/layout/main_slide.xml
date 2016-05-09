@@ -11,7 +11,6 @@
         android:layout_height="50dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar" >
 
         <LinearLayout

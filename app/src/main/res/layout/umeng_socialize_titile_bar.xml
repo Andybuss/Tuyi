@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="48dp"
-    android:background="@color/md_red_300"
+    android:background="#EEEEEE"
      >
 
     <Button
@@ -10,7 +10,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/bar_left"
+        android:background="@drawable/umeng_socialize_title_back_bt"
         android:layout_centerVertical="true"
         android:textColor="#ffffff"
         android:layout_marginLeft="8dp"
@@ -24,7 +24,7 @@
         android:gravity="center"
         android:layout_centerVertical="true"
         android:text="@string/umeng_socialize_comment"
-        android:textColor="#eeffffff"
+        android:textColor="@color/umeng_socialize_text_title"
         android:textSize="20sp" />
 
     <RelativeLayout
@@ -62,15 +62,13 @@
         android:gravity="center_horizontal" >
 
         <Button
-            android:background="#00ffffff"
-            android:gravity="center"
-            android:text="OK"
             android:id="@+id/umeng_socialize_title_bar_rightBt"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:background="@drawable/umeng_socialize_title_right_bt"
             android:layout_centerVertical="true"
             android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textSize="12sp" />
 
         <ProgressBar
             android:id="@+id/umeng_socialize_title_bar_rightBt_progress"

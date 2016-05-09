@@ -143,12 +143,12 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/bg_like_addr"
+                android:background="@drawable/circle_rect_green"
                 android:onClick="register"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"
                 android:text="@string/register"
-                android:textColor="@color/md_grey_800"
+                android:textColor="@color/md_white_1000"
                 android:textSize="20sp" />
     </LinearLayout>
 

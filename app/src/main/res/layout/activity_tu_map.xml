@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/map_search_et"
-            android:hint="搜索附近图忆"
+            android:hint="@string/search_near_tuyi"
             android:padding="8dp"
             android:background="@drawable/circle_rect_alph_white"
             android:layout_marginBottom="5dp"
@@ -79,14 +79,13 @@
             android:layout_width="@dimen/tumap_icon"
             android:layout_height="@dimen/tumap_icon" />
         <TextView
-            android:text="+"
             android:textSize="30sp"
             android:textColor="@color/md_green_500"
             android:layout_marginRight="10dp"
             android:layout_gravity="end|top"
             android:id="@+id/switcher"
             android:gravity="center"
-            android:background="@drawable/circle_soild_whiel"
+            android:background="@drawable/umeng_comm_msg_notice"
             android:layout_marginTop="5dp"
             android:layout_width="@dimen/tumap_icon"
             android:layout_height="@dimen/tumap_icon" />

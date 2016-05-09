@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical" >
 
     <!-- icon -->
 
@@ -15,7 +14,7 @@
         android:layout_margin="10dp"
         android:gravity="center" >
 
-        <com.umeng.comm.ui.widgets.SquareImageView
+        <com.umeng.common.ui.widgets.SquareImageView
             android:id="@+id/umeng_comm_user_icon"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -33,15 +32,14 @@
             android:src="@drawable/umeng_comm_camera_pressed" />
     </RelativeLayout>
 
+    <include layout="@layout/umeng_comm_divide_line" />
     <!-- nick name -->
 
     <RelativeLayout
-        android:background="@drawable/circle_rect_alph_white"
         android:layout_width="match_parent"
         android:layout_height="52dp" >
 
         <TextView
-            android:clickable="false"
             android:id="@+id/umeng_comm_user_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,8 +52,6 @@
             android:textSize="@dimen/text_big14_size" />
 
         <EditText
-            android:enabled="false"
-            android:clickable="false"
             android:id="@+id/umeng_comm_nickname_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,17 +63,14 @@
             android:inputType="text" />
     </RelativeLayout>
 
+    <include layout="@layout/umeng_comm_divide_line" />
     <!-- gender -->
 
     <RelativeLayout
-        android:layout_marginTop="8dp"
-        android:background="@drawable/circle_rect_alph_white"
         android:layout_width="match_parent"
         android:layout_height="52dp" >
 
         <TextView
-            android:enabled="false"
-            android:clickable="false"
             android:id="@+id/umeng_comm_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,8 +83,6 @@
             android:textSize="@dimen/text_big14_size" />
 
         <TextView
-            android:enabled="false"
-            android:clickable="false"
             android:id="@+id/umeng_comm_gender_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,5 +94,6 @@
             android:padding="5dp" />
     </RelativeLayout>
 
+    <include layout="@layout/umeng_comm_divide_line" />
 
 </LinearLayout>

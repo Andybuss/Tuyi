@@ -10,7 +10,6 @@
         layout="@layout/umeng_socialize_titile_bar" />
 
     <LinearLayout
-        android:background="#aafefefe"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >

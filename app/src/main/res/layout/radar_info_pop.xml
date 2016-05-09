@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20.0dip"
         android:gravity="center"
-        android:text="添加位置上传时的备注信息，对其他用户可见"
+        android:text="@string/rader_position_alert"
         android:textSize="@dimen/text_size_16" />
 
     <EditText
@@ -30,7 +30,7 @@
         android:layout_marginRight="20.0dip"
         android:layout_marginTop="20.0dip"
         android:gravity="start"
-        android:hint="默认为空"
+        android:hint="@string/default_text_null"
         android:minHeight="80.0dip" />
 
     <LinearLayout
@@ -45,7 +45,7 @@
             android:textColor="@color/md_white_1000"
             android:id="@+id/radar_info_done"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_marginRight="10.0dip"
             android:background="@drawable/circle_rect_red"
             android:gravity="center"
@@ -53,13 +53,13 @@
             android:paddingLeft="20.0dip"
             android:paddingRight="20.0dip"
             android:paddingTop="5.0dip"
-            android:text="开始"
+            android:text="@string/start"
             android:textSize="@dimen/text_size_17" />
 
         <TextView
             android:id="@+id/radar_info_cancel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_marginLeft="10.0dip"
             android:background="@drawable/circle_rect_blue"
             android:gravity="center"
@@ -67,7 +67,7 @@
             android:paddingLeft="20.0dip"
             android:paddingRight="20.0dip"
             android:paddingTop="5.0dip"
-            android:text="默认"
+            android:text="@string/text_default"
             android:textSize="@dimen/text_size_17" />
     </LinearLayout>
 </LinearLayout>

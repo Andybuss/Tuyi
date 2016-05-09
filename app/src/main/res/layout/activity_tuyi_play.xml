@@ -56,7 +56,7 @@
             android:layout_gravity="center"
             android:background="@drawable/circle_red"
             android:gravity="center"
-            android:text="预览"
+            android:text="@string/preview"
             android:textColor="@color/md_white_1000" />
         <Button
             android:id="@+id/savePlay"
@@ -65,7 +65,7 @@
             android:layout_gravity="center"
             android:background="@drawable/circle_blue"
             android:gravity="center"
-            android:text="保存"
+            android:text="@string/save"
             android:textColor="@color/md_white_1000" />
     </LinearLayout>
 </LinearLayout>

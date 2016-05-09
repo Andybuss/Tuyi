@@ -6,14 +6,12 @@
     android:padding="10dp" >
 
     <TextView
-        android:padding="8dp"
-        android:background="@drawable/circle_rect_red"
         android:id="@+id/umeng_comm_report_comment_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="举报"
+        android:text="@string/umeng_comm_spam_content"
         android:textSize="15sp" />
 
     <include
@@ -25,8 +23,6 @@
         layout="@layout/umeng_comm_divide_line" />
 
     <TextView
-        android:padding="8dp"
-        android:background="@drawable/circle_rect_green"
         android:id="@+id/umeng_comm_reply_comment_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="回复"
+        android:text="@string/umeng_comm_reply"
         android:textSize="15sp" />
 
 </RelativeLayout>

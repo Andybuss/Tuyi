@@ -100,10 +100,10 @@
             <Button
                 android:id="@+id/umeng_update_id_ok"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_like_addr"
+                android:background="@drawable/circle_rect_green"
                 android:gravity="center"
                 android:padding="12dp"
                 android:text="马上升级"
@@ -113,7 +113,7 @@
             <Button
                 android:id="@+id/umeng_update_id_cancel"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle_chat_def"
