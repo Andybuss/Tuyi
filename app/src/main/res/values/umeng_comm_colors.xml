@@ -42,5 +42,6 @@
     <color name="radio_button_unselected_color">#ff0000</color>
     <color name="umeng_comm_radio_stroke_color">#4A90E2</color>
     <color name="umeng_comm_url_color">#3ac9d7</color>
+    <color name="umeng_comm_color_location_text" >#b5b5b5</color>
 
 </resources>
