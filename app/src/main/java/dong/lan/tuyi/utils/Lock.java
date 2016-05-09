@@ -14,7 +14,10 @@ import android.widget.TextView;
 import dong.lan.tuyi.R;
 
 /**
- * Created by 桂栋 on 2015/8/19.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/8/19  18:03.
+ * Email: 760625325@qq.com
  */
 public class Lock {
     public static PopupWindow popupWindow;
