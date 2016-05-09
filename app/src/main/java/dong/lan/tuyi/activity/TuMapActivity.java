@@ -48,19 +48,13 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.media.QQShareContent;
-import com.umeng.socialize.media.QZoneShareContent;
-import com.umeng.socialize.media.TencentWbShareContent;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,7 +65,6 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
-import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.adapter.ClickPopRecycleAdapter;
@@ -85,15 +78,16 @@ import dong.lan.tuyi.utils.TimeUtil;
 
 
 /**
- * Created by 桂栋 on 2015/7/18.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/7/18  10:52.
+ * Email: 760625325@qq.com
  */
 public class TuMapActivity extends BaseActivity implements View.OnClickListener, SensorEventListener {
 
 
     public static final int TUYI_MARKER = 0;
     public static final int USER_MARKER = 1;
-    public static final UMSocialService mController = UMServiceFactory
-            .getUMSocialService(Constant.DESCRIPTOR);
     public int clickTag = 0;
     private boolean goFetck = true;
     private MapView mMapView;
@@ -124,7 +118,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     private int index = 0;
     private static float Tra;
     public static String Tusername;
-    private FrameLayout popLayout,mapSearchLayout;
+    private FrameLayout popLayout, mapSearchLayout;
     private RecyclerView recyclerView;
     TextView bar_center, bar_left;
     SensorManager sensorManager;
@@ -270,52 +264,39 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 }
             });
         }
-        // 配置需要分享的相关平台
-        configPlatforms();
     }
 
 
-    private void configPlatforms() {
-        // 添加新浪SSO授权
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        // 添加QQ支持, 并且设置QQ分享内容的target url
-        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,
-                Constant.QQ_APPID, Constant.QQ_APPKEY);
-        qqSsoHandler.addToSocialSDK();
-        // 添加QZone平台
-        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, Constant.QQ_APPID, Constant.QQ_APPKEY);
-        qZoneSsoHandler.addToSocialSDK();
-    }
 
     private void setShareContent(Bitmap img) {
         UMImage image = new UMImage(this, img);
+        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                {
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SMS
+                };
+        new ShareAction(this).setDisplayList(displaylist)
+                .withText("我在图忆的足迹，你也来吧")
+                .withTitle("图忆")
+                .withTargetUrl("http://tuyiapp.bmob.cn")
+                .withMedia(image)
+                .setListenerList(new UMShareListener() {
+                    @Override
+                    public void onResult(SHARE_MEDIA share_media) {
 
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        TencentWbShareContent tencent = new TencentWbShareContent();
-        tencent.setShareContent("来自图忆的分享");
-        // 设置tencent分享内容
-        mController.setShareMedia(tencent);
-        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
-                Constant.QQ_APPID, Constant.QQ_APPKEY);
-        qZoneSsoHandler.addToSocialSDK();
-        mController.setShareContent("我在图忆的足迹，你也来吧");
-        mController.setShareImage(image);
-        mController.setAppWebSite("http://tuyiapp.bmob.cn");
-        QZoneShareContent qzone = new QZoneShareContent();
-        qzone.setShareContent("我在图忆的足迹，你也来吧");
-        qzone.setTitle("图忆");
-        qzone.setAppWebSite("http://tuyiapp.bmob.cn");
-        qzone.setTargetUrl("http://tuyiapp.bmob.cn");
-        qzone.setShareMedia(image);
-        mController.setShareMedia(qzone);
-        QQShareContent qqShareContent = new QQShareContent();
-        qqShareContent.setShareContent("我在图忆的足迹，你也来吧");
-        qqShareContent.setTitle("图忆");
-        qqShareContent.setShareMedia(image);
-        qqShareContent.setAppWebSite("http://tuyiapp.bmob.cn");
-        qqShareContent.setTargetUrl("http://tuyiapp.bmob.cn");
-        mController.setShareMedia(qqShareContent);
+                    }
 
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media) {
+
+                    }
+                })
+                .open();
     }
 
     @Override
@@ -374,8 +355,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("TUYI", list.get(i));
                         marker.setExtraInfo(bundle);
-                        if(Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100)
-                        {
+                        if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
                             mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
                         }
                     }
@@ -534,8 +514,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         for (int i = 0; i < list.size(); i++) {
             LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
             OverlayOptions ooA;
-            if(Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100)
-            {
+            if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
                 mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
             }
             if (list.get(i).isPublic())
@@ -631,18 +610,17 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     BmobQuery<UserTuyi> q1 = new BmobQuery<UserTuyi>();
     BmobQuery<UserTuyi> q2 = new BmobQuery<UserTuyi>();
     BmobQuery<UserTuyi> q3 = new BmobQuery<UserTuyi>();
-    BmobQuery<UserTuyi> or =new BmobQuery<UserTuyi>();
-    List<BmobQuery<UserTuyi>> ors=new ArrayList<BmobQuery<UserTuyi>>();
-    List<BmobQuery<UserTuyi>> ands=new ArrayList<BmobQuery<UserTuyi>>();
+    BmobQuery<UserTuyi> or = new BmobQuery<UserTuyi>();
+    List<BmobQuery<UserTuyi>> ors = new ArrayList<BmobQuery<UserTuyi>>();
+    List<BmobQuery<UserTuyi>> ands = new ArrayList<BmobQuery<UserTuyi>>();
     BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
-    private void searchTuyi()
-    {
-        String s =searchEt.getText().toString();
-        if(s.matches("^[\u4e00-\u9fa5]*$"))
-        {
+
+    private void searchTuyi() {
+        String s = searchEt.getText().toString();
+        if (s.matches("^[\u4e00-\u9fa5]*$")) {
             Show("开始搜索附近");
             q2.addWhereContains("tContent", s);
-            q3.addWhereContains("tTittle",s);
+            q3.addWhereContains("tTittle", s);
             ors.add(q2);
             ors.add(q3);
             or.or(ors);
@@ -654,13 +632,11 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             query.findObjects(this, new FindListener<UserTuyi>() {
                 @Override
                 public void onSuccess(List<UserTuyi> list) {
-                    if(list.isEmpty())
-                    {
+                    if (list.isEmpty()) {
                         Show("没有相似图忆存在");
-                    }else
-                    {
+                    } else {
                         mBaiduMap.clear();
-                        Show("找到"+list.size()+" 个图忆");
+                        Show("找到" + list.size() + " 个图忆");
                         for (int i = 0; i < list.size(); i++) {
                             tuyiList = list;
                             LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
@@ -670,8 +646,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("TUYI", list.get(i));
                             marker.setExtraInfo(bundle);
-                            if(Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100)
-                            {
+                            if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
                                 mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
                             }
                         }
@@ -685,11 +660,11 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                     Show("搜索失败");
                 }
             });
-        }else
-        {
+        } else {
             Show("只允许输入汉字");
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -792,11 +767,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                         out.close();
                     }
                     setShareContent(BitmapFactory.decodeFile(file.toString()));
-                    mController.getConfig().setPlatforms(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA);
-                    mController.openShare(TuMapActivity.this, false);
                     isSnaping = false;
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -913,8 +884,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                                         bundle.putSerializable("TU", list.get(i));
                                         marker.setExtraInfo(bundle);
                                         marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.nav));
-                                        if(Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100)
-                                        {
+                                        if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
                                             mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
                                         }
                                         dialog.dismiss();
@@ -950,8 +920,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(searchEt.getText().length()>0)
-            {
+            if (searchEt.getText().length() > 0) {
                 searchEt.getText().clear();
             }
             if (popLayout != null && popLayout.getVisibility() == View.VISIBLE) {
@@ -999,6 +968,12 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         mMapView.onPause();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
     boolean run = false;
     final static int RUN = 0;
     int tag = 0;
@@ -1011,8 +986,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                     if (tag >= tuyiList.size()) {
                         run = false;
                         tag = 0;
-                    }
-                    else
+                    } else
                         showClickMarkerInfo(tuyiList.get(tag++));
 
             }

@@ -44,8 +44,7 @@ import dong.lan.tuyi.R;
 
 public class PublicChatRoomsActivity extends BaseActivity {
 	private ProgressBar pb;
-	private TextView title;
-	private ListView listView;
+    private ListView listView;
 	private ChatRoomAdapter adapter;
 	
 	private List<EMChatRoom> chatRoomList;
@@ -66,7 +65,7 @@ public class PublicChatRoomsActivity extends BaseActivity {
 		// 搜索框
 		pb = (ProgressBar) findViewById(R.id.progressBar);
 		listView = (ListView) findViewById(R.id.list);
-		title = (TextView)findViewById(R.id.tv_title);
+        TextView title = (TextView) findViewById(R.id.tv_title);
 		title.setText(getResources().getString(R.string.chat_room));
 		chatRoomList = new ArrayList<EMChatRoom>();
 		

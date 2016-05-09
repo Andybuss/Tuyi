@@ -13,8 +13,6 @@
  */
 package dong.lan.tuyi.activity;
 
-import java.io.File;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -27,25 +25,23 @@ import android.widget.TextView;
 
 import com.easemob.util.ImageUtils;
 
+import java.io.File;
+
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.task.DownloadImageTask;
 import dong.lan.tuyi.utils.ImageCache;
 
 public class AlertDialog extends BaseActivity {
-	private TextView mTextView;
-	private Button mButton;
 	private int position;
-	private ImageView imageView;
 	private EditText editText;
-	private boolean isEditextShow;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alert_dialog);
-		mTextView = (TextView) findViewById(R.id.title);
-		mButton = (Button) findViewById(R.id.btn_cancel);
-		imageView = (ImageView) findViewById(R.id.image);
+		TextView mTextView = (TextView) findViewById(R.id.title);
+		Button mButton = (Button) findViewById(R.id.btn_cancel);
+		ImageView imageView = (ImageView) findViewById(R.id.image);
 		editText = (EditText) findViewById(R.id.edit);
 		//提示内容
 		String msg = getIntent().getStringExtra("msg");
@@ -57,7 +53,7 @@ public class AlertDialog extends BaseActivity {
 		//是否显示取消按钮
 		boolean isCanceShow = getIntent().getBooleanExtra("cancel", false);
 		//是否显示文本编辑框
-		isEditextShow = getIntent().getBooleanExtra("editTextShow",false);
+		boolean isEditextShow = getIntent().getBooleanExtra("editTextShow", false);
 		//转发复制的图片的path
 		String path = getIntent().getStringExtra("forwardImage");
 		//

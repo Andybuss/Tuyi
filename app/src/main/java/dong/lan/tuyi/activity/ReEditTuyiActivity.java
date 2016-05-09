@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,18 +59,15 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
     private BaiduMap mBaiduMap;
     private Marker cur_Marker;
     private RelativeLayout markOffLayout;
-    private ProgressBar geoProgress;
     private EditText geoText;
 
     private int from;
     public static final int NORMAL = 1;
     public static final int OFFLINE = 2;
-    private LocationClient mLocClient;
 
 
     BitmapDescriptor location_mark = BitmapDescriptorFactory.fromResource(R.drawable.location_mark);
     private boolean isFirst = true;
-    private TextView mark_done, add_mark, upload;
     private double lat, lng;
 
     @Override
@@ -112,7 +108,6 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
         pic = (ImageView) findViewById(R.id.reedit_pic);
         content = (EditText) findViewById(R.id.et_reedit);
         isOpen = (CheckBox) findViewById(R.id.reedit_isOpen_check);
-        geoProgress = (ProgressBar) findViewById(R.id.geoProgressBar);
         geoText = (EditText) findViewById(R.id.geoResultText);
         bar_right.setText("完成");
         if (from == NORMAL) {
@@ -122,20 +117,19 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
         } else if (from == OFFLINE) {
             bar_center.setText("离线图忆");
             pic.setImageBitmap(BitmapFactory.decodeFile(tuyi.gettUri()));
-            add_mark = (TextView) findViewById(R.id.add_mark);
+            TextView add_mark = (TextView) findViewById(R.id.add_mark);
             add_mark.setOnClickListener(this);
             add_mark.setVisibility(View.VISIBLE);
             markOffLayout = (RelativeLayout) findViewById(R.id.markOffLayout);
             mMapView = (MapView) findViewById(R.id.bmapView);
-            mark_done = (TextView) findViewById(R.id.mark_done);
-            upload = (TextView) findViewById(R.id.reedit_upload);
+            TextView mark_done = (TextView) findViewById(R.id.mark_done);
             mark_done.setOnClickListener(this);
             mBaiduMap = mMapView.getMap();
             MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
             mBaiduMap.setMapStatus(msu);
             mBaiduMap.setMyLocationEnabled(true);
             mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
-            mLocClient = new LocationClient(this);
+            LocationClient mLocClient = new LocationClient(this);
             mLocClient.registerLocationListener(this);
             LocationClientOption option = new LocationClientOption();
             option.setOpenGps(true);// 打开gps

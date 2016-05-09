@@ -15,8 +15,6 @@ import dong.lan.tuyi.R;
 public class OfflineTuyiActivity extends dong.lan.tuyi.basic.BaseActivity {
 
 
-    private RecoderOfflineTuyiFragment recoderOfflineTuyiFragment;
-    private UploadOfflineTuyiFragment uploadOfflineTuyiFragment;
     private Fragment[] fragments;
     private Button tab[];
     int index, curIndex;
@@ -25,8 +23,8 @@ public class OfflineTuyiActivity extends dong.lan.tuyi.basic.BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_tuyi);
-        recoderOfflineTuyiFragment = new RecoderOfflineTuyiFragment();
-        uploadOfflineTuyiFragment = new UploadOfflineTuyiFragment();
+        RecoderOfflineTuyiFragment recoderOfflineTuyiFragment = new RecoderOfflineTuyiFragment();
+        UploadOfflineTuyiFragment uploadOfflineTuyiFragment = new UploadOfflineTuyiFragment();
         fragments = new Fragment[]{recoderOfflineTuyiFragment, uploadOfflineTuyiFragment};
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_offline_container, recoderOfflineTuyiFragment)
                 .add(R.id.fragment_offline_container, uploadOfflineTuyiFragment).hide(uploadOfflineTuyiFragment)

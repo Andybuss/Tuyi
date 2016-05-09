@@ -13,13 +13,12 @@ import dong.lan.tuyi.utils.MyImageAsyn;
  * Created by 桂栋 on 2015/8/15.
  */
 public class BigImage extends Activity {
-    private ImageView bigImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitvity_big_image);
         String url = getIntent().getStringExtra("PIC");
-        bigImage = (ImageView) findViewById(R.id.bigImage);
+        ImageView bigImage = (ImageView) findViewById(R.id.bigImage);
         new MyImageAsyn(bigImage,MyImageAsyn.NORMAL).execute(url);
     }
 
