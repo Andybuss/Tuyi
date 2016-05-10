@@ -17,7 +17,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
@@ -55,16 +54,10 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
 import com.easemob.exceptions.EaseMobException;
-import com.easemob.util.DensityUtil;
 import com.easemob.util.EMLog;
 import com.easemob.util.FileUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
 
 import java.io.File;
 import java.util.Date;
@@ -92,8 +85,6 @@ import dong.lan.tuyi.utils.ImageCache;
 import dong.lan.tuyi.utils.ImageUtils;
 import dong.lan.tuyi.utils.SmileUtils;
 import dong.lan.tuyi.utils.UserUtils;
-
-import dong.lan.tuyi.activity.ShowVideoActivity;
 
 public class MessageAdapter extends BaseAdapter{
 
@@ -911,9 +902,9 @@ public class MessageAdapter extends BaseAdapter{
 						.getMsgId())&&VoicePlayClickListener.isPlaying) {
 			AnimationDrawable voiceAnimation;
 			if (message.direct == Direct.RECEIVE) {
-				holder.iv.setImageResource(R.anim.voice_from_icon);
+				holder.iv.setImageResource(R.drawable.voice_from_icon);
 			} else {
-				holder.iv.setImageResource(R.anim.voice_to_icon);
+				holder.iv.setImageResource(R.drawable.voice_to_icon);
 			}
 			voiceAnimation = (AnimationDrawable) holder.iv.getDrawable();
 			voiceAnimation.start();

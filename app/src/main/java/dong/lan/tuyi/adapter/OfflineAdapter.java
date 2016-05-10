@@ -14,14 +14,20 @@ import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.ReEditTuyiActivity;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 
 /**
- * Created by Dooze on 2015/9/13.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/9/13  08:36.
+ * Email: 760625325@qq.com
  */
 public class OfflineAdapter extends BaseListAdapter<UserTuyi> {
+    private Context context;
     public OfflineAdapter(Context context, List<UserTuyi> list) {
         super(context, list);
+        this.context = context;
     }
 
     @Override
@@ -44,11 +50,11 @@ public class OfflineAdapter extends BaseListAdapter<UserTuyi> {
         viewHolder.popular = (TextView) convertView.findViewById(R.id.popular);
         itemClick(viewHolder.itemLayout, position);
         viewHolder.delete.setVisibility(View.VISIBLE);
-        viewHolder.delete.setText("删除");
+        viewHolder.delete.setText(mContext.getString(R.string.delete));
         deleteItem(convertView,viewHolder.delete,position);
         if (tuyi.gettPoint() == null) {
             viewHolder.popular.setBackgroundResource(R.drawable.circle_red);
-            viewHolder.popular.setText("标记");
+            viewHolder.popular.setText(mContext.getString(R.string.mark));
         } else {
             viewHolder.popular.setVisibility(View.GONE);
         }
@@ -57,7 +63,10 @@ public class OfflineAdapter extends BaseListAdapter<UserTuyi> {
         long currentTime;
         currentTime = TimeUtil.stringToLong(time, TimeUtil.FORMAT_DATA_TIME_SECOND_1);
         viewHolder.time.setText(TimeUtil.getDescriptionTimeFromTimestamp(currentTime));
-        viewHolder.pic.setImageBitmap(android.graphics.BitmapFactory.decodeFile(tuyi.gettUri()));
+        PicassoHelper.load(context,tuyi.gettUri())
+                .placeholder(R.drawable.logo)
+                .resize(100,100)
+                .into(viewHolder.pic);
 
         return convertView;
     }

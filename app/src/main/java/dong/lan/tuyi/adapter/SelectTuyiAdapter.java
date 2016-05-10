@@ -17,18 +17,23 @@ import java.util.List;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.bean.UserTuyi;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
- * Created by 梁桂栋 on 2015/11/10.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/11/10  08:36.
+ * Email: 760625325@qq.com
  */
 public class SelectTuyiAdapter extends RecyclerView.Adapter<SelectHolder> {
     private LayoutInflater inflater;
     private List<UserTuyi> tuyis;
     private HashSet<Integer> set= new HashSet<>();
+    private Context context;
     public SelectTuyiAdapter(Context context,List<UserTuyi> tuyis)
     {
         this.tuyis =tuyis;
+        this.context = context;
         inflater = LayoutInflater.from(context);
     }
     @Override
@@ -45,7 +50,10 @@ public class SelectTuyiAdapter extends RecyclerView.Adapter<SelectHolder> {
         s.append(tuyis.get(i).gettContent());
         s.append("</p></body></html>");
         holder.content.setText(Html.fromHtml(s.toString()));
-        new MyImageAsyn(holder.pic,MyImageAsyn.THUMNAIL).execute(tuyis.get(i).gettPic());
+        PicassoHelper.load(context,tuyis.get(i).gettPic())
+                .placeholder(R.drawable.logo)
+                .resize(100,100)
+                .into(holder.pic);
         holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

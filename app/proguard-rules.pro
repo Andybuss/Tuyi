@@ -15,7 +15,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-#### 友盟相关 ####
+
+-optimizations !code/allocation/variable
+-keep class com.easemob.** {*;}
+-keep class org.jivesoftware.** {*;}
+-keep class org.apache.** {*;}
+-dontwarn  com.easemob.**
+
 -dontusemixedcaseclassnames
 -dontshrink
 -dontoptimize
@@ -99,7 +105,7 @@
 
 -keep class org.android.spdy.**{*;}
 
--keep public class com.umeng.community.example.R$*{
+-keep public class dong.lan.tuyi.R$*{
     public static final int *;
 }
 -keepattributes Exceptions,InnerClasses,Signature,EnclosingMethod
@@ -123,88 +129,47 @@
 -keep class com.sina.** {*;}
 -dontwarn com.sina.**
 
-#### Bmob ####
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
 
 -ignorewarnings
-
-# 这里根据具体的SDK版本修改
--libraryjars libs/bmob_v3.0.9beta.jar
-
 -keepattributes Signature
+# 如果你使用了okhttp、okio的包，请添加以下混淆代码
 
-# 不混淆BmobSDK
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *;}
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn okio.**
+
 -keep class cn.bmob.v3.** {*;}
 
 # 保证继承自BmobObject、BmobUser类的JavaBean不被混淆
 -keep class * extends cn.bmob.v3.BmobObject {
     *;
 }
-# 也可逐个填写
--keep class com.example.bmobexample.bean.BankCard{*;}
--keep class com.example.bmobexample.bean.GameScore{*;}
--keep class com.example.bmobexample.bean.MyUser{*;}
--keep class com.example.bmobexample.bean.Person{*;}
 
--keep class com.example.bmobexample.file.Movie{*;}
--keep class com.example.bmobexample.file.Song{*;}
+-keep class * extends com.squareup.picasso.Transformation {
+    *;
+}
 
--keep class com.example.bmobexample.relation.Post{*;}
--keep class com.example.bmobexample.relation.Comment{*;}
+-keep class dong.lan.tuyi.PicassoHelper
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**
 
-# 如果你使用了okhttp、okio的包，请添加以下混淆代码
--dontwarn com.squareup.okhttp.**
--keep class com.squareup.okhttp.** { *;}
--keep interface com.squareup.okhttp.** { *; }
--dontwarn okio.**
+-keep class com.lidroid.xutils.**{*;}
+-dontwarn com.lidroid.xutils.**
 
-# 如果你使用了support v4包，请添加如下混淆代码
--dontwarn android.support.v4.**
--keep class android.support.v4.** { *; }
--keep interface android.support.v4.app.** { *; }
--keep public class * extends android.support.v4.**
--keep public class * extends android.app.Fragment
+-keep class com.nostra13.universaliamgeloader.**{*;}
+-dontwarn com.nostra13.universaliamgeloader.**
 
-# 如果你需要兼容6.0系统，请不要混淆org.apache.http.legacy.jar
- -dontwarn android.net.compatibility.**
- -dontwarn android.net.http.**
- -dontwarn com.android.internal.http.multipart.**
- -dontwarn org.apache.commons.**
- -dontwarn org.apache.http.**
- -keep class android.net.compatibility.**{*;}
- -keep class android.net.http.**{*;}
- -keep class com.android.internal.http.multipart.**{*;}
- -keep class org.apache.commons.**{*;}
- -keep class org.apache.http.**{*;}
+-keep class com.squareup.picasso.**{*;}
+-dontwarn com.squareup.picasso.**
 
-
- ####  Baidu   ####
-
- -keep class com.baidu.** {*;}
- -keep class vi.com.** {*;}
- -dontwarn com.baidu.**
-
-
- #### 环信  ####
-
- -keep class com.easemob.** {*;}
- -keep class org.jivesoftware.** {*;}
- -keep class org.apache.** {*;}
- -dontwarn  com.easemob.**
- #2.0.9后的不需要加下面这个keep
- #-keep class org.xbill.DNS.** {*;}
- #另外，demo中发送表情的时候使用到反射，需要keep SmileUtils
- -keep class com.easemob.chatuidemo.utils.SmileUtils {*;}
- #注意前面的包名，如果把这个类复制到自己的项目底下，比如放在com.example.utils底下，应该这么写(实际要去掉#)
- -keep class dong.lan.tuyi.utils.SmileUtils {*;}
- #如果使用easeui库，需要这么写
- -keep class com.easemob.easeui.utils.EaseSmileUtils {*;}
-
- #2.0.9后加入语音通话功能，如需使用此功能的api，加入以下keep
- #-dontwarn ch.imvs.**
- #-dontwarn org.slf4j.**
- #-keep class org.ice4j.** {*;}
- #-keep class net.java.sip.** {*;}
- #-keep class org.webrtc.voiceengine.** {*;}
- #-keep class org.bitlet.** {*;}
- #-keep class org.slf4j.** {*;}
- #-keep class ch.imvs.** {*;}

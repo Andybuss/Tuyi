@@ -8,7 +8,10 @@ import com.umeng.comm.ui.fragments.CommunityMainFragment;
 import dong.lan.tuyi.R;
 
 /**
- * Created by 桂栋 on 2015/8/4.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/8/4  12:34.
+ * Email: 760625325@qq.com
  */
 public class TuyiHomeActivity extends dong.lan.tuyi.basic.BaseActivity {
 

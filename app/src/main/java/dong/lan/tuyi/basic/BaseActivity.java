@@ -35,17 +35,15 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
         MobclickAgent.onResume(this);
-        // umeng
     }
 
     @Override
     protected void onPause() {
+        super.onPause();
         Lock.canPop = false;
         MobclickAgent.onPause(this);
-        super.onPause();
     }
     @Override
     protected void onStart() {

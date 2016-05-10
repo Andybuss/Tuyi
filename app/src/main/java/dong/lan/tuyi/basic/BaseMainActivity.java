@@ -34,7 +34,6 @@ public class BaseMainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
         MobclickAgent.onResume(this);
 

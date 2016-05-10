@@ -17,7 +17,7 @@ import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.TuyiInfoActivity;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 
 /**
@@ -65,7 +65,9 @@ public class MyFavoriteAdapter extends BaseListAdapter<UserTuyi> {
         viewHolder.time.setText(TimeUtil.getDescriptionTimeFromTimestamp(currentTime));
         String url = tuyi.gettPic();
         if (url != null)
-            new MyImageAsyn(viewHolder.pic, 1).execute(url);
+            PicassoHelper.load(mContext,url)
+                    .placeholder(R.drawable.gallery)
+                    .into(viewHolder.pic);
         else
             viewHolder.pic.setImageResource(R.drawable.logo);
         viewHolder.content.setText(tuyi.gettContent());

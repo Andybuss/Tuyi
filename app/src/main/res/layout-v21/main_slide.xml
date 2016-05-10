@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slide_Main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar" >
+
+        <LinearLayout
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:drawableRight="@drawable/tuoolbar_tuyi"
+                android:id="@+id/toolbar_tuyi"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/text_big18_size"
+                android:gravity="center"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+            <TextView
+                android:drawableRight="@drawable/toolbar_community"
+                android:id="@+id/toolbar_community"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/text_big18_size"
+                android:gravity="center"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <include layout="@layout/activity_main" />
+
+        <include layout="@layout/slide_menu" />
+    </android.support.v4.widget.DrawerLayout>
+
+    <LinearLayout
+        android:id="@+id/tip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/md_green_500"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/progress_brown" />
+
+        <TextView
+            android:textColor="@color/md_white_1000"
+            android:id="@+id/tip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center" />
+    </LinearLayout>
+</RelativeLayout>

@@ -32,7 +32,7 @@ import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.util.FileUilt;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
  * Created by 桂栋 on 2015/8/13.
@@ -114,7 +114,10 @@ public class ShareTuyiActivity extends BaseActivity{
 
             }
         });
-        new MyImageAsyn(img,MyImageAsyn.NORMAL).execute(tuyi.gettPic());
+
+        PicassoHelper.load(this,tuyi.gettPic())
+                .placeholder(R.drawable.gallery)
+                .into(img);
         initData();
     }
     

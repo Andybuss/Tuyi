@@ -73,8 +73,8 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
         uploadLayout.setVisibility(View.GONE);
         bar_right.setOnClickListener(this);
         bar_left.setOnClickListener(this);
-        bar_center.setText("本地记录");
-        bar_right.setText("上传");
+        bar_center.setText(getString(R.string.local_recode));
+        bar_right.setText(getString(R.string.upload));
         upload.setOnClickListener(this);
         initData();
     }
@@ -189,11 +189,11 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
             case R.id.offline_upload:
 
                 if (Config.tUser == null) {
-                    Config.Show(getActivity(), "用户同步未完成");
+                    Config.Show(getActivity(),getString(R.string.user_asyn_no_finish));
                     return;
                 }
                 if (offTuyis == null) {
-                    Config.Show(getActivity(), "没有离线图忆");
+                    Config.Show(getActivity(), getString(R.string.no_offline_tuyi));
                     return;
                 }
 
@@ -240,7 +240,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                     run = true;
                 }
                 uploadLayout.setVisibility(View.VISIBLE);
-                tip.setText("开始上传");
+                tip.setText(R.string.start_upload);
                 thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -266,10 +266,6 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                         String info = "离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "的图片上传成功";
                                         tip.setText(info);
                                         urls.add(bmobFile.getFileUrl(getActivity()));
-                                        if (!urls.isEmpty())
-                                            System.out.println(urls.get(urls.size() - 1));
-                                        else
-                                            System.out.println("EMPTY");
                                     }
 
                                     @Override
@@ -291,7 +287,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                         if (map.size() > 0)
                                             Config.Show(getActivity(), offTuyis.get(map.get(map.size() - 1)).gettContent() + "保存成功");
                                         DemoDBManager.getInstance().deleteOffTuyiByTime(offTuyis.get(map.get(map.size() - 1)).getTime());
-                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + " 上传成功");
+                                        tip.setText(getString(R.string.offline_tuyi_upload_tip_text, offTuyis.get(map.get(map.size() - 1)).gettContent()));
                                         offTuyis.get(map.get(map.size() - 1)).settPic(urls.get(urls.size() - 1));
                                         offTuyis.get(map.get(map.size() - 1)).settUser(Config.tUser);
                                         DemoDBManager.getInstance().saveTuyi(tuyi);

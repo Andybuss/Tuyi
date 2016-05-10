@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
@@ -80,7 +79,7 @@
         <activity android:name=".activity.FavoriteActivity" />
         <activity android:name=".activity.AddTuyiActivity" />
         <activity android:name=".activity.MyRadarActivity" />
-        <activity android:name=".activity.MyLikeTuyiActivity" />
+        <activity android:name=".activity.MyFootStepActivity" />
         <activity
             android:name=".activity.OfflineTuyiActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -112,6 +111,10 @@
 
         </activity>
 
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
 
         <!-- 登陆 -->
         <activity
@@ -259,7 +262,7 @@
             android:enabled="true"
             android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
+                <action android:name="com.baidu.location.service_v2.2"/>
             </intent-filter>
         </service>
 
@@ -469,14 +472,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--友盟的自动更新组件-->
 
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" />
-        <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

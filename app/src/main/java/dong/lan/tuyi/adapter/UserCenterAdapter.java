@@ -20,7 +20,7 @@ import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.db.Tuyi;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 
 /**
@@ -72,10 +72,7 @@ public class UserCenterAdapter extends BaseListAdapter<UserTuyi> {
         }
         viewHolder.time.setText(TimeUtil.getDescriptionTimeFromTimestamp(currentTime));
         String url = tuyi.gettPic();
-        if (url != null)
-            new MyImageAsyn(viewHolder.pic, 1).execute(url);
-        else
-            viewHolder.pic.setImageResource(R.drawable.logo);
+        PicassoHelper.load(mContext,url).placeholder(R.drawable.logo).into(viewHolder.pic);
         viewHolder.content.setText(tuyi.gettContent());
         setPrivate(convertView, viewHolder.delete, position);
         return convertView;

@@ -20,7 +20,7 @@ import dong.lan.tuyi.activity.TuyiInfoActivity;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 
 /**
@@ -33,6 +33,7 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
     public static final int OFFLINE = 2;
     private int index;
     private String y;
+
     public UserMainAdapter(Context context, List<UserTuyi> list) {
         super(context, list);
     }
@@ -40,7 +41,7 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
     public UserMainAdapter(Context context, List<UserTuyi> list, int community) {
         super(context, list);
         FLAG = community;
-        y= TimeUtil.getYear();
+        y = TimeUtil.getYear();
     }
 
 
@@ -53,7 +54,7 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_community, null);
-            viewHolder =new ViewHolder();
+            viewHolder = new ViewHolder();
             viewHolder.pic = (ImageView) convertView.findViewById(R.id.item_tuyi_pic);
             viewHolder.time = (TextView) convertView.findViewById(R.id.item_tuyi_time);
             viewHolder.content = (TextView) convertView.findViewById(R.id.item_tuyi_content);
@@ -64,9 +65,7 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
             viewHolder.share = (TextView) convertView.findViewById(R.id.swip_share);
             viewHolder.reEdit = (TextView) convertView.findViewById(R.id.swip_reEdit);
             convertView.setTag(viewHolder);
-        }
-        else
-        {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         convertView.setTag(viewHolder);
@@ -76,17 +75,17 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
         viewHolder.rankIcon.setVisibility(View.GONE);
         viewHolder.popular.setVisibility(View.GONE);
         viewHolder.delete.setVisibility(View.VISIBLE);
-        viewHolder.delete.setText("删除");
+        viewHolder.delete.setText(mContext.getString(R.string.delete));
         viewHolder.share.setVisibility(View.VISIBLE);
         viewHolder.reEdit.setVisibility(View.VISIBLE);
-        viewHolder.share.setText("分享");
-        viewHolder.reEdit.setText("修改");
+        viewHolder.share.setText(mContext.getString(R.string.share));
+        viewHolder.reEdit.setText(mContext.getString(R.string.modefy));
         deleteItem(convertView, viewHolder.delete, position);
         swipReEdit(viewHolder.reEdit, position);
         swipShare(viewHolder.share, position);
         String time = tuyi.getTime();
-            StringBuffer s = new StringBuffer();
-        if(time!=null) {
+        StringBuffer s = new StringBuffer();
+        if (time != null) {
             s.append("<html><body><h1>");
             if (time.substring(0, 4).equals(y) && index != Integer.parseInt(y)) {
                 s.append(time.substring(0, 4));
@@ -108,11 +107,10 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
             viewHolder.time.setText(Html.fromHtml(s.toString()));
         }
         String url = tuyi.gettPic();
-        if (url != null)
-            new MyImageAsyn(viewHolder.pic, MyImageAsyn.THUMNAIL).execute(url);
-        else
-            viewHolder.pic.setImageResource(R.drawable.gallery);
-
+        PicassoHelper.load(mContext, url)
+                .resize(100, 100)
+                .placeholder(R.drawable.gallery)
+                .into(viewHolder.pic);
         s.delete(0, s.length());
         s.append("<html><head><p>");
         s.append(tuyi.gettContent());
@@ -160,7 +158,7 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
 
                     @Override
                     public void onFailure(int i, String s) {
-                        Config.Show(mContext, "删除失败，请检查网络");
+                        Config.Show(mContext, mContext.getString(R.string.network_unavailable));
                     }
                 });
 

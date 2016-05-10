@@ -39,8 +39,8 @@ public class ImgPlayAsyn extends AsyncTask<String,Integer,Bitmap> {
         {
             text.setText(s);
             img.setImageBitmap(bitmap);
-            ObjectAnimator.ofFloat(img,"scaleX",1f,1.3f,1f).setDuration(2000).start();
-            ObjectAnimator.ofFloat(img,"scaleY",1f,1.3f,1f).setDuration(2000).start();
+            ObjectAnimator.ofFloat(img,"scaleX",1f,1.3f,1f).setDuration(3000).start();
+            ObjectAnimator.ofFloat(img,"scaleY",1f,1.3f,1f).setDuration(3000).start();
             ObjectAnimator.ofFloat(text,"translationX",1000f,1f).setDuration(1500).start();
             ObjectAnimator.ofFloat(text,"translationY",1f,-100f).setDuration(1500).start();
         }

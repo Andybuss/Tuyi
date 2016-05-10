@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "dong.lan.tuyi"
         minSdkVersion 14
-        targetSdkVersion 22
-        versionCode 16
-        versionName "1.7.4"
+        targetSdkVersion 23
+        versionCode 18
+        versionName "1.7.6"
         multiDexEnabled true
     }
 
@@ -25,15 +25,20 @@ android {
 
     buildTypes {
         debug {
+            signingConfig signingConfigs.releaseSign
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
-            signingConfig signingConfigs.releaseSign
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            renderscriptDebuggable false
-            proguardFile 'E:/Android_Studio_Works/Tuyi/app/proguard-rules.pro'
+            renderscriptDebuggable true
+            renderscriptOptimLevel 3
+            pseudoLocalesEnabled true
         }
+    }
+    dexOptions {
+        incremental true
+    }
+    compileOptions {
     }
 }
 
@@ -44,13 +49,11 @@ dependencies {
     compile files('libs/activeandroid.jar')
     compile files('libs/android-support-v7-recyclerview.jar')
     compile files('libs/httpmime-4.1.3.jar')
-    compile files('libs/picasso-2.4.0.jar')
     compile files('libs/umeng_community_sdk_core.jar')
     compile files('libs/umeng_social_sdk.jar')
     compile files('libs/SocialSDK_QQZone_3.jar')
     compile files('libs/xUtils-2.6.14.jar')
     compile files('libs/okhttp-2.4.0.jar')
-    compile files('libs/umeng-update-v2.6.0.1.jar')
     compile 'com.android.support:support-v4:23.3.0'
     compile files('libs/SocialSDK_WeiXin_1.jar')
     compile files('libs/SocialSDK_WeiXin_2.jar')
@@ -71,4 +74,7 @@ dependencies {
     compile files('libs/wire-runtime-1.7.0.jar')
     compile files('libs/umeng_community_sdk_db.jar')
     compile files('libs/umeng_community_sdk_ui_main.jar')
+    compile files('libs/okhttp-urlconnection-2.7.5.jar')
+    compile files('libs/picasso-2.5.2.jar')
+    compile files('libs/umeng-analytics-v5.6.7.jar')
 }

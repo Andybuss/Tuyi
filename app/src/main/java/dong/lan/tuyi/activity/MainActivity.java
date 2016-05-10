@@ -82,7 +82,6 @@ import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.listeners.Listeners;
 import com.umeng.comm.core.login.LoginListener;
 import com.umeng.comm.core.nets.responses.PortraitUploadResponse;
-import com.umeng.update.UmengUpdateAgent;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -101,6 +100,7 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
 import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.DemoHXSDKHelper;
 import dong.lan.tuyi.R;
@@ -115,10 +115,11 @@ import dong.lan.tuyi.domain.InviteMessage;
 import dong.lan.tuyi.domain.User;
 import dong.lan.tuyi.util.PhotoUtil;
 import dong.lan.tuyi.utils.AES;
+import dong.lan.tuyi.utils.CircleTransformation;
 import dong.lan.tuyi.utils.CommonUtils;
 import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.utils.Lock;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 import dong.lan.tuyi.utils.Weather;
 
@@ -215,8 +216,8 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         option.setIsNeedAddress(true);
         mLocClient.setLocOption(option);
         mLocClient.start();
-        UmengUpdateAgent.update(this);
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
+
+        BmobUpdateAgent.update(this);
     }
 
     private void init() {
@@ -399,7 +400,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.footstep:
-                    startActivity(new Intent(MainActivity.this, MyLikeTuyiActivity.class).putExtra(MyLikeTuyiActivity.INTENT_TAG, MyLikeTuyiActivity.FROM_USER));
+                    startActivity(new Intent(MainActivity.this, MyFootStepActivity.class).putExtra(MyFootStepActivity.INTENT_TAG, MyFootStepActivity.FROM_USER));
                     overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                     break;
                 case R.id.addFriend:
@@ -617,7 +618,11 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private void initTuser() {
         TUser tUser = DemoDBManager.getInstance().getTUserByName(TuApplication.getInstance().getUserName());
         if (tUser != null)
-            new MyImageAsyn(head, MyImageAsyn.HEAD).execute(tUser.getHead());
+            PicassoHelper.load(this,tUser.getHead())
+            .resize(100,100).transform(new CircleTransformation(50))
+            .placeholder(R.drawable.default_avatar)
+            .error(R.drawable.default_avatar)
+            .into(head);
         tip.setText("更新用户数据中...");
         runOnUiThread(new Runnable() {
             @Override
@@ -640,7 +645,12 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                                 if (list.get(0).getHead() == null || list.get(0).getHead().equals("")) {
                                     head.setImageResource(R.drawable.default_avatar);
                                 } else {
-                                    new MyImageAsyn(head, MyImageAsyn.HEAD).execute(list.get(0).getHead());
+                                    PicassoHelper.load(MainActivity.this,list.get(0).getHead())
+                                            .resize(100,100)
+                                            .transform(new CircleTransformation(50))
+                                            .placeholder(R.drawable.default_avatar)
+                                            .error(R.drawable.default_avatar)
+                                            .into(head);
                                 }
                             }
                         }
@@ -1715,7 +1725,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             TuApplication.communitySDK.updateUserProtrait(bitmap, new Listeners.SimpleFetchListener<PortraitUploadResponse>() {
                 @Override
                 public void onComplete(PortraitUploadResponse portraitUploadResponse) {
-                    print("umeng update avatar" + portraitUploadResponse.mIconUrl);
                 }
             });
         } else {

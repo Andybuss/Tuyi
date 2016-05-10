@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -35,10 +34,11 @@ import dong.lan.tuyi.bean.TUser;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.db.TUserDao;
-import dong.lan.tuyi.util.PhotoUtil;
 import dong.lan.tuyi.utils.AES;
+import dong.lan.tuyi.utils.CircleTransformation;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.LoopImagesHandler;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.xlist.XListView;
 
 /**
@@ -63,49 +63,47 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
     private static final int INVITE = 2;
     private ProgressDialog progressDialog;
     private LinearLayout headLayout;
+    private LoopImagesHandler handle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.user_center);
         if (getIntent().hasExtra("USER"))
             user = (TUser) getIntent().getSerializableExtra("USER");
         else
             finish();
         initView();
-        if(user.getObjectId()==null || user.getObjectId().equals(""))
-        {
+        if (user.getObjectId() == null || user.getObjectId().equals("")) {
             BmobQuery<TUser> query = new BmobQuery<>();
             query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
             query.addWhereEqualTo("username", user.getUsername());
             query.findObjects(this, new FindListener<TUser>() {
                 @Override
                 public void onSuccess(List<TUser> list) {
-                    if(!list.isEmpty())
-                    {
+                    if (!list.isEmpty()) {
                         user = list.get(0);
                         initDate();
                         getUserTuyi();
-                    }
-                    else
-                    {
-                        Show("获取用户数据失败");
+                    } else {
+                        Show(getString(R.string.can_not_get_user_data));
                         dismiss();
                     }
                 }
 
                 @Override
                 public void onError(int i, String s) {
-                    Show("获取用户数据失败 "+s);
+                    Show("获取用户数据失败 " + s);
                     dismiss();
                 }
             });
-        }
-        else {
+        } else {
             initDate();
             getUserTuyi();
         }
+
+        handle = new LoopImagesHandler(this,imageSwitcher,tuyilist);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -116,8 +114,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
                         } else {
                             if (wheel > tuyilist.size() - 1)
                                 wheel = 0;
-//                            AsynImageLoader.getInstance().showImageAsyn(imageSwitcher,tuyilist.get(wheel),R.drawable.load_pic,AsynImageLoader.ForNormal);
-                            new MyImageAsyn(imageSwitcher,MyImageAsyn.NORMAL).execute(tuyilist.get(wheel));
+                            handle.sendEmptyMessage(wheel);
                             sleep(5000);
                             wheel++;
                         }
@@ -167,7 +164,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         });
         imageSwitcher = (ImageView) findViewById(R.id.wall_image_switcher);
         headLayout = (LinearLayout) findViewById(R.id.head_layout);
-        showProgress("努力加载用户数据中",false);
+        showProgress("努力加载用户数据中", false);
     }
 
     /*
@@ -175,6 +172,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
      */
     boolean isFirst = true;
     boolean hasLoad = true;  //避免每次刷新都更新用户信息
+
     private void getUserTuyi() {
         skip = 0;
         BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
@@ -183,7 +181,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         query.setLimit(limit);
         query.order("createAt");
         if (hasLoad)
-        query.include("tUser");
+            query.include("tUser");
         query.findObjects(this, new FindListener<UserTuyi>() {
             @Override
             public void onSuccess(List<UserTuyi> list) {
@@ -195,23 +193,22 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
                     }
 
                 } else {
-                    if(hasLoad && list.get(0).gettUser()!=null)
-                    {
+                    if (hasLoad && list.get(0).gettUser() != null) {
                         ContentValues values = new ContentValues();
-                        values.put(TUserDao.COLUMN_IS_OPEN,list.get(0).gettUser().isPublicMyPoint()?"1":"0");
-                        values.put(TUserDao.COLUMN_NAME_AVATAR,list.get(0).gettUser().getHead());
-                        values.put(TUserDao.COLUMN_LAT,list.get(0).gettUser().getLoginPoint().getLatitude());
-                        values.put(TUserDao.COLUMN_LONG,list.get(0).gettUser().getLoginPoint().getLongitude());
+                        values.put(TUserDao.COLUMN_IS_OPEN, list.get(0).gettUser().isPublicMyPoint() ? "1" : "0");
+                        values.put(TUserDao.COLUMN_NAME_AVATAR, list.get(0).gettUser().getHead());
+                        values.put(TUserDao.COLUMN_LAT, list.get(0).gettUser().getLoginPoint().getLatitude());
+                        values.put(TUserDao.COLUMN_LONG, list.get(0).gettUser().getLoginPoint().getLongitude());
                         DemoDBManager.getInstance().updateTuser(list.get(0).gettUser().getUsername(), values);
-                        hasLoad=false;
+                        hasLoad = false;
                     }
                     for (int i = 0; i < list.size(); i++)
                         tuyilist.add(list.get(i).gettPic());
-                    if(CLICK_STATUS !=-1)
-                    adapter = new UserCenterAdapter(UserCenter.this, list,false);
-                    else adapter = new UserCenterAdapter(UserCenter.this, list,true);
+                    if (CLICK_STATUS != -1)
+                        adapter = new UserCenterAdapter(UserCenter.this, list, false);
+                    else adapter = new UserCenterAdapter(UserCenter.this, list, true);
                     skip = list.size();
-                    if(skip<limit)
+                    if (skip < limit)
                         mListView.setPullLoadEnable(false);
                     mListView.setAdapter(adapter);
                     mListView.setPullLoadEnable(true);
@@ -308,11 +305,11 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         queries.add(q2);
         if (TuApplication.getInstance().getUserName().equals(user.getUsername())) {
             click.setBackgroundResource(R.drawable.circle_red);
-            click.setText("返回");
+            click.setText(getString(R.string.back));
             CLICK_STATUS = -1;
         } else if (TuApplication.getInstance().getContactList().containsKey(AES.encode(user.getUsername()))) {
             click.setBackgroundResource(R.drawable.circle_green);
-            click.setText("聊天");
+            click.setText(getString(R.string.robot_chat));
             CLICK_STATUS = ISFRIEND;
         } else {
             click.setBackgroundResource(R.drawable.new_friends_icon);
@@ -321,20 +318,21 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
 
 
         String headStr = Config.preferences.getString(Config.USER_HEAD + user.getUsername(), "");
-        if (headStr.equals("")) {
-            if (user.getHead() != null && !user.getHead().equals(""))
-                new MyImageAsyn(head, MyImageAsyn.HEAD).execute(user.getHead());
-        } else {
-            head.setImageBitmap(PhotoUtil.toRoundBitmap(BitmapFactory.decodeFile(headStr)));
-        }
+        PicassoHelper.load(this, headStr)
+                .resize(100, 100)
+                .transform(new CircleTransformation(50))
+                .placeholder(R.drawable.default_avatar)
+                .error(R.drawable.loding_pic)
+                .into(head);
     }
 
 
     AlertDialog dialog;
+
     public void addFriends() {
 
         android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = LayoutInflater.from(this).inflate(R.layout.add_friend_reason_dialog,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.add_friend_reason_dialog, null);
         final Button done = (Button) view.findViewById(R.id.add_done);
         final EditText reason = (EditText) view.findViewById(R.id.add_reason);
         reason.requestFocus();
@@ -382,6 +380,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         dialog = builder.show();
 
     }
+
     private void refreshLoad() {
         if (mListView.getPullLoading()) {
             mListView.stopLoadMore();
@@ -405,28 +404,28 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
     }
 
     int lastIndex = -1;
+
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if(visibleItemCount>4)
-        {
-            if(firstVisibleItem>1 && firstVisibleItem!=lastIndex)
-            {
-                ObjectAnimator.ofFloat(headLayout,"scaleY",1f,0f).setDuration(200).start();
-                lastIndex=firstVisibleItem;
+        if (visibleItemCount > 4) {
+            if (firstVisibleItem > 1 && firstVisibleItem != lastIndex) {
+                ObjectAnimator.ofFloat(headLayout, "scaleY", 1f, 0f).setDuration(200).start();
+                lastIndex = firstVisibleItem;
                 ViewGroup.LayoutParams layoutParams = headLayout.getLayoutParams();
-                layoutParams.height=0;
+                layoutParams.height = 0;
                 headLayout.setLayoutParams(layoutParams);
             }
-            if(firstVisibleItem<1 && lastIndex!=firstVisibleItem)
-            {
-                ObjectAnimator.ofFloat(headLayout,"scaleY",0f,1f).setDuration(200).start();
-                lastIndex=firstVisibleItem;
+            if (firstVisibleItem < 1 && lastIndex != firstVisibleItem) {
+                ObjectAnimator.ofFloat(headLayout, "scaleY", 0f, 1f).setDuration(200).start();
+                lastIndex = firstVisibleItem;
                 ViewGroup.LayoutParams layoutParams = headLayout.getLayoutParams();
-                layoutParams.height=(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
+                layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
                 headLayout.setLayoutParams(layoutParams);
             }
         }
-
-        Config.print("firstVisibleItem:"+firstVisibleItem+" visibleItemCount:"+visibleItemCount);
     }
+
+
 }
+
+

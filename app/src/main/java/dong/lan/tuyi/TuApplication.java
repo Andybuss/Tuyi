@@ -28,6 +28,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
+import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.sdkmanager.LocationSDKManager;
@@ -44,6 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import cn.bmob.v3.Bmob;
 import dong.lan.tuyi.activity.MyUmengCommunityLogin;
 import dong.lan.tuyi.domain.User;
 import dong.lan.tuyi.utils.AES;
@@ -96,6 +98,9 @@ public class TuApplication extends MultiDexApplication {
         communitySDK = CommunityFactory.getCommSDK(this);
         communitySDK.initSDK(this);
         AES.init();
+        //初始化Bmob SDK
+        Bmob.initialize(this, Constant.BmonAppID);
+        AnalyticsConfig.enableEncrypt(true); //友盟统计日志加密
         LoginSDKManager.getInstance().addAndUse(MyUmengCommunityLogin.getInstance());
         LocationSDKManager.getInstance().addAndUse(new DefaultLocationImpl());
         PushSDKManager.getInstance().addImpl("my_push", new UmengPushImpl());

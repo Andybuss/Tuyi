@@ -20,10 +20,13 @@ import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.db.Tuyi;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
- * Created by Dooze on 2015/9/13.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/9/13  08:37.
+ * Email: 760625325@qq.com
  */
 public class TuyiTopAdapter extends BaseListAdapter<UserTuyi> {
     DecimalFormat format;
@@ -52,7 +55,7 @@ public class TuyiTopAdapter extends BaseListAdapter<UserTuyi> {
         viewHolder.popular = (TextView) convertView.findViewById(R.id.popular);
         itemClick(viewHolder.itemLayout, position);
         viewHolder.delete.setVisibility(View.VISIBLE);
-        viewHolder.popular.setText(position +1 +"");
+        viewHolder.popular.setText(String.valueOf(position +1));
         viewHolder.delete.setVisibility(View.VISIBLE);
         viewHolder.delete.setText("赞");
         Zan(viewHolder.delete, position);
@@ -66,16 +69,17 @@ public class TuyiTopAdapter extends BaseListAdapter<UserTuyi> {
             viewHolder.rankIcon.setVisibility(View.GONE);
         int zan =tuyi.getZan();
         if(zan<1000)
-            viewHolder.time.setText(zan + "赞");
+            viewHolder.time.setText(mContext.getString(R.string.get_zan,zan));
         else if(zan>1000&&zan<100000)
-        viewHolder.time.setText(format.format(zan/1000.0) + "千赞");
+        viewHolder.time.setText(mContext.getString(R.string.get_ThousandZan,format.format(zan/1000.0)));
         else
-            viewHolder.time.setText(format.format(zan/10000.0) + "万赞");
+            viewHolder.time.setText(mContext.getString(R.string.get_ThousandZan,format.format(zan/10000.0)));
         String url = tuyi.gettPic();
-        if (url != null)
-            new MyImageAsyn(viewHolder.pic, 1).execute(url);
-        else
-            viewHolder.pic.setImageResource(R.drawable.logo);
+        PicassoHelper.load(mContext,url)
+                .resize(100,100)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.login_error_icon)
+                .into(viewHolder.pic);
         viewHolder.content.setText(tuyi.gettContent());
         return convertView;
     }

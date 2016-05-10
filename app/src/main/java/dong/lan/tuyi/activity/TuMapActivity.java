@@ -71,9 +71,9 @@ import dong.lan.tuyi.adapter.ClickPopRecycleAdapter;
 import dong.lan.tuyi.bean.TUser;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
-import dong.lan.tuyi.util.AsynImageLoader;
+import dong.lan.tuyi.utils.CircleTransformation;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 
 
@@ -92,9 +92,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     private boolean goFetck = true;
     private MapView mMapView;
     private BaiduMap mBaiduMap;
-    private int topIconID[] = new int[]{R.id.switcher, R.id.add_tuyi, R.id.add_look_more, R.id.near_user};
+    private int topIconID[] = new int[]{R.id.switcher, R.id.add_tuyi, R.id.add_look_more, R.id.near_user,R.id.capture};
     private int nearID[] = new int[]{R.id.near_za, R.id.near_shi, R.id.near_jing, R.id.near_qing, R.id.near_wan, R.id.near_all};
-    private TextView topIcon[] = new TextView[4];
+    private TextView topIcon[] = new TextView[5];
     private TextView nearIcon[] = new TextView[6];
     private Button search;
     private EditText searchEt;
@@ -156,7 +156,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         });
         bar_center.setText("图忆");
         findViewById(R.id.bar_right).setEnabled(false);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             topIcon[i] = (TextView) findViewById(topIconID[i]);
             topIcon[i].setOnClickListener(this);
         }
@@ -265,7 +265,6 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             });
         }
     }
-
 
 
     private void setShareContent(Bitmap img) {
@@ -437,7 +436,11 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         tag.setText(tuyi.getTAG());
         content.setText(tuyi.gettContent() + "\n" + time);
         if (avatar != null && !avatar.equals(""))
-            AsynImageLoader.getInstance().showImageAsyn(head, avatar, R.drawable.default_avatar, 960, 720, AsynImageLoader.ForHead);
+            PicassoHelper.load(this,avatar)
+                    .resize(100, 100)
+                    .transform(new CircleTransformation(50))
+                    .placeholder(R.drawable.default_avatar)
+                    .into(head);
 
         addFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -500,7 +503,10 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         });
         String url = tuyi.gettPic();
         if (url != null)
-            new MyImageAsyn(pic, MyImageAsyn.NORMAL).execute(url);
+            PicassoHelper.load(this, url)
+                    .placeholder(R.drawable.logo)
+                    .error(R.drawable.chat_error_item_bg)
+                    .into(pic);
         else
             Show("图片加载链接为空");
 
@@ -694,6 +700,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 NearTuyi("乐玩");
                 startPop();
                 break;
+            case R.id.capture:
+                snap();
+                break;
             case R.id.near_user:
                 clickTag = USER_MARKER;
                 mBaiduMap.clear();
@@ -819,15 +828,6 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
     }
 
-//    /*
-//    点击定位的点
-//     */
-//    @Override
-//    public boolean onMyLocationClick() {
-//
-//        startAdd();
-//        return true;
-//    }
 
     List<UserTuyi> popList = new ArrayList<>();
 

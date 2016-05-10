@@ -12,10 +12,13 @@ import java.util.List;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.bean.UserTuyi;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
- * Created by Dooze on 2015/9/9.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/9/9  08:36.
+ * Email: 760625325@qq.com
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private LayoutInflater inflater;
@@ -30,8 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int pos) {
         View view = inflater.inflate(R.layout.item_like_tuyi,viewGroup,false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -39,9 +41,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         viewHolder.time.setText(tuyis.get(pos).getTime());
         viewHolder.content.setText(tuyis.get(pos).gettContent());
         viewHolder.tag.setText(tuyis.get(pos).getTAG());
-            viewHolder.locDes.setText(tuyis.get(pos).getLocDes()+"");
-
-        new MyImageAsyn(viewHolder.pic, MyImageAsyn.NORMAL).execute(tuyis.get(pos).gettPic());
+            viewHolder.locDes.setText(tuyis.get(pos).getLocDes());
+        PicassoHelper.load(context,tuyis.get(pos).gettPic())
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.login_error_icon)
+                .into(viewHolder.pic);
 
     }
 

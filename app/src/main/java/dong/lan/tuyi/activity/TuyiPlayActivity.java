@@ -114,7 +114,7 @@ public class TuyiPlayActivity extends BaseActivity implements View.OnClickListen
                             new ImgPlayAsyn(img, palyText, tuyis.get(index).gettContent()).execute(tuyis.get(index).gettPic());
                             index++;
                         }
-                    }, 0, 2000);
+                    }, 0, 3000);
                     tag=1;
                 }else if(tag==1)
                 {

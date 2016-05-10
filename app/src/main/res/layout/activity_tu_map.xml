@@ -57,6 +57,14 @@
         <TextView
             android:layout_marginRight="10dp"
             android:layout_gravity="end|top"
+            android:id="@+id/capture"
+            android:background="@drawable/capture"
+            android:layout_marginTop="5dp"
+            android:layout_width="@dimen/tumap_icon"
+            android:layout_height="@dimen/tumap_icon" />
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_gravity="end|top"
             android:id="@+id/near_user"
             android:background="@drawable/near_user"
             android:layout_marginTop="5dp"
@@ -184,7 +192,7 @@
             android:layout_gravity="bottom|left"
             android:gravity="center"
             android:textSize="16sp"
-            android:text="附近"
+            android:text="@string/near"
             android:layout_marginBottom="9dp"
             android:layout_marginLeft="10dp"
             android:layout_alignParentLeft="true"
@@ -197,15 +205,15 @@
     </FrameLayout>
 
     <FrameLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/clickPopLayout"
         android:paddingTop="16dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/md_light_green_500"
+        android:background="@color/md_green_500"
         android:layout_width="match_parent"
         android:layout_height="350dp">
         <TextView
-            android:text="点击点附近的图忆"
+            android:text="@string/click_to_show_near_tuyi"
             android:textColor="@color/md_grey_300"
             android:textSize="20sp"
             android:gravity="center"

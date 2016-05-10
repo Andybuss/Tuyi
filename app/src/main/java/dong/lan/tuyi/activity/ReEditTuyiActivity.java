@@ -43,9 +43,9 @@ import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.db.OfflineTuyi;
 import dong.lan.tuyi.db.Tuyi;
-import dong.lan.tuyi.util.AsynImageLoader;
 import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.utils.InputTools;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
  * Created by 桂栋 on 2015/8/8.
@@ -113,7 +113,9 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
         if (from == NORMAL) {
             content.requestFocus();
             bar_center.setText("修改图忆");
-            AsynImageLoader.getInstance().showImageAsyn(pic, tuyi.gettPic()==null ? "" : tuyi.gettPic(), R.drawable.gallery,960,720, AsynImageLoader.ForNormal);
+            PicassoHelper.load(this,tuyi.gettPic())
+                    .placeholder(R.drawable.gallery)
+                    .into(pic);
         } else if (from == OFFLINE) {
             bar_center.setText("离线图忆");
             pic.setImageBitmap(BitmapFactory.decodeFile(tuyi.gettUri()));
@@ -309,7 +311,7 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
         if (bdLocation == null || mMapView == null)
             return;
         if (isFirst) {
-            geoText.setText(bdLocation.getAddrStr()+"(点击修改)");
+            geoText.setText(bdLocation.getAddrStr());
             isFirst = false;
             LatLng loc = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(loc);

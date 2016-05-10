@@ -19,7 +19,10 @@ import dong.lan.tuyi.bean.Interested;
 import dong.lan.tuyi.bean.TUser;
 
 /**
- * Created by 桂栋 on 2015/7/19.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/7/19  13:08.
+ * Email: 760625325@qq.com
  */
 public class Config {
 
