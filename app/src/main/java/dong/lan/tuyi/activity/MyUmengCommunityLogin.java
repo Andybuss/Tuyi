@@ -1,6 +1,7 @@
 package dong.lan.tuyi.activity;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 
 import com.umeng.comm.core.beans.CommUser;
 import com.umeng.comm.core.login.AbsLoginImpl;
@@ -15,6 +16,8 @@ import dong.lan.tuyi.utils.Config;
  * 日期：  2015/8/4  09:36.
  * Email: 760625325@qq.com
  */
+
+@Keep
 public class MyUmengCommunityLogin extends AbsLoginImpl {
 
     CommUser user;
