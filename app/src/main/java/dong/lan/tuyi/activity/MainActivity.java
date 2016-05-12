@@ -82,6 +82,7 @@ import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.listeners.Listeners;
 import com.umeng.comm.core.login.LoginListener;
 import com.umeng.comm.core.nets.responses.PortraitUploadResponse;
+import com.umeng.comm.ui.fragments.CommunityMainFragment;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -198,9 +199,13 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         // 显示所有人消息记录的fragment
         chatHistoryFragment = new ChatAllHistoryFragment();
         contactListFragment = new ContactlistFragment();
-        SettingsFragment settingFragment = new SettingsFragment();
+        CommunityMainFragment mFeedsFragment = new CommunityMainFragment();
+        //设置Feed流页面的返回按钮不可见
+        mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
+
+
         UserMainFragment userMainFragment = new UserMainFragment();
-        fragments = new Fragment[]{chatHistoryFragment, contactListFragment, settingFragment, userMainFragment};
+        fragments = new Fragment[]{chatHistoryFragment, contactListFragment, mFeedsFragment, userMainFragment};
         // 添加显示第一个fragment
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, userMainFragment).add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(userMainFragment)
@@ -687,7 +692,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 break;
             case R.id.btn_setting:
                 index = 2;
-                toolbar.setTitle("设置");
+                toolbar.setTitle("图忆社区");
                 break;
 
         }
@@ -874,7 +879,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toolbar_community:
-                startActivity(new Intent(MainActivity.this, TuyiHomeActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 break;
             case R.id.toolbar_tuyi:
