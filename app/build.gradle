@@ -3,7 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
+    dexOptions {
+        dexInProcess false
+    }
+    compileOptions {
+        incremental false
+    }
     defaultConfig {
         applicationId "dong.lan.tuyi"
         minSdkVersion 14
@@ -12,9 +17,7 @@ android {
         versionName "1.7.6"
         multiDexEnabled true
     }
-
     signingConfigs {
-
         releaseSign {
             storeFile file("E:\\Android_Studio_Works\\nomonkey.jks")
             storePassword "766476lan"
@@ -22,23 +25,16 @@ android {
             keyPassword "766476lan,."
         }
     }
-
     buildTypes {
         debug {
             signingConfig signingConfigs.releaseSign
         }
         release {
-            minifyEnabled false
             shrinkResources true
-            renderscriptDebuggable true
-            renderscriptOptimLevel 3
-            pseudoLocalesEnabled true
+            minifyEnabled false
         }
     }
-    dexOptions {
-        incremental true
-    }
-    compileOptions {
+    productFlavors {
     }
 }
 
@@ -76,5 +72,4 @@ dependencies {
     compile files('libs/umeng_community_sdk_ui_main.jar')
     compile files('libs/okhttp-urlconnection-2.7.5.jar')
     compile files('libs/picasso-2.5.2.jar')
-    compile files('libs/umeng-analytics-v5.6.7.jar')
 }

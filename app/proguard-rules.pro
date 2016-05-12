@@ -15,20 +15,93 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-target 7
+-dontnote
+-repackageclasses ''
+-allowaccessmodification
+-optimizations !code/simplification/arithmetic
+-dontusemixedcaseclassnames
+-dontshrink
+-dontoptimize
+-dontpreverify
+-ignorewarnings
+-keepattributes Signature
 
--optimizations !code/allocation/variable
+-keep class * {
+    public void *(android.view.View);
+}
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
+}
+
+
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+
+-keepclassmembers class * implements android.os.Parcelable {
+    static android.os.Parcelable$Creator CREATOR;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-keepparameternames
+-renamesourcefileattribute SourceFile
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+
+-keep public class * {
+    public protected *;
+}
+
+-keepclassmembernames class * {
+    java.lang.Class class$(java.lang.String);
+    java.lang.Class class$(java.lang.String, boolean);
+}
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keepclasseswithmembers public class * {
+    public static void main(java.lang.String[]);
+}
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+-keepnames class * implements java.io.Serializable
+
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
 -keep class com.easemob.** {*;}
 -keep class org.jivesoftware.** {*;}
 -keep class org.apache.** {*;}
 -dontwarn  com.easemob.**
 
--dontusemixedcaseclassnames
--dontshrink
--dontoptimize
--dontpreverify
+-dontwarn android.support.**
 -dontwarn com.umeng.comm.**
 -dontwarn com.umeng.commm.**
--dontwarn com.google.android.maps.**
 -dontwarn android.webkit.WebView
 -keep class  activeandroid.** {*;}
 -keep class com.umeng.** {*;}
@@ -50,9 +123,6 @@
     public <methods>;
 }
 
--keep public class com.umeng.community.example.R$*{
-    *;
-}
 
 -keep class com.umeng.comm.push.UmengPushImpl {
     public * ;
@@ -129,18 +199,10 @@
 -keep class com.sina.** {*;}
 -dontwarn com.sina.**
 
--keepclassmembers class * {
-   public <init> (org.json.JSONObject);
-}
-
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
 
 
--ignorewarnings
--keepattributes Signature
+
+
 # 如果你使用了okhttp、okio的包，请添加以下混淆代码
 
 -dontwarn com.squareup.okhttp.**
@@ -159,7 +221,7 @@
     *;
 }
 
--keep class dong.lan.tuyi.PicassoHelper
+-keep class dong.lan.tuyi.utils.PicassoHelper
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**

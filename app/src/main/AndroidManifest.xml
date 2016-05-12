@@ -89,7 +89,7 @@
             android:name=".activity.ReEditTuyiActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.TuyiHomeActivity"
+            android:name=".activity.SettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.OfflineMapActivity" />
