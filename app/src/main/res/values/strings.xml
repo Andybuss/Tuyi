@@ -495,4 +495,5 @@
     <string name="click_to_show_near_tuyi">点击点附近的图忆</string>
     <string name="near">附近</string>
     <string name="can_not_get_user_data">获取用户数据失败</string>
+    <string name="community">图区</string>
 </resources>
