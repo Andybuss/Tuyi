@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 
 import applib.controller.HXSDKHelper;
 import dong.lan.tuyi.utils.Lock;
@@ -53,14 +52,11 @@ public class BaseActivity extends Activity {
         super.onResume();
         // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
-        MobclickAgent.onResume(this);
-        // umeng
     }
 
     @Override
     protected void onPause() {
         Lock.canPop = false;
-        MobclickAgent.onPause(this);
         super.onPause();
     }
 
