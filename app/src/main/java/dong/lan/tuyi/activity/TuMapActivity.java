@@ -8,14 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -37,6 +35,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -68,6 +67,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.adapter.ClickPopRecycleAdapter;
+import dong.lan.tuyi.adapter.TimeLineAdapter;
 import dong.lan.tuyi.bean.TUser;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
@@ -83,7 +83,7 @@ import dong.lan.tuyi.utils.TimeUtil;
  * 日期：  2015/7/18  10:52.
  * Email: 760625325@qq.com
  */
-public class TuMapActivity extends BaseActivity implements View.OnClickListener, SensorEventListener {
+public class TuMapActivity extends BaseActivity implements View.OnClickListener, TimeLineAdapter.TimeLineItemClickListener {
 
 
     public static final int TUYI_MARKER = 0;
@@ -115,47 +115,30 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     private boolean isFirstLoc = true;
     private LatLng loc;
     private LatLng lastLoc = new LatLng(89.99999, 89.99999);
-    private int index = 0;
     private static float Tra;
     public static String Tusername;
-    private FrameLayout popLayout, mapSearchLayout;
+    private FrameLayout popLayout;
     private RecyclerView recyclerView;
-    TextView bar_center, bar_left;
+    private RecyclerView timeLineView;
     SensorManager sensorManager;
     View markarPopView;
     PopupWindow markarPop;
     private ClickPopRecycleAdapter adapter;
+    private TimeLineAdapter timeLineAdapter;
     private MyHandler handler = new MyHandler();
-    private Thread thread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            while (true) {
-                if (run) {
-                    try {
-                        handler.sendEmptyMessage(RUN);
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }
-    });
+    boolean isAnimOpen = false;
+    boolean popStart = false;
+    int radius = 200;
+    boolean isFromOffline = false;
+    UiSettings uiSettings;
     private MapStatusUpdate msu;
+    private String BUNDLE_TAG="TUYI";
+
 
     private void initView() {
         q1.addWhereEqualTo("isPublic", true);
-        bar_center = (TextView) findViewById(R.id.bar_center);
-        bar_left = (TextView) findViewById(R.id.bar_left);
-        bar_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        bar_center.setText("图忆");
-        findViewById(R.id.bar_right).setEnabled(false);
+
+
         for (int i = 0; i < 5; i++) {
             topIcon[i] = (TextView) findViewById(topIconID[i]);
             topIcon[i].setOnClickListener(this);
@@ -168,15 +151,13 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         search.setOnClickListener(this);
         searchEt = (EditText) findViewById(R.id.map_search_et);
         popLayout = (FrameLayout) findViewById(R.id.clickPopLayout);
-        mapSearchLayout = (FrameLayout) findViewById(R.id.map_bar);
+        timeLineView = (RecyclerView) findViewById(R.id.drawer_tuyi_map_list);
+        timeLineView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView = (RecyclerView) findViewById(R.id.clickPopList);
         GridLayoutManager layoutManager = new GridLayoutManager(TuMapActivity.this, 1);
         recyclerView.setLayoutManager(layoutManager);
     }
 
-
-    boolean isFromOffline = false;
-    UiSettings uiSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,8 +231,8 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                         if (marker.getExtraInfo() != null && marker.getExtraInfo().getSerializable("TU") != null) {
                             showClickMarkerInfo((UserTuyi) marker.getExtraInfo().getSerializable("TU"));
                         } else {
-                            if (clickTag == TUYI_MARKER && marker.getExtraInfo() != null && marker.getExtraInfo().getSerializable("TUYI") != null) {
-                                showClickMarkerInfo((UserTuyi) marker.getExtraInfo().getSerializable("TUYI"));
+                            if (clickTag == TUYI_MARKER && marker.getExtraInfo() != null && marker.getExtraInfo().getSerializable(BUNDLE_TAG) != null) {
+                                showClickMarkerInfo((UserTuyi) marker.getExtraInfo().getSerializable(BUNDLE_TAG));
                             }
                             if (clickTag == USER_MARKER) {
                                 int tag = markerClickMatch(marker);
@@ -266,7 +247,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-
+    /*
+        打开分享面板
+     */
     private void setShareContent(Bitmap img) {
         UMImage image = new UMImage(this, img);
         final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
@@ -352,7 +335,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                                 .zIndex(9).draggable(true);
                         Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("TUYI", list.get(i));
+                        bundle.putSerializable(BUNDLE_TAG, list.get(i));
                         marker.setExtraInfo(bundle);
                         if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
                             mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
@@ -367,6 +350,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             }
         });
     }
+
 
     /*
     显示登陆用户的所有图忆到地图上
@@ -410,7 +394,6 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         }
 
     }
-
 
     /*
     点击地图标记后的pop
@@ -516,7 +499,44 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    View popView;
+    ImageView popTuyiImageView;
+    TextView popTuyiText;
+    private void ShowPopView(UserTuyi tuyi){
+        if(popView==null){
+            popView =LayoutInflater.from(this).inflate(R.layout.view_tuyi_pop,null);
+            popTuyiText = (TextView) popView.findViewById(R.id.pop_tuyi_text);
+            popTuyiImageView = (ImageView) popView.findViewById(R.id.pop_tuyi_img);
+        }
+        PicassoHelper.load(this,tuyi.gettPic()).into(popTuyiImageView);
+        popTuyiText.setText(tuyi.gettContent());
+        InfoWindow infoWindow = new InfoWindow(popView,
+                new LatLng(tuyi.gettPoint().getLatitude(),tuyi.gettPoint().getLongitude()),
+                -47);
+        mBaiduMap.showInfoWindow(infoWindow);
+        msu = MapStatusUpdateFactory.zoomTo(20.0f);
+        mBaiduMap.setMapStatus(msu);
+
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(new LatLng(tuyi.gettPoint().getLatitude(),
+                tuyi.gettPoint().getLongitude()));
+        mBaiduMap.animateMapStatus(u);
+        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, BitmapDescriptorFactory
+                .fromResource(R.drawable.location_mark)));
+
+        popTuyiImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBaiduMap.clear();
+            }
+        });
+    }
+
     private void showMarkerOfUser(List<UserTuyi> list) {
+        if(timeLineAdapter==null){
+            timeLineAdapter = new TimeLineAdapter(TuMapActivity.this,list);
+            timeLineAdapter.setItemClickListener(TuMapActivity.this);
+            timeLineView.setAdapter(timeLineAdapter);
+        }
         for (int i = 0; i < list.size(); i++) {
             LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
             OverlayOptions ooA;
@@ -530,15 +550,11 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 ooA = new MarkerOptions().position(p).icon(btm_private)
                         .zIndex(9).draggable(false).title(list.get(i).gettContent());
             Bundle bundle = new Bundle();
-            bundle.putSerializable("TUYI", list.get(i));
+            bundle.putSerializable(BUNDLE_TAG, list.get(i));
             Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
             marker.setExtraInfo(bundle);
         }
     }
-
-    boolean isAnimOpen = false;
-    boolean popStart = false;
-    int radius = 200;
 
     private void showNearUser() {
         if (loc == null)
@@ -650,7 +666,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                                     .zIndex(9).draggable(true);
                             Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("TUYI", list.get(i));
+                            bundle.putSerializable(BUNDLE_TAG, list.get(i));
                             marker.setExtraInfo(bundle);
                             if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
                                 mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
@@ -710,13 +726,11 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.near_all:
                 clickTag = TUYI_MARKER;
-                index = Config.NEAR;
                 mBaiduMap.clear();
                 NearTuyi("");
                 break;
             case R.id.add_look_more:
                 clickTag = TUYI_MARKER;
-                index = Config.MY;
                 mBaiduMap.clear();
                 showMyAllTuyi();
                 break;
@@ -740,26 +754,24 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             ObjectAnimator.ofFloat(topIcon[0], "scaleX", 1f, 0.7f).setDuration(500).start();
             ObjectAnimator.ofFloat(topIcon[0], "scaleY", 1f, 0.7f).setDuration(500).start();
 
-            for (int i = 1; i < 4; i++) {
+            for (int i = 1; i < 5; i++) {
                 ObjectAnimator.ofFloat(topIcon[i], "translationY", 1f, Tra * i).setDuration(100 * i).start();
                 ObjectAnimator.ofFloat(topIcon[i], "rotation", 1f, 360f).setDuration(100 * i).start();
                 ObjectAnimator.ofFloat(topIcon[i], "scaleX", 1f, 1.2f).setDuration(300).start();
                 ObjectAnimator.ofFloat(topIcon[i], "scaleY", 1f, 1.2f).setDuration(300).start();
             }
             isAnimOpen = true;
-            mapSearchLayout.setVisibility(View.GONE);
         } else {
             ObjectAnimator.ofFloat(topIcon[0], "scaleX", 0.7f, 1f).setDuration(500).start();
             ObjectAnimator.ofFloat(topIcon[0], "scaleY", 0.7f, 1f).setDuration(500).start();
 
-            for (int i = 3; i > 0; i--) {
+            for (int i = 4; i > 0; i--) {
                 ObjectAnimator.ofFloat(topIcon[i], "translationY", Tra * i, 1f).setDuration(100 * i).start();
                 ObjectAnimator.ofFloat(topIcon[i], "rotation", 360f, 1f).setDuration(100 * i).start();
                 ObjectAnimator.ofFloat(topIcon[i], "scaleX", 1.2f, 1f).setDuration(200).start();
                 ObjectAnimator.ofFloat(topIcon[i], "scaleY", 1.2f, 1f).setDuration(200).start();
             }
             isAnimOpen = false;
-            mapSearchLayout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -788,36 +800,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     }
 
     boolean isSnaping = false;
-    boolean first = true;
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        float values[] = event.values;
-        if (!isSnaping && (Math.abs(values[0]) > 35 || Math.abs(values[1]) > 35 || Math.abs(values[2]) > 35)) {
-            if (first) {
-                first = false;
-                thread.start();
-            }
-            if (run) {
-                run = false;
-                try {
-                    thread.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                run = true;
-                thread.notify();
-            }
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
     String addr = "";
+
+
 
     private void startAdd() {
         Intent intent = new Intent(this, AddTuyiActivity.class);
@@ -830,6 +815,15 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
 
 
     List<UserTuyi> popList = new ArrayList<>();
+
+    /*
+    侧滑抽屉中列表点击事件回调
+     */
+    @Override
+    public void onTimeLineItemClick(UserTuyi tuyi, int pos) {
+        ShowPopView(tuyi);
+        Show(tuyi.gettContent());
+    }
 
     /**
      * 定位SDK监听函数
@@ -845,6 +839,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             loc = new LatLng(location.getLatitude(),
                     location.getLongitude());
             addr = location.getAddrStr();
+
             MyLocationData locData = new MyLocationData.Builder()
                     // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(location.getDirection()).latitude(location.getLatitude())
@@ -912,9 +907,6 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                         .fromResource(R.drawable.geo_icon)));
             }
         }
-
-        public void onReceivePoi(BDLocation poiLocation) {
-        }
     }
 
     @Override
@@ -947,19 +939,11 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         finish();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!isFromOffline)
-            sensorManager.unregisterListener(this);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
-        if (!isFromOffline)
-            sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
