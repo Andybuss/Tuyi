@@ -19,7 +19,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 
 import applib.controller.HXSDKHelper;
 
@@ -35,14 +34,12 @@ public class BaseMainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         HXSDKHelper.getInstance().getNotifier().reset();
-        MobclickAgent.onResume(this);
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
 
     }
 

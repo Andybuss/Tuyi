@@ -19,7 +19,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 
 import applib.controller.HXSDKHelper;
 import dong.lan.tuyi.utils.Lock;
@@ -36,14 +35,12 @@ public class BaseActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         HXSDKHelper.getInstance().getNotifier().reset();
-        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Lock.canPop = false;
-        MobclickAgent.onPause(this);
     }
     @Override
     protected void onStart() {
