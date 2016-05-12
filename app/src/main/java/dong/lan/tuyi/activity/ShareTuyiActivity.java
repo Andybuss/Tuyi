@@ -182,7 +182,7 @@ public class ShareTuyiActivity extends BaseActivity{
             public void onComplete(FeedItemResponse feedItemResponse) {
                 Show("发布成功");
                 progressDialog.dismiss();
-                startActivity(new Intent(ShareTuyiActivity.this, TuyiHomeActivity.class));
+                startActivity(new Intent(ShareTuyiActivity.this, SettingActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 isGeoGet = false;
                 finish();
