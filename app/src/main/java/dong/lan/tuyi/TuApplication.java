@@ -28,17 +28,11 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
-import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.comm.core.CommunitySDK;
 import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.sdkmanager.LocationSDKManager;
 import com.umeng.comm.core.sdkmanager.LoginSDKManager;
-import com.umeng.comm.core.sdkmanager.PushSDKManager;
-import com.umeng.comm.push.UmengPushImpl;
 import com.umeng.community.location.DefaultLocationImpl;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.entity.UMessage;
 import com.umeng.socialize.PlatformConfig;
 
 import java.util.Iterator;
@@ -100,20 +94,10 @@ public class TuApplication extends MultiDexApplication {
         AES.init();
         //初始化Bmob SDK
         Bmob.initialize(this, Constant.BmonAppID);
-        AnalyticsConfig.enableEncrypt(true); //友盟统计日志加密
         LoginSDKManager.getInstance().addAndUse(MyUmengCommunityLogin.getInstance());
         LocationSDKManager.getInstance().addAndUse(new DefaultLocationImpl());
-        PushSDKManager.getInstance().addImpl("my_push", new UmengPushImpl());
-        PushSDKManager.getInstance().useThis("my_push");
-        PushAgent.getInstance(this).enable();
-        PushAgent.getInstance(this).setDebugMode(true);
-        PushAgent.getInstance(this).setMessageHandler(new UmengMessageHandler() {
-            @Override
-            public void dealWithNotificationMessage(Context arg0, UMessage msg) {
-                super.dealWithNotificationMessage(arg0, msg);
 
-            }
-        });
+
 
 
         SDKInitializer.initialize(this);// 百度地图 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
