@@ -4,41 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        app:theme="@style/ThemeOverlay.AppCompat.ActionBar" >
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <LinearLayout
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
             <TextView
-                android:drawableRight="@drawable/tuoolbar_tuyi"
                 android:id="@+id/toolbar_tuyi"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/md_white_1000"
-                android:textSize="@dimen/text_big18_size"
-                android:gravity="center"
                 android:layout_width="45dp"
-                android:layout_height="45dp" />
-            <TextView
-                android:drawableRight="@drawable/toolbar_community"
-                android:id="@+id/toolbar_community"
-                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/md_white_1000"
-                android:textSize="@dimen/text_big18_size"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/map_tool"
                 android:gravity="center"
-                android:layout_width="45dp"
-                android:layout_height="45dp" />
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/text_big18_size" />
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
@@ -70,11 +61,11 @@
             android:indeterminateDrawable="@drawable/progress_brown" />
 
         <TextView
-            android:textColor="@color/md_white_1000"
             android:id="@+id/tip"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@color/md_white_1000" />
     </LinearLayout>
 </RelativeLayout>

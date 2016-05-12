@@ -21,16 +21,10 @@
 
             <Button
                 android:id="@+id/btn_user_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/main_bottom_item_bg"
                 android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="图忆"
-                android:textColor="@color/md_white_1000"
-                android:textSize="12sp" />
+                android:text="@string/app_name"
+                style="@style/bottom_tab" />
 
             <TextView
                 android:id="@+id/text_user_main"
@@ -54,17 +48,10 @@
 
             <Button
                 android:id="@+id/btn_conversation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/main_bottom_item_bg"
-                android:drawableTop="@drawable/tab_chat_bg"
                 android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
                 android:scaleType="matrix"
                 android:text="@string/session"
-                android:textColor="@color/md_white_1000"
-                android:textSize="12sp" />
+                style="@style/bottom_tab" />
 
             <TextView
                 android:id="@+id/unread_msg_number"
@@ -89,17 +76,10 @@
 
             <Button
                 android:id="@+id/btn_address_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/main_bottom_item_bg"
-                android:drawableTop="@drawable/tab_contact_list_bg"
                 android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
                 android:scaleType="matrix"
                 android:text="@string/address_book"
-                android:textColor="@color/md_white_1000"
-                android:textSize="12sp" />
+                style="@style/bottom_tab" />
 
             <TextView
                 android:id="@+id/unread_address_number"
@@ -119,17 +99,11 @@
 
             <Button
                 android:id="@+id/btn_setting"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/main_bottom_item_bg"
-                android:drawableTop="@drawable/tab_setting_bg"
+                style="@style/bottom_tab"
                 android:onClick="onTabClicked"
-                android:paddingBottom="2dip"
-                android:paddingTop="7dip"
                 android:scaleType="matrix"
-                android:text="@string/setting"
-                android:textColor="@color/md_white_1000"
-                android:textSize="12sp" />
+                android:text="@string/community"
+                />
         </RelativeLayout>
     </LinearLayout>
     <RelativeLayout

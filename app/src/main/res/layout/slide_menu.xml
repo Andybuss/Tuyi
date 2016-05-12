@@ -147,7 +147,18 @@
         android:text="离线图忆"
         android:textColor="@color/slide_menu_text"
         android:textSize="16sp" />
-
+    <TextView
+        android:layout_marginLeft="25dp"
+        android:drawableLeft="@drawable/umeng_comm_setting_pressed"
+        android:id="@+id/toolbar_community"
+        android:text="@string/setting"
+        android:textColor="@color/slide_menu_text"
+        android:textSize="16sp"
+        android:drawablePadding="15dp"
+        android:padding="10dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
     <View
         android:layout_weight="1"
         android:layout_width="match_parent"
