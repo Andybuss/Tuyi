@@ -12,6 +12,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -120,6 +122,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     private FrameLayout popLayout;
     private RecyclerView recyclerView;
     private RecyclerView timeLineView;
+    private DrawerLayout tuyiMapDrawer;
     SensorManager sensorManager;
     View markarPopView;
     PopupWindow markarPop;
@@ -147,6 +150,33 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             nearIcon[i] = (TextView) findViewById(nearID[i]);
             nearIcon[i].setOnClickListener(this);
         }
+        tuyiMapDrawer = (DrawerLayout) findViewById(R.id.tuyi_map_drawer);
+        tuyiMapDrawer.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                if(timeLineAdapter==null){
+                    tuyiList = DemoDBManager.getInstance().getUserAllTuyi(Tusername);
+                    timeLineAdapter = new TimeLineAdapter(TuMapActivity.this,tuyiList);
+                    timeLineAdapter.setItemClickListener(TuMapActivity.this);
+                    timeLineView.setAdapter(timeLineAdapter);
+                }
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
         search = (Button) findViewById(R.id.map_search_bt);
         search.setOnClickListener(this);
         searchEt = (EditText) findViewById(R.id.map_search_et);
@@ -821,6 +851,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
      */
     @Override
     public void onTimeLineItemClick(UserTuyi tuyi, int pos) {
+        tuyiMapDrawer.closeDrawer(GravityCompat.START);
         ShowPopView(tuyi);
         Show(tuyi.gettContent());
     }
