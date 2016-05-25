@@ -108,7 +108,7 @@ public class SmileUtils {
 	private static final Factory spannableFactory = Factory
 	        .getInstance();
 	
-	private static final Map<Pattern, Integer> emoticons = new HashMap<Pattern, Integer>();
+	private static final Map<Pattern, Integer> emoticons = new HashMap<>();
 
 	static {
 

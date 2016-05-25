@@ -63,7 +63,7 @@ public class DemoDBManager {
      */
     synchronized public Map<String, User> getContactList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Map<String, User> users = new HashMap<String, User>();
+        Map<String, User> users = new HashMap<>();
         if (db.isOpen()) {
             Cursor cursor = db.rawQuery("select * from " + UserDao.TABLE_NAME /* + " desc" */, null);
             while (cursor.moveToNext()) {
@@ -121,7 +121,7 @@ public class DemoDBManager {
         if (!cursor.moveToFirst()) {
             return null;
         }
-        List<UserTuyi> list = new ArrayList<UserTuyi>();
+        List<UserTuyi> list = new ArrayList<>();
         do {
 
             UserTuyi offTuyi = new UserTuyi();
@@ -239,7 +239,7 @@ public class DemoDBManager {
         if (!cursor.moveToFirst()) {
             return null;
         }
-        List<UserTuyi> list = new ArrayList<UserTuyi>();
+        List<UserTuyi> list = new ArrayList<>();
         do {
 
             UserTuyi offTuyi = new UserTuyi();
@@ -408,7 +408,7 @@ public class DemoDBManager {
         if (!cursor.moveToFirst()) {
             return null;
         }
-        List<UserTuyi> list = new ArrayList<UserTuyi>();
+        List<UserTuyi> list = new ArrayList<>();
         do {
             double lat = Double.parseDouble(cursor.getString(cursor.getColumnIndex(Tuyi.COLUMN_NAME_LAT)));
             double lgt = Double.parseDouble(cursor.getString(cursor.getColumnIndex(Tuyi.COLUMN_NAME_LGT)));
@@ -461,7 +461,7 @@ public class DemoDBManager {
         if (!cursor.moveToFirst()) {
             return null;
         }
-        List<UserTuyi> list = new ArrayList<UserTuyi>();
+        List<UserTuyi> list = new ArrayList<>();
         do {
             double lat = Double.parseDouble(cursor.getString(cursor.getColumnIndex(Tuyi.COLUMN_NAME_LAT)));
             double lgt = Double.parseDouble(cursor.getString(cursor.getColumnIndex(Tuyi.COLUMN_NAME_LGT)));
@@ -613,7 +613,7 @@ public class DemoDBManager {
         String[] array = strVal.split("$");
 
         if (array != null && array.length > 0) {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             for (String str : array) {
                 list.add(str);
             }
@@ -673,7 +673,7 @@ public class DemoDBManager {
      */
     synchronized public List<InviteMessage> getMessagesList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        List<InviteMessage> msgs = new ArrayList<InviteMessage>();
+        List<InviteMessage> msgs = new ArrayList<>();
         if (db.isOpen()) {
             Cursor cursor = db.rawQuery("select * from " + InviteMessgeDao.TABLE_NAME + " desc", null);
             while (cursor.moveToNext()) {

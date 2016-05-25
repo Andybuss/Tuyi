@@ -28,7 +28,7 @@ public class ShowNormalFileActivity extends BaseActivity {
 		final FileMessageBody messageBody = getIntent().getParcelableExtra("msgbody");
 		file = new File(messageBody.getLocalUrl());
 		//set head map
-		final Map<String, String> maps = new HashMap<String, String>();
+		final Map<String, String> maps = new HashMap<>();
 		if (!TextUtils.isEmpty(messageBody.getSecret())) {
 			maps.put("share-secret", messageBody.getSecret());
 		}

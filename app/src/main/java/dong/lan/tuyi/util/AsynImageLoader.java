@@ -31,8 +31,8 @@ public class AsynImageLoader {
 private static AsynImageLoader instance;
     public AsynImageLoader() {
         // 初始化变量
-        caches = new HashMap<String, SoftReference<Bitmap>>();
-        taskQueue = new ArrayList<Task>();
+        caches = new HashMap<>();
+        taskQueue = new ArrayList<>();
         // 启动图片下载线程
         isRunning = true;
         new Thread(runnable).start();
@@ -145,7 +145,7 @@ private static AsynImageLoader instance;
                     Task task = taskQueue.remove(0);
                     // 将下载的图片添加到缓存
                     task.bitmap = PhotoUtil.getbitmap(task.path);
-                    caches.put(task.path, new SoftReference<Bitmap>(task.bitmap));
+                    caches.put(task.path, new SoftReference<>(task.bitmap));
                     if (handler != null) {
                         // 创建消息对象，并将完成的任务添加到消息对象中
                         Message msg = handler.obtainMessage();

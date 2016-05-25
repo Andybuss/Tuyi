@@ -56,7 +56,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		super(context, resource, objects);
 		this.res = resource;
 		this.userList = objects;
-		copyUserList = new ArrayList<User>();
+		copyUserList = new ArrayList<>();
 		copyUserList.addAll(objects);
 		layoutInflater = LayoutInflater.from(context);
 	}
@@ -145,7 +145,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		positionOfSection = new SparseIntArray();
 		sectionOfPosition = new SparseIntArray();
 		int count = getCount();
-		list = new ArrayList<String>();
+		list = new ArrayList<>();
 		list.add(getContext().getString(R.string.search_header));
 		positionOfSection.put(0, 0);
 		sectionOfPosition.put(0, 0);
@@ -183,7 +183,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		protected synchronized FilterResults performFiltering(CharSequence prefix) {
 			FilterResults results = new FilterResults();
 			if(mOriginalList==null){
-			    mOriginalList = new ArrayList<User>();
+			    mOriginalList = new ArrayList<>();
 			}
 			EMLog.d(TAG, "contacts original size: " + mOriginalList.size());
 			EMLog.d(TAG, "contacts copy size: " + copyUserList.size());
@@ -194,7 +194,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 			}else{
 				String prefixString = prefix.toString();
 				final int count = mOriginalList.size();
-				final ArrayList<User> newValues = new ArrayList<User>();
+				final ArrayList<User> newValues = new ArrayList<>();
 				for(int i=0;i<count;i++){
 					final User user = mOriginalList.get(i);
 					String username = user.getUsername();

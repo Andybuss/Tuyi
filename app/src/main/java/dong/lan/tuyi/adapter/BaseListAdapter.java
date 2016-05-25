@@ -109,7 +109,7 @@ public abstract class BaseListAdapter<E> extends BaseAdapter {
 	public void setOnInViewClickListener(Integer key,
 			onInternalClickListener onClickListener) {
 		if (canClickItem == null)
-			canClickItem = new HashMap<Integer, onInternalClickListener>();
+			canClickItem = new HashMap<>();
 		canClickItem.put(key, onClickListener);
 	}
 

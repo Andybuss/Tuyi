@@ -207,7 +207,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initializeContacts() {
-        Map<String, User> userlist = new HashMap<String, User>();
+        Map<String, User> userlist = new HashMap<>();
         // 添加user"申请与通知"
         User newFriends = new User();
         newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
@@ -229,7 +229,7 @@ public class LoginActivity extends BaseActivity {
         TuApplication.getInstance().setContactList(userlist);
         // 存入db
         UserDao dao = new UserDao(LoginActivity.this);
-        List<User> users = new ArrayList<User>(userlist.values());
+        List<User> users = new ArrayList<>(userlist.values());
         dao.saveContactList(users);
     }
 
@@ -237,7 +237,7 @@ public class LoginActivity extends BaseActivity {
         Config.preferences = getSharedPreferences(Config.prefName, MODE_PRIVATE);
         String cur = Config.preferences.getString(Config.prefTUserName, "0");
         if (cur.equals("0")) {
-            BmobQuery<TUser> query = new BmobQuery<TUser>();
+            BmobQuery<TUser> query = new BmobQuery<>();
             query.addWhereEqualTo("username", name);
             query.findObjects(LoginActivity.this, new FindListener<TUser>() {
                 @Override

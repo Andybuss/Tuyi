@@ -184,7 +184,7 @@ public class Config {
 
     public static void updateStatus(final Context context,final String tag) {
         if (Config.INTERESTED == null) {
-            BmobQuery<Interested> query = new BmobQuery<Interested>();
+            BmobQuery<Interested> query = new BmobQuery<>();
             query.addWhereEqualTo("user", Config.tUser);
             query.findObjects(context, new FindListener<Interested>() {
                 @Override

@@ -35,7 +35,7 @@ public class UserUtils {
         boolean isUser = isColumnName(username);
         final boolean exits = DemoDBManager.getInstance().isTUserExits(username);
         if(!exits && isUser) {
-            BmobQuery<TUser> query = new BmobQuery<TUser>();
+            BmobQuery<TUser> query = new BmobQuery<>();
             query.addWhereEqualTo("username", username);
             query.findObjects(TuApplication.getInstance(), new FindListener<TUser>() {
                 @Override

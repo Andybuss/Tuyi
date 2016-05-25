@@ -65,7 +65,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 	public ChatAllHistoryAdapter(Context context, int textViewResourceId, List<EMConversation> objects) {
 		super(context, textViewResourceId, objects);
 		this.conversationList = objects;
-		copyConversationList = new ArrayList<EMConversation>();
+		copyConversationList = new ArrayList<>();
 		copyConversationList.addAll(objects);
 		inflater = LayoutInflater.from(context);
 	}
@@ -245,7 +245,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			FilterResults results = new FilterResults();
 
 			if (mOriginalValues == null) {
-				mOriginalValues = new ArrayList<EMConversation>();
+				mOriginalValues = new ArrayList<>();
 			}
 			if (prefix == null || prefix.length() == 0) {
 				results.values = copyConversationList;
@@ -253,7 +253,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			} else {
 				String prefixString = prefix.toString();
 				final int count = mOriginalValues.size();
-				final ArrayList<EMConversation> newValues = new ArrayList<EMConversation>();
+				final ArrayList<EMConversation> newValues = new ArrayList<>();
 
 				for (int i = 0; i < count; i++) {
 					final EMConversation value = mOriginalValues.get(i);

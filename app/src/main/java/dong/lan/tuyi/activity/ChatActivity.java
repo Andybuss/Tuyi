@@ -259,7 +259,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
         // 表情list
         reslist = getExpressionRes(70);
         // 初始化表情viewpager
-        List<View> views = new ArrayList<View>();
+        List<View> views = new ArrayList<>();
         View gv1 = getGridChildView(1);
         View gv2 = getGridChildView(2);
         View gv3 = getGridChildView(3);
@@ -1328,7 +1328,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
     private View getGridChildView(int i) {
         View view = View.inflate(this, R.layout.expression_gridview, null);
         ExpandGridView gv = (ExpandGridView) view.findViewById(R.id.gridview);
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         if (i == 1) {
             List<String> list1 = reslist.subList(0, 20);
             list.addAll(list1);
@@ -1388,7 +1388,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
     }
 
     public List<String> getExpressionRes(int getSum) {
-        List<String> reslist = new ArrayList<String>();
+        List<String> reslist = new ArrayList<>();
         for (int x = 1; x <= getSum; x++) {
             String filename = "u" + x;
             reslist.add(filename);

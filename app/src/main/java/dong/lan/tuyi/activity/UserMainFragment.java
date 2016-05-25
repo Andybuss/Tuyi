@@ -36,12 +36,12 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
 
 
     private XListView mListView;
-    private List<UserTuyi> tuyilist = new ArrayList<UserTuyi>();
+    private List<UserTuyi> tuyilist = new ArrayList<>();
     private LinearLayout dialog;
     private UserMainAdapter adapter;
     public static boolean isChange = false;
     private static String username;
-    private java.util.List<UserTuyi> notList = new ArrayList<UserTuyi>();
+    private java.util.List<UserTuyi> notList = new ArrayList<>();
 
 
     @Nullable
@@ -64,7 +64,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
 
-        tuyilist = new ArrayList<UserTuyi>();
+        tuyilist = new ArrayList<>();
         initNotList();
         SwipLayout.swipRightLength = 150;
         username = TuApplication.getInstance().getUserName();
@@ -107,13 +107,13 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     private void initDB() {
         tuyilist = DemoDBManager.getInstance().getUserAllTuyi(username);
         if (tuyilist == null || tuyilist.isEmpty()) {
-            tuyilist = new ArrayList<UserTuyi>();
+            tuyilist = new ArrayList<>();
                 if (Config.tUser == null) {
                     adapter = new UserMainAdapter(getActivity(), notList,UserMainAdapter.USERMAIN);
                     mListView.setAdapter(adapter);
                     ShowDialog(false);
                 } else {
-                    BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+                    BmobQuery<UserTuyi> query = new BmobQuery<>();
                     query.order("-time,-createAt");
                     query.addWhereEqualTo("tUser", Config.tUser);
                     query.include("tUser");
@@ -152,7 +152,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     private void refresh() {
         //下拉刷新功能时本地数据库有更新，直接从数据库获取更新的内容
         if (!tuyilist.isEmpty() && DemoDBManager.getInstance().getTuyiCount() > adapter.getCount()) {
-            List<UserTuyi> l = new ArrayList<UserTuyi>();
+            List<UserTuyi> l = new ArrayList<>();
             l = DemoDBManager.getInstance().getTuyiGreaterThanID(adapter.getCount());
             if(l!=null)
             adapter.addAll(l);

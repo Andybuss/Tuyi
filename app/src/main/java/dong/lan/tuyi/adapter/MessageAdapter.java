@@ -136,7 +136,7 @@ public class MessageAdapter extends BaseAdapter{
 
 	private Context context;
 
-	private Map<String, Timer> timers = new Hashtable<String, Timer>();
+	private Map<String, Timer> timers = new Hashtable<>();
 
 	public MessageAdapter(Context context, String username, int chatType) {
 		this.username = username;

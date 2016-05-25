@@ -21,7 +21,7 @@ import dong.lan.tuyi.util.FileUilt;
  * Created by 桂栋 on 2015/7/26.
  */
 public class MyImageDownload extends AsyncTask<String,Integer,Integer> {
-    private List<Uri> uriList = new ArrayList<Uri>();
+    private List<Uri> uriList = new ArrayList<>();
     private ImageSwitcher switcher;
 
     @Override
