@@ -96,9 +96,8 @@ public class RegisterActivity extends BaseActivity {
                         EMChatManager.getInstance().createAccountOnServer(username, pwd);
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                if (!RegisterActivity.this.isFinishing()) {
-                                    if (dialog != null)
-                                        dialog.dismiss();
+                                if (!RegisterActivity.this.isFinishing() && dialog != null) {
+                                    dialog.dismiss();
                                 }
 
                                 TuApplication.getInstance().setUserName(userNameEditText.getText().toString());
@@ -108,9 +107,8 @@ public class RegisterActivity extends BaseActivity {
                     } catch (final EaseMobException e) {
                         runOnUiThread(new Runnable() {
                             public void run() {
-                                if (!RegisterActivity.this.isFinishing()) {
-                                    if (dialog != null)
-                                        dialog.dismiss();
+                                if (!RegisterActivity.this.isFinishing() && dialog != null) {
+                                    dialog.dismiss();
                                 }
                                 int errorCode = e.getErrorCode();
                                 if (errorCode == EMError.NONETWORK_ERROR) {

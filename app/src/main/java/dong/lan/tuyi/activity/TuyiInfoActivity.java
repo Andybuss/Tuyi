@@ -123,29 +123,27 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
     更新图忆的喜欢状态
      */
     private void updateLike() {
-        if (Config.tUser != null) {
-            if (like.isChecked()) {
-                UserTuyi userTuyi = new UserTuyi();
-                userTuyi.setObjectId(tuyi.getObjectId());
-                if (tuyi.getZan() == null)
-                    userTuyi.setZan(1);
-                else
-                    userTuyi.setZan(tuyi.getZan() + 1);
-                BmobRelation relation = new BmobRelation();
-                relation.add(Config.tUser);
-                userTuyi.setLikes(relation);
-                userTuyi.update(this, new UpdateListener() {
-                    @Override
-                    public void onSuccess() {
-                    }
+        if (Config.tUser != null && like.isChecked()) {
+            UserTuyi userTuyi = new UserTuyi();
+            userTuyi.setObjectId(tuyi.getObjectId());
+            if (tuyi.getZan() == null)
+                userTuyi.setZan(1);
+            else
+                userTuyi.setZan(tuyi.getZan() + 1);
+            BmobRelation relation = new BmobRelation();
+            relation.add(Config.tUser);
+            userTuyi.setLikes(relation);
+            userTuyi.update(this, new UpdateListener() {
+                @Override
+                public void onSuccess() {
+                }
 
-                    @Override
-                    public void onFailure(int i, String s) {
+                @Override
+                public void onFailure(int i, String s) {
 
-                    }
-                });
+                }
+            });
 
-            }
         }
     }
 
