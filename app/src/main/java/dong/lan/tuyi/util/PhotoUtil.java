@@ -384,16 +384,14 @@ public class PhotoUtil {
 	 */
 	public static BitmapDrawable getcontentPic(String imageUri) {
 		URL imgUrl = null;
-		try {
-			imgUrl = new URL(imageUri);
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}
 		BitmapDrawable icon = null;
 		try {
+			imgUrl = new URL(imageUri);
 			HttpURLConnection hp = (HttpURLConnection) imgUrl.openConnection();
 			icon = new BitmapDrawable(hp.getInputStream());// 将输入流转换成bitmap
 			hp.disconnect();// 关闭连接
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
 		} catch (Exception e) {
 		}
 		return icon;
