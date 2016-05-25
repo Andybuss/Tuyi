@@ -30,7 +30,11 @@ import dong.lan.tuyi.R;
 
 public class CommonUtils {
 	private static final String TAG = "CommonUtils";
-	/**
+
+    private CommonUtils() {
+    }
+
+    /**
 	 * 检测网络是否可用
 	 * 
 	 * @param context

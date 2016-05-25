@@ -17,6 +17,9 @@ import android.text.TextPaint;
 public class ImageHelper {
 
 
+    private ImageHelper() {
+    }
+
     public static  Bitmap handleColorMatrixs(Bitmap bitmap,float colorMatrixs[]) {
         Bitmap bmp = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         ColorMatrix matrix = new ColorMatrix();

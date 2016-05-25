@@ -22,6 +22,9 @@ import dong.lan.tuyi.domain.User;
 
 
 public class UserUtils {
+    private UserUtils() {
+    }
+
     /**
      * 根据username获取相应user，由于demo没有真实的用户数据，这里给的模拟的数据；
      * @param username

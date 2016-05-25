@@ -30,6 +30,9 @@ public class AnimationUtil {
 	public  static AlphaAnimation alphaA = new AlphaAnimation(1f,0.6f);
 	public static  AlphaAnimation alphaB = new AlphaAnimation(0.4f,1f);
 
+	private AnimationUtil() {
+	}
+
 	public  static  AlphaAnimation alphaA()
 	{
 		alphaA.setDuration(400);

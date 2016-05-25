@@ -12,6 +12,9 @@ import java.io.IOException;
 public class FileUilt {
     private static final String TAG = "FileUtil";
 
+    private FileUilt() {
+    }
+
     public static File getCacheFile(String imageUri){
         File cacheFile = null;
         try {
