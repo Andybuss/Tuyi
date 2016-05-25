@@ -60,10 +60,10 @@ public class MyImageDownload extends AsyncTask<String,Integer,Integer> {
 
                 InputStream is = conn.getInputStream();
                 cacheFile = FileUilt.getCacheFile(params[0]);
-                BufferedOutputStream bos = null;
+                BufferedOutputStream bos;
                 bos = new BufferedOutputStream(new FileOutputStream(cacheFile));
                 byte[] buf = new byte[1024];
-                int len = 0;
+                int len;
                 // 将网络上的图片存储到本地
                 while ((len = is.read(buf)) > 0) {
                     bos.write(buf, 0, len);

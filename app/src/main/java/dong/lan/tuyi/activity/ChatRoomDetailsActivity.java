@@ -325,7 +325,7 @@ public class ChatRoomDetailsActivity extends BaseActivity implements OnClickList
 
 		@Override
 		public View getView(final int position, View convertView, final ViewGroup parent) {
-		    ViewHolder holder = null;
+		    ViewHolder holder;
 			if (convertView == null) {
 			    holder = new ViewHolder();
 				convertView = LayoutInflater.from(getContext()).inflate(res, null);

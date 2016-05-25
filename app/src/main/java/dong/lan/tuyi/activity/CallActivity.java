@@ -111,8 +111,8 @@ public class CallActivity extends BaseActivity {
      * @param type 0：音频，1：视频
      */
     protected void saveCallRecord(int type) {
-        EMMessage message = null;
-        TextMessageBody txtBody = null;
+        EMMessage message;
+        TextMessageBody txtBody;
         if (!isInComingCall) { // 打出去的通话
             message = EMMessage.createSendMessage(EMMessage.Type.TXT);
             message.setReceipt(username);

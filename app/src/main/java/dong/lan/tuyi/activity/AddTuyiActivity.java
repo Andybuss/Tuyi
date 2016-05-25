@@ -481,7 +481,7 @@ public class AddTuyiActivity extends BaseActivity implements View.OnClickListene
     private void saveCropAvator(String filePath) {
 
 
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         if (filePath != null && !filePath.equals("")) {
             path = filePath;
             bitmap = PhotoUtil.getImageThumbnail(filePath, 720, 540);

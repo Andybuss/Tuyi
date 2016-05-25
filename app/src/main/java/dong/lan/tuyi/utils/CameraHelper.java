@@ -219,7 +219,7 @@ public class CameraHelper implements PreviewCallback {
     void YUV420spRotate180(byte[]  dst, byte[] src, int srcWidth, int srcHeight) {  
         int nWidth = 0, nHeight = 0;  
         int wh = 0;
-        int uvsize = 0;
+        int uvsize;
         int uvHeight = 0;  
         if(srcWidth != nWidth || srcHeight != nHeight)  {  
             nWidth = srcWidth;  
@@ -275,8 +275,8 @@ public class CameraHelper implements PreviewCallback {
 
     void YUV42left2right(byte[] dst, byte[] src, int srcWidth, int srcHeight) {
         // int nWidth = 0, nHeight = 0;
-        int wh = 0;
-        int uvHeight = 0;
+        int wh;
+        int uvHeight;
         // if(srcWidth != nWidth || srcHeight != nHeight)
         {
             // nWidth = srcWidth;

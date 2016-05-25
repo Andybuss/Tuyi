@@ -152,7 +152,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     private void refresh() {
         //下拉刷新功能时本地数据库有更新，直接从数据库获取更新的内容
         if (!tuyilist.isEmpty() && DemoDBManager.getInstance().getTuyiCount() > adapter.getCount()) {
-            List<UserTuyi> l = new ArrayList<UserTuyi>();
+            List<UserTuyi> l;
             l = DemoDBManager.getInstance().getTuyiGreaterThanID(adapter.getCount());
             if(l!=null)
             adapter.addAll(l);

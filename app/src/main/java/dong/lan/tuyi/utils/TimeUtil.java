@@ -38,7 +38,7 @@ public class TimeUtil {
 		long currentTime = System.currentTimeMillis();
 		long timeGap = (currentTime - timestamp) / 1000;// 与现在时间相差秒数
 		System.out.println("timeGap: " + timeGap);
-		String timeStr = null;
+		String timeStr;
 		if (timeGap > YEAR) {
 			timeStr = timeGap / YEAR + "年前";
 		} else if (timeGap > MONTH) {
@@ -82,7 +82,7 @@ public class TimeUtil {
  	// currentTime要转换的long类型的时间
  	// formatType要转换的string类型的时间格式
  	public static String longToString(long currentTime, String formatType){
- 		String strTime="";
+ 		String strTime;
 		Date date = longToDate(currentTime, formatType);// long类型转成Date类型
 		strTime = dateToString(date, formatType); // date类型转成String 
  		return strTime;
@@ -159,7 +159,7 @@ public class TimeUtil {
 	  */
 	public static String getChatTime(long timesamp) {
 		long clearTime = timesamp*1000;
-		String result = "";
+		String result;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd");
 		Date today = new Date(System.currentTimeMillis());
 		Date otherDay = new Date(clearTime);

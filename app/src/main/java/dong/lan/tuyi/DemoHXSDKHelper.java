@@ -337,8 +337,8 @@ public class DemoHXSDKHelper extends HXSDKHelper {
                     return;
                 }
                 
-                String chatUsename = null;
-                List<String> notNotifyIds = null;
+                String chatUsename;
+                List<String> notNotifyIds;
                 // 获取设置的不提示新消息的用户或者群组ids
                 if (message.getChatType() == ChatType.Chat) {
                     chatUsename = message.getFrom();

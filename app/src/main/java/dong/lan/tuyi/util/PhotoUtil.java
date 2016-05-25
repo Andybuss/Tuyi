@@ -64,7 +64,7 @@ public class PhotoUtil {
 	 */
 	public static Bitmap getImageThumbnail(String imagePath, int width,
 			int height) {
-		Bitmap bitmap = null;
+		Bitmap bitmap;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		// 获取这个图片的宽和高，注意此处的bitmap为null
@@ -75,7 +75,7 @@ public class PhotoUtil {
 		int w = options.outWidth;
 		int beWidth = w / width;
 		int beHeight = h / height;
-		int be = 1;
+		int be;
 		if (beWidth < beHeight) {
 			be = beWidth;
 		} else {
@@ -207,7 +207,7 @@ public class PhotoUtil {
 	}
 
 	public static void makeRootDirectory(String filePath) {
-		File file = null;
+		File file;
 		try {
 			file = new File(filePath);
 			if (!file.exists()) {
@@ -462,12 +462,12 @@ public class PhotoUtil {
 
 			InputStream is = conn.getInputStream();
 			File cacheFile = FileUilt.getCacheFile(imageUri);
-			BufferedOutputStream bos = null;
+			BufferedOutputStream bos;
 			bos = new BufferedOutputStream(new FileOutputStream(cacheFile));
 			Log.i(TAG, "write file to " + cacheFile.getCanonicalPath());
 
 			byte[] buf = new byte[1024];
-			int len = 0;
+			int len;
 			// 将网络上的图片存储到本地
 			while ((len = is.read(buf)) > 0) {
 				bos.write(buf, 0, len);
@@ -512,7 +512,7 @@ public class PhotoUtil {
 
 	public static void writeTofiles(Context context, Bitmap bitmap,
 									String filename) {
-		BufferedOutputStream outputStream = null;
+		BufferedOutputStream outputStream;
 		try {
 			outputStream = new BufferedOutputStream(context.openFileOutput(
 					filename, Context.MODE_PRIVATE));

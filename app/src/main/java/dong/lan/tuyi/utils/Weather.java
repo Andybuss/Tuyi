@@ -62,7 +62,7 @@ public class Weather extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... params) {
-        BufferedReader reader = null;
+        BufferedReader reader;
         String result = null;
         StringBuffer sbf = new StringBuffer();
         if(Tag==NAME)
@@ -79,7 +79,7 @@ public class Weather extends AsyncTask<String,Void,String> {
             connection.connect();
             InputStream is = connection.getInputStream();
             reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            String strRead = null;
+            String strRead;
             while ((strRead = reader.readLine()) != null) {
                 sbf.append(strRead);
                 sbf.append("\r\n");

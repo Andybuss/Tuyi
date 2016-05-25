@@ -26,7 +26,7 @@ public class CacheTuyiAdapter extends BaseListAdapter<UserTuyi> {
 
     @Override
     public View bindView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if(convertView==null)
         {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_cache,null);
