@@ -59,6 +59,8 @@ public class ImgPlayAsyn extends AsyncTask<String,Integer,Bitmap> {
                 e.printStackTrace();
             }
         } else {
+            InputStream is = null;
+            BufferedOutputStream bos = null;
             try {
                 // 显示网络上的图片
                 URL myFileUrl = new URL(params[0]);
@@ -66,9 +68,8 @@ public class ImgPlayAsyn extends AsyncTask<String,Integer,Bitmap> {
                         .openConnection();
                 conn.setDoInput(true);
                 conn.connect();
-                InputStream is = conn.getInputStream();
+                is = conn.getInputStream();
                 cacheFile = FileUilt.getCacheFile(params[0]);
-                BufferedOutputStream bos = null;
                 bos = new BufferedOutputStream(new FileOutputStream(cacheFile));
                 byte[] buf = new byte[1024];
                 int len = 0;
@@ -77,13 +78,24 @@ public class ImgPlayAsyn extends AsyncTask<String,Integer,Bitmap> {
                     bos.write(buf, 0, len);
                 }
 
-                is.close();
-                bos.close();
                 // 从本地加载图片
                 bitmap = BitmapFactory.decodeFile(cacheFile.getCanonicalPath());
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (is != null)
+                        is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (bos != null)
+                        bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return bitmap;

@@ -452,6 +452,8 @@ public class PhotoUtil {
 	 */
 	public static Bitmap getbitmapAndwrite(String imageUri) {
 		Bitmap bitmap = null;
+		InputStream is = null;
+		BufferedOutputStream bos = null;
 		try {
 			// 显示网络上的图片
 			URL myFileUrl = new URL(imageUri);
@@ -460,9 +462,8 @@ public class PhotoUtil {
 			conn.setDoInput(true);
 			conn.connect();
 
-			InputStream is = conn.getInputStream();
+			is = conn.getInputStream();
 			File cacheFile = FileUilt.getCacheFile(imageUri);
-			BufferedOutputStream bos = null;
 			bos = new BufferedOutputStream(new FileOutputStream(cacheFile));
 			Log.i(TAG, "write file to " + cacheFile.getCanonicalPath());
 
@@ -473,8 +474,6 @@ public class PhotoUtil {
 				bos.write(buf, 0, len);
 			}
 
-			is.close();
-			bos.close();
 
 			// 从本地加载图片
 			bitmap = BitmapFactory.decodeFile(cacheFile.getCanonicalPath());
@@ -482,6 +481,19 @@ public class PhotoUtil {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (is != null)
+					is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (bos != null)
+					bos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return bitmap;
 	}
