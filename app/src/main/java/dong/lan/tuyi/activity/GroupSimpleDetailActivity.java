@@ -51,7 +51,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 		progressBar = (ProgressBar) findViewById(R.id.loading);
 
 		EMGroupInfo groupInfo = (EMGroupInfo) getIntent().getSerializableExtra("groupinfo");
-		String groupname = null;
+		String groupname;
 		if(groupInfo != null){
 		    groupname = groupInfo.getGroupName();
 		    groupid = groupInfo.getGroupId();

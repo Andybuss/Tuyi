@@ -106,7 +106,7 @@ public class RecoderOfflineTuyiFragment extends Fragment implements View.OnClick
     String path = "";
 
     private void saveCropAvator(String filePath) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         if (filePath != null && !filePath.equals("")) {
             String filename = "OFF_" + Config.Tusername +
                     new SimpleDateFormat(TimeUtil.FORMAT_NORMAL).format(new Date()) + ".png";

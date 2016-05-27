@@ -732,7 +732,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
                 //获取到message
                 EMMessage message = (EMMessage) event.getData();
 
-                String username = null;
+                String username;
                 //群组消息
                 if (message.getChatType() == ChatType.GroupChat || message.getChatType() == ChatType.ChatRoom) {
                     username = message.getTo();
@@ -1046,7 +1046,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
         String filePath = null;
         if ("content".equalsIgnoreCase(uri.getScheme())) {
             String[] projection = {"_data"};
-            Cursor cursor = null;
+            Cursor cursor;
 
             try {
                 cursor = getContentResolver().query(uri, projection, null, null, null);
@@ -1098,7 +1098,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
      * 重发消息
      */
     private void resendMessage() {
-        EMMessage msg = null;
+        EMMessage msg;
         msg = conversation.getMessage(resendPos);
         // msg.setBackSend(true);
         msg.status = EMMessage.Status.CREATE;

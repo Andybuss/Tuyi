@@ -384,7 +384,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
      * @param user
      */
     private static void setUserHearder(String username, User user) {
-        String headerName = null;
+        String headerName;
         if (!TextUtils.isEmpty(user.getNick())) {
             headerName = user.getNick();
         } else {
@@ -864,7 +864,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
      * @return
      */
     public int getUnreadMsgCountTotal() {
-        int unreadMsgCountTotal = 0;
+        int unreadMsgCountTotal;
         int chatroomUnreadMsgCount = 0;
         unreadMsgCountTotal = EMChatManager.getInstance().getUnreadMsgsCount();
         for (EMConversation conversation : EMChatManager.getInstance().getAllConversations().values()) {
@@ -1175,7 +1175,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                         // 显示帐号在其他设备登陆dialog
                         showConflictDialog();
                     } else {
-                        String s = "";
+                        String s;
                         if (NetUtils.hasNetwork(MainActivity.this))
                             s = st1;
                         else
@@ -1381,7 +1381,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     User setUserHead(String username) {
         User user = new User();
         user.setUsername(username);
-        String headerName = null;
+        String headerName;
         if (!TextUtils.isEmpty(user.getNick())) {
             headerName = user.getNick();
         } else {
@@ -1555,7 +1555,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
 
     private void startImageAction(Uri uri, int outputX, int outputY,
                                   int requestCode, boolean isCrop) {
-        Intent intent = null;
+        Intent intent;
         if (isCrop) {
             intent = new Intent("com.android.camera.action.CROP");
         } else {
@@ -1604,7 +1604,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 if (popLayout != null) {
                     popLayout.setVisibility(View.GONE);
                 }
-                Uri uri = null;
+                Uri uri;
                 if (data == null) {
                     return;
                 }
@@ -1695,7 +1695,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     }
 
     private void updateUserAvatar(String url) {
-        String id = "";
+        String id;
         if (Config.tUser != null)
             id = Config.tUser.getObjectId();
         else {

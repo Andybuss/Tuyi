@@ -152,7 +152,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 	 * @return
 	 */
 	private String getMessageDigest(EMMessage message, Context context) {
-		String digest = "";
+		String digest;
 		switch (message.getType()) {
 		case LOCATION: // 位置消息
 			if (message.direct == EMMessage.Direct.RECEIVE) {

@@ -276,7 +276,7 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        int tag = -1;
+        int tag;
         if ((tag = patchMarker(marker)) != -1) {
             markerPopUp(tag);
         }

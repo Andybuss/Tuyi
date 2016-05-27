@@ -209,7 +209,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
      */
     public void importFromSDCard(View view) {
         int num = mOffline.importOfflineData();
-        String msg = "";
+        String msg;
         if (num == 0) {
             msg = "没有导入离线包，这可能是离线包放置位置不正确，或离线包已经导入过";
         } else {
@@ -245,7 +245,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
     }
 
     public String formatDataSize(int size) {
-        String ret = "";
+        String ret;
         if (size < (1024 * 1024)) {
             ret = String.format("%dK", size / 1024);
         } else {

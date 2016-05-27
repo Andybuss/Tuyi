@@ -75,7 +75,7 @@ public class DemoDBManager {
                     user.setUsername(username);
                     user.setNick(nick);
                     user.setAvatar(avatar);
-                    String headerName = null;
+                    String headerName;
                     if (!TextUtils.isEmpty(user.getNick())) {
                         headerName = user.getNick();
                     } else {

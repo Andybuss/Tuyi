@@ -157,7 +157,7 @@ public class AES {
     }
      
     private static byte[] getKey(String password) {
-        byte[] rByte = null;
+        byte[] rByte;
         if (password!=null) {
             rByte = password.getBytes();
         }else{

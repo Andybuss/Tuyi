@@ -538,7 +538,7 @@ public abstract class HXSDKHelper {
         new Thread(){
             @Override
             public void run(){
-                List<String> usernames = null;
+                List<String> usernames;
                 try {
                     usernames = EMContactManager.getInstance().getContactUserNames();
                     
@@ -586,7 +586,7 @@ public abstract class HXSDKHelper {
             @Override
             public void run(){
                 try {
-                    List<String> usernames = null;
+                    List<String> usernames;
                     usernames = EMContactManager.getInstance().getBlackListUsernamesFromServer();
                     
                     // in case that logout already before server returns, we should return immediately

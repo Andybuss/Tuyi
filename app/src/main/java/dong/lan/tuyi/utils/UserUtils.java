@@ -43,7 +43,7 @@ public class UserUtils {
                     if (!list.isEmpty()) {
                         if (exits) {
                             ContentValues values = new ContentValues();
-                            BmobGeoPoint point = new BmobGeoPoint();
+                            BmobGeoPoint point;
                             point = list.get(0).getLoginPoint();
                             if (point != null) {
                                 values.put(TUserDao.COLUMN_LAT, list.get(0).getLoginPoint().getLatitude());

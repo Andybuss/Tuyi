@@ -47,7 +47,7 @@ public class LocUtils {
     {
         boolean isNull = true;
         long start =System.currentTimeMillis();
-        long cur = 0;
+        long cur;
         while(isNull)
         {
             cur = System.currentTimeMillis();

@@ -23,7 +23,7 @@ public class DateUtils {
         
         boolean isChinese = languageCode.contains("zh");
         
-        String format = null;
+        String format;
         
         long messageTime = messageDate.getTime();
         if (isSameDay(messageTime)) {

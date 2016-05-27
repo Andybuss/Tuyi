@@ -45,7 +45,7 @@ public abstract class VersionedGestureDetector {
 
 	public static VersionedGestureDetector newInstance(Context context, OnGestureListener listener) {
 		final int sdkVersion = Build.VERSION.SDK_INT;
-		VersionedGestureDetector detector = null;
+		VersionedGestureDetector detector;
 
 		if (sdkVersion < Build.VERSION_CODES.ECLAIR) {
 			detector = new CupcakeDetector(context);
