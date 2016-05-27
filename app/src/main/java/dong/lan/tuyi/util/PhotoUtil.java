@@ -64,7 +64,7 @@ public class PhotoUtil {
 	 */
 	public static Bitmap getImageThumbnail(String imagePath, int width,
 			int height) {
-		Bitmap bitmap;
+		Bitmap bitmap = null;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		// 获取这个图片的宽和高，注意此处的bitmap为null
@@ -75,7 +75,7 @@ public class PhotoUtil {
 		int w = options.outWidth;
 		int beWidth = w / width;
 		int beHeight = h / height;
-		int be;
+		int be = 1;
 		if (beWidth < beHeight) {
 			be = beWidth;
 		} else {
@@ -207,7 +207,7 @@ public class PhotoUtil {
 	}
 
 	public static void makeRootDirectory(String filePath) {
-		File file;
+		File file = null;
 		try {
 			file = new File(filePath);
 			if (!file.exists()) {
@@ -384,16 +384,14 @@ public class PhotoUtil {
 	 */
 	public static BitmapDrawable getcontentPic(String imageUri) {
 		URL imgUrl = null;
-		try {
-			imgUrl = new URL(imageUri);
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}
 		BitmapDrawable icon = null;
 		try {
+			imgUrl = new URL(imageUri);
 			HttpURLConnection hp = (HttpURLConnection) imgUrl.openConnection();
 			icon = new BitmapDrawable(hp.getInputStream());// 将输入流转换成bitmap
 			hp.disconnect();// 关闭连接
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
 		} catch (Exception e) {
 		}
 		return icon;
@@ -452,6 +450,8 @@ public class PhotoUtil {
 	 */
 	public static Bitmap getbitmapAndwrite(String imageUri) {
 		Bitmap bitmap = null;
+		InputStream is = null;
+		BufferedOutputStream bos = null;
 		try {
 			// 显示网络上的图片
 			URL myFileUrl = new URL(imageUri);
@@ -460,21 +460,18 @@ public class PhotoUtil {
 			conn.setDoInput(true);
 			conn.connect();
 
-			InputStream is = conn.getInputStream();
+			is = conn.getInputStream();
 			File cacheFile = FileUilt.getCacheFile(imageUri);
-			BufferedOutputStream bos;
 			bos = new BufferedOutputStream(new FileOutputStream(cacheFile));
 			Log.i(TAG, "write file to " + cacheFile.getCanonicalPath());
 
 			byte[] buf = new byte[1024];
-			int len;
+			int len = 0;
 			// 将网络上的图片存储到本地
 			while ((len = is.read(buf)) > 0) {
 				bos.write(buf, 0, len);
 			}
 
-			is.close();
-			bos.close();
 
 			// 从本地加载图片
 			bitmap = BitmapFactory.decodeFile(cacheFile.getCanonicalPath());
@@ -482,6 +479,19 @@ public class PhotoUtil {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if (is != null)
+					is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (bos != null)
+					bos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return bitmap;
 	}
@@ -512,7 +522,7 @@ public class PhotoUtil {
 
 	public static void writeTofiles(Context context, Bitmap bitmap,
 									String filename) {
-		BufferedOutputStream outputStream;
+		BufferedOutputStream outputStream = null;
 		try {
 			outputStream = new BufferedOutputStream(context.openFileOutput(
 					filename, Context.MODE_PRIVATE));

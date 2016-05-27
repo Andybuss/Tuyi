@@ -11,3 +11,5 @@
 * UI优化
 
 ##直接跳转  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi)
+
+## Click  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi) to follow the latest commit

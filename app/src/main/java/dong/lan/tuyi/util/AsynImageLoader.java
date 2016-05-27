@@ -182,6 +182,8 @@ private static AsynImageLoader instance;
 
         @Override
         public boolean equals(Object o) {
+            if (o == null)
+                return false;
             Task task = (Task) o;
             return task.path.equals(path);
         }
