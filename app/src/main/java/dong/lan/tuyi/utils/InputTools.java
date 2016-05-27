@@ -12,6 +12,9 @@ import java.util.TimerTask;
 
 public class InputTools {
 
+    private InputTools() {
+    }
+
     public static void hideSoftKeyboard(Activity activity) {
         if (activity.getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
             if (activity.getCurrentFocus() != null)

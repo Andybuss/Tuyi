@@ -16,6 +16,9 @@ public class DateUtils {
 
     private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
 
+    private DateUtils() {
+    }
+
     public static String getTimestampString(Date messageDate) {
         Locale curLocale = HXSDKHelper.getInstance().getAppContext().getResources().getConfiguration().locale;
         

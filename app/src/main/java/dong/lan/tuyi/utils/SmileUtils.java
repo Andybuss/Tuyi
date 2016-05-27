@@ -186,6 +186,9 @@ public class SmileUtils {
 
 	}
 
+	private SmileUtils() {
+	}
+
 	private static void addPattern(Map<Pattern, Integer> map, String smile,
 	        int resource) {
 	    map.put(Pattern.compile(Pattern.quote(smile)), resource);

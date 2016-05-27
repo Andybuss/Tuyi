@@ -40,6 +40,9 @@ public class PhotoUtil {
 
 	private static final String TAG = "PicUtil";
 
+	private PhotoUtil() {
+	}
+
 
 	/**
 	 * 回收垃圾 recycle

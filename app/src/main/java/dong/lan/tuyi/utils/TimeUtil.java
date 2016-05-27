@@ -27,6 +27,9 @@ public class TimeUtil {
 	private static final int HOUR = 60 * 60;// 小时
 	private static final int MINUTE = 60;// 分钟
 
+	private TimeUtil() {
+	}
+
 	/**
 	 * 根据时间戳获取描述性时间，如3分钟前，1天前
 	 * 

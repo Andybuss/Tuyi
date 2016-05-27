@@ -7,6 +7,9 @@ import android.view.View;
   */
 @SuppressWarnings("unchecked")
 public class ViewHolder {
+	private ViewHolder() {
+	}
+
 	public static <T extends View> T get(View view, int id) {
 		SparseArray<View> viewHolder = (SparseArray<View>) view.getTag();
 		if (viewHolder == null) {
