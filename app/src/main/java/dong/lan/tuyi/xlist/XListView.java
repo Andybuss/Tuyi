@@ -302,14 +302,12 @@ public class XListView extends ListView implements OnScrollListener {
 					}
 				}
 				resetHeaderHeight();
-			} else if (getLastVisiblePosition() == mTotalItemCount - 1) {
+			} else if (getLastVisiblePosition() == mTotalItemCount - 1 && mEnablePullLoad) {
 				// invoke load more.
-				if (mEnablePullLoad) {
-					if (mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
-						startLoadMore();
-					}
-					resetFooterHeight();
+				if (mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA) {
+					startLoadMore();
 				}
+				resetFooterHeight();
 			}
 			break;
 		}

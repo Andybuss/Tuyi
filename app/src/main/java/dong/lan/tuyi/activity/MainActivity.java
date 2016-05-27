@@ -751,11 +751,9 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             public void run() {
                 // 刷新bottom bar消息未读数
                 updateUnreadLabel();
-                if (currentTabIndex == 0) {
+                if (currentTabIndex == 0 && chatHistoryFragment != null) {
                     // 当前页面如果为聊天历史页面，刷新此页面
-                    if (chatHistoryFragment != null) {
-                        chatHistoryFragment.refresh();
-                    }
+                    chatHistoryFragment.refresh();
                 }
             }
         });
