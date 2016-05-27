@@ -73,7 +73,7 @@ public class DemoHXSDKHelper extends HXSDKHelper {
     /**
      * 用来记录foreground Activity
      */
-    private List<Activity> activityList = new ArrayList<Activity>();
+    private List<Activity> activityList = new ArrayList<>();
     
     public void pushActivity(Activity activity){
         if(!activityList.contains(activity)){

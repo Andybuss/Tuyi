@@ -152,7 +152,7 @@ public class ContactlistFragment extends Fragment {
 
         //黑名单列表
         blackList = EMContactManager.getInstance().getBlackListUsernames();
-        contactList = new ArrayList<User>();
+        contactList = new ArrayList<>();
         // 获取设置contactlist
         getContactList();
 

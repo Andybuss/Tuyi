@@ -60,7 +60,7 @@ public class ChatAllHistoryFragment extends Fragment implements OnClickListener 
 
 	public TextView errorText;
 	private boolean hidden;
-	private List<EMConversation> conversationList = new ArrayList<EMConversation>();
+	private List<EMConversation> conversationList = new ArrayList<>();
 		
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -225,7 +225,7 @@ public class ChatAllHistoryFragment extends Fragment implements OnClickListener 
 		 * 保证Conversation在Sort过程中最后一条消息的时间不变 
 		 * 避免并发问题
 		 */
-		List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
+		List<Pair<Long, EMConversation>> sortList = new ArrayList<>();
 		synchronized (conversations) {
 			for (EMConversation conversation : conversations.values()) {
 				if (conversation.getAllMessages().size() != 0) {
@@ -241,7 +241,7 @@ public class ChatAllHistoryFragment extends Fragment implements OnClickListener 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		List<EMConversation> list = new ArrayList<EMConversation>();
+		List<EMConversation> list = new ArrayList<>();
 		for (Pair<Long, EMConversation> sortItem : sortList) {
 			list.add(sortItem.second);
 		}

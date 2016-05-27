@@ -38,13 +38,13 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
 
     private XListView mListView;
     private TextView upload, null_tip;
-    private List<UserTuyi> offTuyis = new ArrayList<UserTuyi>();
+    private List<UserTuyi> offTuyis = new ArrayList<>();
     private OfflineAdapter adapter;
     private LinearLayout uploadLayout;
     private TextView tip;
     public static boolean hasChange = false;
     private TextView bar_left, bar_center, bar_right;
-    private Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> map = new HashMap<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -169,7 +169,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
     Thread thread;
     UserTuyi tuyi = null;
 
-    List<String> urls = new ArrayList<String>();
+    List<String> urls = new ArrayList<>();
 
     @Override
     public void onClick(View v) {

@@ -38,7 +38,7 @@ public class DefaultHXSDKModel extends HXSDKModel{
     private static final String PREF_PWD = "pwd";
     UserDao dao = null;
     protected Context context = null;
-    protected Map<Key,Object> valueCache = new HashMap<Key,Object>();
+    protected Map<Key,Object> valueCache = new HashMap<>();
     
     public DefaultHXSDKModel(Context ctx){
         context = ctx;

@@ -33,7 +33,7 @@ public class SelectTuyiActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private SelectTuyiAdapter adapter;
-    private List<UserTuyi> tuyis = new ArrayList<UserTuyi>();
+    private List<UserTuyi> tuyis = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
