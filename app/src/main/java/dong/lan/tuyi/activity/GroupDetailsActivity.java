@@ -148,7 +148,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		
 		((TextView) findViewById(R.id.group_name)).setText(group.getGroupName() + "(" + group.getAffiliationsCount() + st);
 		
-		List<String> members = new ArrayList<String>();
+		List<String> members = new ArrayList<>();
 		members.addAll(group.getMembers());
 		
 		adapter = new GridAdapter(this, R.layout.grid, members);
@@ -294,7 +294,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private void refreshMembers(){
 	    adapter.clear();
         
-        List<String> members = new ArrayList<String>();
+        List<String> members = new ArrayList<>();
         members.addAll(group.getMembers());
         adapter.addAll(members);
         

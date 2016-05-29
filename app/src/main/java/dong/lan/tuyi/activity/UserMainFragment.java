@@ -36,12 +36,12 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
 
 
     private XListView mListView;
-    private List<UserTuyi> tuyilist = new ArrayList<UserTuyi>();
+    private List<UserTuyi> tuyilist = new ArrayList<>();
     private LinearLayout dialog;
     private UserMainAdapter adapter;
     public static boolean isChange = false;
     private static String username;
-    private java.util.List<UserTuyi> notList = new ArrayList<UserTuyi>();
+    private java.util.List<UserTuyi> notList = new ArrayList<>();
 
 
     @Nullable
@@ -64,7 +64,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
 
-        tuyilist = new ArrayList<UserTuyi>();
+        tuyilist = new ArrayList<>();
         initNotList();
         SwipLayout.swipRightLength = 150;
         username = TuApplication.getInstance().getUserName();
@@ -107,7 +107,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     private void initDB() {
         tuyilist = DemoDBManager.getInstance().getUserAllTuyi(username);
         if (tuyilist == null || tuyilist.isEmpty()) {
-            tuyilist = new ArrayList<UserTuyi>();
+            tuyilist = new ArrayList<>();
                 if (Config.tUser == null) {
                     adapter = new UserMainAdapter(getActivity(), notList,UserMainAdapter.USERMAIN);
                     mListView.setAdapter(adapter);

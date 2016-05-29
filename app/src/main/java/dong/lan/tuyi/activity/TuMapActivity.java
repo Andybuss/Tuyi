@@ -104,9 +104,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     private TextView nearIcon[] = new TextView[6];
     private Button search;
     private EditText searchEt;
-    private List<Marker> userMarkers = new ArrayList<Marker>();
-    private List<TUser> nearUsers = new ArrayList<TUser>();
-    private List<UserTuyi> tuyiList = new ArrayList<UserTuyi>();
+    private List<Marker> userMarkers = new ArrayList<>();
+    private List<TUser> nearUsers = new ArrayList<>();
+    private List<UserTuyi> tuyiList = new ArrayList<>();
     private LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
     private MyLocationConfiguration.LocationMode locationMode = MyLocationConfiguration.LocationMode.NORMAL;
@@ -350,7 +350,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             query1.addWhereEqualTo("TAG", nearTag);
             BmobQuery<UserTuyi> query2 = new BmobQuery<UserTuyi>();
             query2.addWhereEqualTo("isPublic", true);
-            List<BmobQuery<UserTuyi>> queries = new ArrayList<BmobQuery<UserTuyi>>();
+            List<BmobQuery<UserTuyi>> queries = new ArrayList<>();
             queries.add(query1);
             queries.add(query2);
             query.and(queries);
@@ -394,7 +394,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
      */
     private void showMyAllTuyi() {
         if (tuyiList == null)
-            tuyiList = new ArrayList<UserTuyi>();
+            tuyiList = new ArrayList<>();
         if (!tuyiList.isEmpty())
             tuyiList.clear();
         tuyiList = DemoDBManager.getInstance().getUserAllTuyi(Tusername);
@@ -632,8 +632,8 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     BmobQuery<UserTuyi> q2 = new BmobQuery<UserTuyi>();
     BmobQuery<UserTuyi> q3 = new BmobQuery<UserTuyi>();
     BmobQuery<UserTuyi> or =new BmobQuery<UserTuyi>();
-    List<BmobQuery<UserTuyi>> ors=new ArrayList<BmobQuery<UserTuyi>>();
-    List<BmobQuery<UserTuyi>> ands=new ArrayList<BmobQuery<UserTuyi>>();
+    List<BmobQuery<UserTuyi>> ors= new ArrayList<>();
+    List<BmobQuery<UserTuyi>> ands= new ArrayList<>();
     BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
     private void searchTuyi()
     {

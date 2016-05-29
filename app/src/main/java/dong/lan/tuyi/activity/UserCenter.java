@@ -52,7 +52,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
     private ImageView imageSwitcher;
     private TUser user;
     private XListView mListView;
-    private List<String> tuyilist = new ArrayList<String>();
+    private List<String> tuyilist = new ArrayList<>();
     List<BmobQuery<UserTuyi>> queries;//Bmob的复合查询条件
     private UserCenterAdapter adapter;
     private static final int limit = 8;
@@ -303,7 +303,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         BmobQuery<UserTuyi> q2 = new BmobQuery<UserTuyi>();
         q2.addWhereEqualTo("isPublic", true);
 
-        queries = new ArrayList<BmobQuery<UserTuyi>>();
+        queries = new ArrayList<>();
         queries.add(q1);
         queries.add(q2);
         if (TuApplication.getInstance().getUserName().equals(user.getUsername())) {

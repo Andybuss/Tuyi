@@ -159,7 +159,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	private ScaleType mScaleType = ScaleType.FIT_CENTER;
 
 	public PhotoViewAttacher(ImageView imageView) {
-		mImageView = new WeakReference<ImageView>(imageView);
+		mImageView = new WeakReference<>(imageView);
 
 		imageView.setOnTouchListener(this);
 

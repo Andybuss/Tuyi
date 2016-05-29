@@ -70,7 +70,7 @@ public class SelectTuyiAdapter extends RecyclerView.Adapter<SelectHolder> {
     }
     public List<UserTuyi> getTuyis()
     {
-        List<UserTuyi> t = new ArrayList<UserTuyi>();
+        List<UserTuyi> t = new ArrayList<>();
         for (Integer aSet : set) {
             t.add(tuyis.get(aSet));
         }

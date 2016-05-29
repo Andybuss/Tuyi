@@ -65,9 +65,9 @@ public class GroupPickContactsActivity extends BaseActivity {
 			exitingMembers = group.getMembers();
 		}
 		if(exitingMembers == null)
-			exitingMembers = new ArrayList<String>();
+			exitingMembers = new ArrayList<>();
 		// 获取好友列表
-		final List<User> alluserList = new ArrayList<User>();
+		final List<User> alluserList = new ArrayList<>();
 		for (User user : TuApplication.getInstance().getContactList().values()) {
 			if (!user.getUsername().equals(Constant.NEW_FRIENDS_USERNAME) & !user.getUsername().equals(Constant.GROUP_USERNAME) & !user.getUsername().equals(Constant.CHAT_ROOM) & !user.getUsername().equals(Constant.CHAT_ROBOT))
 				alluserList.add(user);
@@ -112,7 +112,7 @@ public class GroupPickContactsActivity extends BaseActivity {
 	 * @return
 	 */
 	private List<String> getToBeAddMembers() {
-		List<String> members = new ArrayList<String>();
+		List<String> members = new ArrayList<>();
 		int length = contactAdapter.isCheckedArray.length;
 		for (int i = 0; i < length; i++) {
 			String username = contactAdapter.getItem(i).getUsername();

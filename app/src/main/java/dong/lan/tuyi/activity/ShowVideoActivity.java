@@ -59,7 +59,7 @@ public class ShowVideoActivity extends BaseActivity{
 			finish();
 		} else if (!TextUtils.isEmpty(remotepath) && !remotepath.equals("null")) {
 			EMLog.d(TAG, "download remote video file");
-			Map<String, String> maps = new HashMap<String, String>();
+			Map<String, String> maps = new HashMap<>();
 			if (!TextUtils.isEmpty(secret)) {
 				maps.put("share-secret", secret);
 			}
