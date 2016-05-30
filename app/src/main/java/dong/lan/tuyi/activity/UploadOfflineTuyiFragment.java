@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
+import com.bmob.BmobProFile;
+import com.bmob.btp.callback.UploadListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +22,6 @@ import java.util.Map;
 
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UploadFileListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.adapter.OfflineAdapter;
 import dong.lan.tuyi.adapter.UserMainAdapter;
@@ -36,12 +38,12 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
 
     private XListView mListView;
     private TextView upload, null_tip;
-    private List<UserTuyi> offTuyis = new ArrayList<UserTuyi>();
-    private List<String> offTuyisUrl = new ArrayList<>();
+    private List<UserTuyi> offTuyis = new ArrayList<>();
     private OfflineAdapter adapter;
     private LinearLayout uploadLayout;
     private TextView tip;
     public static boolean hasChange = false;
+    private TextView bar_left, bar_center, bar_right;
     private Map<Integer, Integer> map = new HashMap<>();
 
     @Override
@@ -65,16 +67,16 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
         mListView.pullRefreshing();
         upload = (TextView) getView().findViewById(R.id.offline_upload);
         null_tip = (TextView) getView().findViewById(R.id.offline_null_tip);
-        TextView bar_center = (TextView) getView().findViewById(R.id.bar_center);
-        TextView bar_left = (TextView) getView().findViewById(R.id.bar_left);
-        TextView bar_right = (TextView) getView().findViewById(R.id.bar_right);
+        bar_center = (TextView) getView().findViewById(R.id.bar_center);
+        bar_left = (TextView) getView().findViewById(R.id.bar_left);
+        bar_right = (TextView) getView().findViewById(R.id.bar_right);
         uploadLayout = (LinearLayout) getView().findViewById(R.id.upload_tip_layout);
         tip = (TextView) getView().findViewById(R.id.upload_tip_text);
         uploadLayout.setVisibility(View.GONE);
         bar_right.setOnClickListener(this);
         bar_left.setOnClickListener(this);
-        bar_center.setText(getString(R.string.local_recode));
-        bar_right.setText(getString(R.string.upload));
+        bar_center.setText("本地记录");
+        bar_right.setText("上传");
         upload.setOnClickListener(this);
         initData();
     }
@@ -109,16 +111,6 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
             adapter = new OfflineAdapter(getActivity(), offTuyis);
             mListView.setAdapter(adapter);
             mListView.setPullLoadEnable(false);
-            for (int i = 0; i < offTuyis.size(); i++) {
-                if (!Config.tUser.getUsername().equals(offTuyis.get(i).getOfflineNmae())) {
-                    offTuyis.remove(i);
-                    adapter.remove(i);
-                }
-            }
-            adapter.notifyDataSetChanged();
-            for (int i = 0, size = offTuyis.size(); i < size; i++) {
-                offTuyisUrl.add(offTuyis.get(i).gettUri());
-            }
         }
     }
 
@@ -177,7 +169,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
     Thread thread;
     UserTuyi tuyi = null;
 
-    List<String> urls = new ArrayList<String>();
+    List<String> urls = new ArrayList<>();
 
     @Override
     public void onClick(View v) {
@@ -189,45 +181,20 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
             case R.id.offline_upload:
 
                 if (Config.tUser == null) {
-                    Config.Show(getActivity(),getString(R.string.user_asyn_no_finish));
+                    Config.Show(getActivity(), "用户同步未完成");
                     return;
                 }
                 if (offTuyis == null) {
-                    Config.Show(getActivity(), getString(R.string.no_offline_tuyi));
+                    Config.Show(getActivity(), "没有离线图忆");
                     return;
                 }
-
-                if (run) {
-                    return;
-                } else {
-                    run = true;
+                for (int i = 0; i < offTuyis.size(); i++) {
+                    if (!Config.tUser.getUsername().equals(offTuyis.get(i).getOfflineNmae())) {
+                        offTuyis.remove(i);
+                        adapter.remove(i);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
-
-//                BmobFile.uploadBatch(getActivity(), (String[]) offTuyisUrl.toArray(), new UploadBatchListener() {
-//                    @Override
-//                    public void onSuccess(List<BmobFile> list, List<String> list1) {
-//                        offTuyisUrl.removeAll(list1);
-//                        String remain = "剩余"+offTuyisUrl.size()+"个图忆未上传成功";
-//                        tip.setText(remain);
-//
-//
-//                        run = false;
-//                    }
-//
-//                    @Override
-//                    public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {
-//                        String progress = "当前上传 "+total +" 中的第 "+curIndex +" 个，当前进度："+curPercent+"%";
-//                        tip.setText(progress);
-//                    }
-//
-//                    @Override
-//                    public void onError(int i, String s) {
-//                        tip.setText(s);
-//                        run = false;
-//                    }
-//                });
-
-
                 urls.clear();
                 for (int i = 0; i < adapter.getCount(); i++) {
                     if (adapter.getList().get(i).gettPoint() != null && !map.containsKey(i)) {
@@ -240,7 +207,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                     run = true;
                 }
                 uploadLayout.setVisibility(View.VISIBLE);
-                tip.setText(R.string.start_upload);
+                tip.setText("开始上传");
                 thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -258,20 +225,29 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                             }
                             if (load) {
                                 load = false;
-                                final BmobFile bmobFile = new BmobFile(new File(offTuyis.get(map.get(map.size() - 1)).gettUri()));
-                                bmobFile.upload(getActivity(), new UploadFileListener() {
+                                BmobProFile.getInstance(getActivity()).upload(offTuyis.get(map.get(map.size() - 1)).gettUri(), new UploadListener() {
                                     @Override
-                                    public void onSuccess() {
-                                        save = true;
-                                        String info = "离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "的图片上传成功";
-                                        tip.setText(info);
-                                        urls.add(bmobFile.getFileUrl(getActivity()));
+                                    public void onError(int i, String s) {
+                                        Log.i("bmob", "文件上传失败：" + i + s);
+                                        load = true;
+                                        tip.setText("图片上传失败：" + s);
                                     }
 
                                     @Override
-                                    public void onFailure(int i, String s) {
-                                        load = true;
-                                        tip.setText(s);
+                                    public void onSuccess(String fileName, String urlStr, BmobFile file) {
+                                        Log.i("bmob", "文件上传成功：" + urlStr + ",可访问的文件地址：" + file.getUrl());
+                                        save = true;
+                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "的图片上传成功");
+                                        urls.add(file.getUrl());
+                                        if (!urls.isEmpty())
+                                            System.out.println(urls.get(urls.size() - 1));
+                                        else
+                                            System.out.println("EMPTY");
+                                    }
+
+                                    @Override
+                                    public void onProgress(int i) {
+                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "上传 ：" + i + " %");
                                     }
                                 });
                             }
@@ -287,7 +263,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                         if (map.size() > 0)
                                             Config.Show(getActivity(), offTuyis.get(map.get(map.size() - 1)).gettContent() + "保存成功");
                                         DemoDBManager.getInstance().deleteOffTuyiByTime(offTuyis.get(map.get(map.size() - 1)).getTime());
-                                        tip.setText(getString(R.string.offline_tuyi_upload_tip_text, offTuyis.get(map.get(map.size() - 1)).gettContent()));
+                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + " 上传成功");
                                         offTuyis.get(map.get(map.size() - 1)).settPic(urls.get(urls.size() - 1));
                                         offTuyis.get(map.get(map.size() - 1)).settUser(Config.tUser);
                                         DemoDBManager.getInstance().saveTuyi(tuyi);
@@ -295,7 +271,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                         map.remove(map.size() - 1);
                                         load = map.size() >= 1;
                                         mListView.deferNotifyDataSetChanged();
-                                        Config.updateStatus(getActivity(), offTuyis.get(map.get(map.size() - 1)).getTAG());
+                                        Config.updateStatus(getActivity(),offTuyis.get(map.get(map.size() - 1)).getTAG());
                                     }
 
                                     @Override
@@ -310,6 +286,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                     }
                 });
                 thread.start();
+
                 break;
         }
     }
