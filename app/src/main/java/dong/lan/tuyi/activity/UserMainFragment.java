@@ -2,10 +2,10 @@ package dong.lan.tuyi.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +29,11 @@ import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.xlist.XListView;
 
 /**
- * Created by 桂栋 on 2015/7/22.
+ *
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/7/22  21:28.
+ * Email: 760625325@qq.com
  */
 public class UserMainFragment extends Fragment implements AdapterView.OnItemClickListener, XListView.IXListViewListener, AdapterView.OnItemLongClickListener {
 
@@ -151,7 +155,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     private void refresh() {
         //下拉刷新功能时本地数据库有更新，直接从数据库获取更新的内容
         if (!tuyilist.isEmpty() && DemoDBManager.getInstance().getTuyiCount() > adapter.getCount()) {
-            List<UserTuyi> l = new ArrayList<>();
+            List<UserTuyi> l ;
             l = DemoDBManager.getInstance().getTuyiGreaterThanID(adapter.getCount());
             if(l!=null)
             adapter.addAll(l);
