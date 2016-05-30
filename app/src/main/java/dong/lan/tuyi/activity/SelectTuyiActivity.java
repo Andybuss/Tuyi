@@ -16,7 +16,10 @@ import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 
 /**
- * Created by 梁桂栋 on 2015/11/9.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/11/9  21:37.
+ * Email: 760625325@qq.com
  */
 public class SelectTuyiActivity extends BaseActivity {
 
