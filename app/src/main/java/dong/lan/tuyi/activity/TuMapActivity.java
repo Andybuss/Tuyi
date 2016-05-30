@@ -104,9 +104,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     private TextView nearIcon[] = new TextView[6];
     private Button search;
     private EditText searchEt;
-    private List<Marker> userMarkers = new ArrayList<Marker>();
-    private List<TUser> nearUsers = new ArrayList<TUser>();
-    private List<UserTuyi> tuyiList = new ArrayList<UserTuyi>();
+    private List<Marker> userMarkers = new ArrayList<>();
+    private List<TUser> nearUsers = new ArrayList<>();
+    private List<UserTuyi> tuyiList = new ArrayList<>();
     private LocationClient mLocClient;
     public MyLocationListenner myListener = new MyLocationListenner();
     private MyLocationConfiguration.LocationMode locationMode = MyLocationConfiguration.LocationMode.NORMAL;
@@ -342,15 +342,15 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             return;
         }
         BmobGeoPoint point = new BmobGeoPoint(loc.longitude, loc.latitude);
-        BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.addWhereNear("tPoint", point);
         if (!nearTag.equals("")) {
-            BmobQuery<UserTuyi> query1 = new BmobQuery<UserTuyi>();
+            BmobQuery<UserTuyi> query1 = new BmobQuery<>();
             query1.addWhereEqualTo("TAG", nearTag);
-            BmobQuery<UserTuyi> query2 = new BmobQuery<UserTuyi>();
+            BmobQuery<UserTuyi> query2 = new BmobQuery<>();
             query2.addWhereEqualTo("isPublic", true);
-            List<BmobQuery<UserTuyi>> queries = new ArrayList<BmobQuery<UserTuyi>>();
+            List<BmobQuery<UserTuyi>> queries = new ArrayList<>();
             queries.add(query1);
             queries.add(query2);
             query.and(queries);
@@ -394,7 +394,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
      */
     private void showMyAllTuyi() {
         if (tuyiList == null)
-            tuyiList = new ArrayList<UserTuyi>();
+            tuyiList = new ArrayList<>();
         if (!tuyiList.isEmpty())
             tuyiList.clear();
         tuyiList = DemoDBManager.getInstance().getUserAllTuyi(Tusername);
@@ -404,7 +404,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             if (Config.tUser == null) {
                 Show("请等待用户数据刷新成功后再试");
             } else {
-                BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+                BmobQuery<UserTuyi> query = new BmobQuery<>();
                 query.addWhereEqualTo("tUser", Config.tUser);
                 query.order("-time,-createAt");
                 query.include("tUser");
@@ -559,7 +559,7 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         if (loc == null)
             return;
         BmobGeoPoint point = new BmobGeoPoint(loc.longitude, loc.latitude);
-        BmobQuery<TUser> query = new BmobQuery<TUser>();
+        BmobQuery<TUser> query = new BmobQuery<>();
         query.addWhereWithinRadians("loginPoint", point, 10000);
         query.addWhereEqualTo("publicMyPoint", true);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
@@ -628,13 +628,13 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    BmobQuery<UserTuyi> q1 = new BmobQuery<UserTuyi>();
-    BmobQuery<UserTuyi> q2 = new BmobQuery<UserTuyi>();
-    BmobQuery<UserTuyi> q3 = new BmobQuery<UserTuyi>();
-    BmobQuery<UserTuyi> or =new BmobQuery<UserTuyi>();
-    List<BmobQuery<UserTuyi>> ors=new ArrayList<BmobQuery<UserTuyi>>();
-    List<BmobQuery<UserTuyi>> ands=new ArrayList<BmobQuery<UserTuyi>>();
-    BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+    BmobQuery<UserTuyi> q1 = new BmobQuery<>();
+    BmobQuery<UserTuyi> q2 = new BmobQuery<>();
+    BmobQuery<UserTuyi> q3 = new BmobQuery<>();
+    BmobQuery<UserTuyi> or = new BmobQuery<>();
+    List<BmobQuery<UserTuyi>> ors= new ArrayList<>();
+    List<BmobQuery<UserTuyi>> ands= new ArrayList<>();
+    BmobQuery<UserTuyi> query = new BmobQuery<>();
     private void searchTuyi()
     {
         String s =searchEt.getText().toString();

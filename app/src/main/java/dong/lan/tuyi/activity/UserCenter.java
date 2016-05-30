@@ -52,7 +52,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
     private ImageView imageSwitcher;
     private TUser user;
     private XListView mListView;
-    private List<String> tuyilist = new ArrayList<String>();
+    private List<String> tuyilist = new ArrayList<>();
     List<BmobQuery<UserTuyi>> queries;//Bmob的复合查询条件
     private UserCenterAdapter adapter;
     private static final int limit = 8;
@@ -177,7 +177,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
     boolean hasLoad = true;  //避免每次刷新都更新用户信息
     private void getUserTuyi() {
         skip = 0;
-        BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.setSkip(skip);
         query.and(queries);
         query.setLimit(limit);
@@ -227,7 +227,7 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
     }
 
     private void getMoreUserTuyi() {
-        BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.setSkip(skip);
         query.setLimit(limit);
         query.order("createAt");
@@ -298,12 +298,12 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
 
 
         username.setText(user.getUsername());
-        BmobQuery<UserTuyi> q1 = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> q1 = new BmobQuery<>();
         q1.addWhereEqualTo("tUser", user);
-        BmobQuery<UserTuyi> q2 = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> q2 = new BmobQuery<>();
         q2.addWhereEqualTo("isPublic", true);
 
-        queries = new ArrayList<BmobQuery<UserTuyi>>();
+        queries = new ArrayList<>();
         queries.add(q1);
         queries.add(q2);
         if (TuApplication.getInstance().getUserName().equals(user.getUsername())) {

@@ -37,7 +37,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
     private MKOfflineMap mOffline = null;
     private TextView bar_left,bar_center;
-    private List<City> allCity = new ArrayList<City>();
+    private List<City> allCity = new ArrayList<>();
     private LinearLayout downloadLayout;
     private TextView status;
     private int ID;
@@ -88,7 +88,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
         ListView allCityList = (ListView) findViewById(R.id.allcitylist);
         // 获取所有支持离线地图的城市
-        ArrayList<String> allCities = new ArrayList<String>();
+        ArrayList<String> allCities = new ArrayList<>();
         ArrayList<MKOLSearchRecord> records2 = mOffline.getOfflineCityList();
             for (MKOLSearchRecord r : records2) {
                 City city = new City(r.cityName,r.cityID,r.size);
@@ -108,7 +108,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
         // 获取已下过的离线地图信息
         localMapList = mOffline.getAllUpdateInfo();
         if (localMapList == null) {
-            localMapList = new ArrayList<MKOLUpdateElement>();
+            localMapList = new ArrayList<>();
         }
 
         ListView localMapListView = (ListView) findViewById(R.id.localmaplist);
@@ -225,7 +225,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
     public void updateView() {
         localMapList = mOffline.getAllUpdateInfo();
         if (localMapList == null) {
-            localMapList = new ArrayList<MKOLUpdateElement>();
+            localMapList = new ArrayList<>();
         }
         lAdapter.notifyDataSetChanged();
     }

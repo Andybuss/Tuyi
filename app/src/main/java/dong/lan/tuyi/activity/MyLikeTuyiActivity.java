@@ -23,7 +23,7 @@ public class MyLikeTuyiActivity extends BaseActivity {
     public static final int FROM_LIKE = 1;
     public static final int FROM_USER = 2;
     public static final String INTENT_TAG = "Like_Tag";
-    private List<UserTuyi> likes = new ArrayList<UserTuyi>();
+    private List<UserTuyi> likes = new ArrayList<>();
     private TextView left,center,right;
     private static final int limit = 10;
     private int skip = 0;

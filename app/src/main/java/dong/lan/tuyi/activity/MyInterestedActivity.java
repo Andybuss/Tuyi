@@ -62,7 +62,7 @@ public class MyInterestedActivity extends BaseActivity implements CompoundButton
 
     private void initData()
     {
-        BmobQuery<Interested> query = new BmobQuery<Interested>();
+        BmobQuery<Interested> query = new BmobQuery<>();
         query.addWhereEqualTo("user", Config.tUser);
         query.findObjects(this, new FindListener<Interested>() {
             @Override

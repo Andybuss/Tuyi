@@ -164,7 +164,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 try {
                     if (msg.getGroupId() == null) //同意好友请求
                     {
-                        BmobQuery<TUser> query = new BmobQuery<TUser>();
+                        BmobQuery<TUser> query = new BmobQuery<>();
                         query.addWhereEqualTo("username", AES.decode(msg.getFrom()));
                         query.findObjects(context, new FindListener<TUser>() {
                             @Override

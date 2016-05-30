@@ -50,7 +50,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.list);
 		sidebar = (Sidebar) findViewById(R.id.sidebar);
 		sidebar.setListView(listView);
-		contactList = new ArrayList<User>();
+		contactList = new ArrayList<>();
 		// 获取设置contactlist
 		getContactList();
 		// 设置adapter

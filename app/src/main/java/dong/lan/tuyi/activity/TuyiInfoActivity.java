@@ -206,7 +206,7 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
      */
     private void fresh() {
         count = 0;
-        BmobQuery<TuyiComment> query = new BmobQuery<TuyiComment>();
+        BmobQuery<TuyiComment> query = new BmobQuery<>();
         query.addWhereEqualTo("userTuyi", new BmobPointer(tuyi));
         query.include("comUser");
         query.setSkip(count);
@@ -244,7 +244,7 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
     加载更多评论
      */
     private void loadMore() {
-        BmobQuery<TuyiComment> query = new BmobQuery<TuyiComment>();
+        BmobQuery<TuyiComment> query = new BmobQuery<>();
         query.addWhereEqualTo("userTuyi", new BmobPointer(tuyi));
         query.include("comUser");
         query.setSkip(count);

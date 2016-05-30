@@ -59,7 +59,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
                     public void onSuccess() {
                         Show("感谢您的反馈");
                         if (adapter == null) {
-                            List<FeedBack> feedBacks = new ArrayList<FeedBack>();
+                            List<FeedBack> feedBacks = new ArrayList<>();
                             feedBacks.add(feedBack);
                             adapter = new FeedBackAdapter(FeedBackActivity.this,feedBacks);
                             mListView.setAdapter(adapter);

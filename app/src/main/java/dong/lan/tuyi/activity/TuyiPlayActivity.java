@@ -31,7 +31,7 @@ public class TuyiPlayActivity extends BaseActivity implements View.OnClickListen
     private TextView palyText;
     private Button prePlay,addPaly,savePlay;
     private Timer timer;
-    private ArrayList<UserTuyi> tuyis = new ArrayList<UserTuyi>();
+    private ArrayList<UserTuyi> tuyis = new ArrayList<>();
     private MediaPlayer player;
     private int index;
     private int size;

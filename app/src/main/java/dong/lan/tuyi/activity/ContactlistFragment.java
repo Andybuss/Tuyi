@@ -152,7 +152,7 @@ public class ContactlistFragment extends Fragment {
 
         //黑名单列表
         blackList = EMContactManager.getInstance().getBlackListUsernames();
-        contactList = new ArrayList<User>();
+        contactList = new ArrayList<>();
         // 获取设置contactlist
         getContactList();
 
@@ -315,7 +315,7 @@ public class ContactlistFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    BmobQuery<TUser> query = new BmobQuery<TUser>();
+                    BmobQuery<TUser> query = new BmobQuery<>();
                     query.addWhereEqualTo("tUser", tobeDeleteUser.getUsername());
                     query.findObjects(getActivity(), new FindListener<TUser>() {
                         @Override

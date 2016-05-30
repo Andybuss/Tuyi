@@ -51,11 +51,11 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
 
     public static final int GET_MAP = 0x12;
     public static final int GET_CONTAINER = 0x13;
-    private List<TUser> map = new ArrayList<TUser>();
-    private List<Marker> mapUser = new ArrayList<Marker>();
-    private List<String> ids = new ArrayList<String>();
-    private List<String> tags = new ArrayList<String>();
-    private List<TUser> users = new ArrayList<TUser>(4);
+    private List<TUser> map = new ArrayList<>();
+    private List<Marker> mapUser = new ArrayList<>();
+    private List<String> ids = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
+    private List<TUser> users = new ArrayList<>(4);
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     BitmapDescriptor marker = BitmapDescriptorFactory
@@ -124,7 +124,7 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
                 if (s.length() > 0) {
                     Show("寻找用户");
                     if (query == null)
-                        query = new BmobQuery<TUser>();
+                        query = new BmobQuery<>();
                     query.addWhereContains("username", s);
                     query.findObjects(getBaseContext(), new FindListener<TUser>() {
                         @Override

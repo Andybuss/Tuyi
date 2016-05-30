@@ -70,7 +70,7 @@ public class TuyiCommunityActivity extends Activity implements AdapterView.OnIte
     {
         count =0;
         layout.setVisibility(View.VISIBLE);
-        BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.order("-zan");
         query.setLimit(limit);
         query.findObjects(this, new FindListener<UserTuyi>() {
@@ -104,7 +104,7 @@ public class TuyiCommunityActivity extends Activity implements AdapterView.OnIte
 
     private void loadMore()
     {
-        BmobQuery<UserTuyi> query = new BmobQuery<UserTuyi>();
+        BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.order("zan");
         query.setLimit(limit);
         query.setSkip(count);

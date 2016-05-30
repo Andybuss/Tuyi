@@ -200,9 +200,9 @@ public abstract class HXSDKHelper {
         initHXOptions();
         initListener();
         
-        syncGroupsListeners = new ArrayList<HXSyncListener>();
-        syncContactsListeners = new ArrayList<HXSyncListener>();
-        syncBlackListListeners = new ArrayList<HXSyncListener>();
+        syncGroupsListeners = new ArrayList<>();
+        syncContactsListeners = new ArrayList<>();
+        syncBlackListListeners = new ArrayList<>();
         
         isGroupsSyncedWithServer = hxModel.isGroupsSynced();
         isContactsSyncedWithServer = hxModel.isContactSynced();
