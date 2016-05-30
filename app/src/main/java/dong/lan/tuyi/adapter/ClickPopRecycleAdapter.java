@@ -12,7 +12,7 @@ import java.util.List;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.bean.UserTuyi;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
  * Created by Dooze on 2015/9/26.
@@ -49,7 +49,9 @@ public class ClickPopRecycleAdapter extends RecyclerView.Adapter <ClickPopRecycl
     @Override
     public void onBindViewHolder(final PopHolder popHolder, final int pos) {
         popHolder.content.setText(tuyiList.get(pos).gettContent());
-        new MyImageAsyn(popHolder.img, MyImageAsyn.NORMAL).execute(tuyiList.get(pos).gettPic());
+        PicassoHelper.load(context,tuyiList.get(pos).gettPic())
+                .placeholder(R.drawable.gallery)
+                .into(popHolder.img);
         popHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

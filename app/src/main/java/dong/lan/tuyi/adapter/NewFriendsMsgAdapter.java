@@ -32,7 +32,6 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.DateUtils;
 import com.umeng.comm.core.beans.CommUser;
-import com.umeng.comm.core.beans.Source;
 import com.umeng.comm.core.listeners.Listeners;
 import com.umeng.comm.core.nets.Response;
 
@@ -186,7 +185,6 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                                                 EMChatManager.getInstance().acceptInvitation(msg.getFrom());
                                                 CommUser user = new CommUser("id" + list.get(0).getUsername().hashCode());
                                                 user.name = list.get(0).getUsername();
-                                                user.source = Source.SELF_ACCOUNT;
                                                 TuApplication.communitySDK.followUser(user, new Listeners.SimpleFetchListener<Response>() {
                                                     @Override
                                                     public void onComplete(Response response) {

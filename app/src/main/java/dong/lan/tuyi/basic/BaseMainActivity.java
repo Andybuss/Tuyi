@@ -19,7 +19,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 
 import applib.controller.HXSDKHelper;
 
@@ -34,16 +33,13 @@ public class BaseMainActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // onresume时，取消notification显示
         HXSDKHelper.getInstance().getNotifier().reset();
-        MobclickAgent.onResume(this);
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
 
     }
 

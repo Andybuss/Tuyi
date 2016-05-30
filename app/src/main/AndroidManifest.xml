@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
@@ -80,7 +79,7 @@
         <activity android:name=".activity.FavoriteActivity" />
         <activity android:name=".activity.AddTuyiActivity" />
         <activity android:name=".activity.MyRadarActivity" />
-        <activity android:name=".activity.MyLikeTuyiActivity" />
+        <activity android:name=".activity.MyFootStepActivity" />
         <activity
             android:name=".activity.OfflineTuyiActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -90,7 +89,7 @@
             android:name=".activity.ReEditTuyiActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.TuyiHomeActivity"
+            android:name=".activity.SettingActivity"
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activity.OfflineMapActivity" />
@@ -112,6 +111,10 @@
 
         </activity>
 
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
 
         <!-- 登陆 -->
         <activity
@@ -259,7 +262,7 @@
             android:enabled="true"
             android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
+                <action android:name="com.baidu.location.service_v2.2"/>
             </intent-filter>
         </service>
 
@@ -304,7 +307,7 @@
         <!-- 显示某个位置Feed的Activity -->
         <activity android:name="com.umeng.comm.ui.activities.LocationFeedActivity" />
         <!--相册Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.AlbumActivity" />
+        <activity android:name="com.umeng.common.ui.activities.AlbumActivity" />
         <!--已关注的话题Activity-->
         <activity android:name="com.umeng.comm.ui.activities.FollowedTopicActivity" />
 
@@ -314,8 +317,9 @@
         <activity android:name="com.umeng.comm.ui.activities.NewMsgActivity" />
 
         <!-- 图片选择相关 -->
-        <activity android:name="com.umeng.comm.ui.imagepicker.PhotoSelectorActivity" />
-        <activity android:name="com.umeng.comm.ui.imagepicker.PhotoPreviewActivity" />
+        <activity android:name="com.umeng.common.ui.imagepicker.PhotoSelectorActivity" />
+        <activity android:name="com.umeng.common.ui.imagepicker.PhotoPreviewActivity" />
+        <activity android:name="com.umeng.common.ui.activities.MessageChatActivity" />
         <!-- ###################分享相关Activity##################-->
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
@@ -323,15 +327,16 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
 
         <!-- 点击链接时跳转的Activity -->
         <activity
-            android:name="com.umeng.comm.ui.activities.BrowserActivity"
+            android:name="com.umeng.common.ui.activities.BrowserActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <!-- 设置页面activity -->
-        <activity android:name="com.umeng.comm.ui.activities.SettingActivity" />
+        <activity android:name="com.umeng.common.ui.activities.SettingActivity" />
         <!--点赞用户Activity-->
         <activity android:name="com.umeng.comm.ui.activities.LikeUsersActivity" />
         <!--搜索Activity-->
@@ -467,14 +472,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--友盟的自动更新组件-->
 
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" />
-        <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

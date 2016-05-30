@@ -15,11 +15,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.umeng.analytics.AnalyticsConfig;
-import com.umeng.analytics.MobclickAgent;
 
-import cn.bmob.v3.Bmob;
-import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.DemoHXSDKHelper;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.LoginActivity;
@@ -34,7 +30,7 @@ import dong.lan.tuyi.utils.Config;
 public class Welcome extends Activity implements GestureDetector.OnGestureListener {
 
     @ViewInject(R.id.viewflit_activity)
-    private ViewFlipper mVFActivity;
+    private ViewFlipper flipper;
     private GestureDetector mGestureDetector;
     @ViewInject(R.id.pic3)
     private ImageView go;
@@ -50,13 +46,9 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
         Config.preferences = Config.getSharePreference(this);
-        //初始化Bmob SDK
-        Bmob.initialize(Welcome.this, Constant.BmonAppID);
-        AnalyticsConfig.enableEncrypt(true); //友盟统计日志加密
-        MobclickAgent.updateOnlineConfig(getApplicationContext());//友盟统计回调数据频率
         ViewUtils.inject(this);
-        mVFActivity.setAutoStart(true);
-        mVFActivity.setFlipInterval(4000);
+//        flipper.setAutoStart(true);
+//        flipper.setFlipInterval(4000);
         initView();
     }
 
@@ -89,6 +81,7 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
                     try {
                         Thread.sleep(sleepTime);
                     } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                     startActivity(new Intent(Welcome.this, LoginActivity.class));
                     overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
@@ -123,7 +116,7 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
             pic1.setImageResource(R.drawable.load_pic);
             AlphaAnimation animation = new AlphaAnimation(0.3f, 1.0f);
             animation.setDuration(1500);
-            mVFActivity.startAnimation(animation);
+            //flipper.startAnimation(animation);
             if(getIntent().hasExtra("OFFLINE") && getIntent().getBooleanExtra("OFFLINE",false))
             {
 
@@ -172,17 +165,17 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
 
 
         if (motionEvent.getX() > motionEvent1.getX()) {
-            mVFActivity.setInAnimation(AnimationUtils.loadAnimation(this,
-                    R.anim.slide_in_from_left));
-            mVFActivity.setOutAnimation(AnimationUtils.loadAnimation(this,
-                    R.anim.slide_out_to_left));
-            mVFActivity.showNext();
-        } else if (motionEvent.getX() < motionEvent1.getX()) {
-            mVFActivity.setInAnimation(AnimationUtils.loadAnimation(this,
+            flipper.setInAnimation(AnimationUtils.loadAnimation(this,
                     R.anim.slide_in_from_right));
-            mVFActivity.setOutAnimation(AnimationUtils.loadAnimation(this,
+            flipper.setOutAnimation(AnimationUtils.loadAnimation(this,
+                    R.anim.slide_out_to_left));
+            flipper.showNext();
+        } else if (motionEvent.getX() < motionEvent1.getX()) {
+            flipper.setInAnimation(AnimationUtils.loadAnimation(this,
+                    R.anim.slide_in_from_left));
+            flipper.setOutAnimation(AnimationUtils.loadAnimation(this,
                     R.anim.slide_out_to_right));
-            mVFActivity.showPrevious();
+            flipper.showPrevious();
         } else {
             return false;
         }

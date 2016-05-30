@@ -151,7 +151,7 @@
         android:id="@+id/comment_layout_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_red_400"
+        android:background="@drawable/chat_bg"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="20dp"
@@ -162,9 +162,9 @@
 
         <TextView
             android:textSize="@dimen/text_size_17"
-            android:textColor="@color/md_white_1000"
+            android:textColor="@color/md_brown_900"
             android:gravity="center"
-            android:text="Write Your Comment Here"
+            android:text="@string/write_your_comment_here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -176,7 +176,8 @@
             android:background="@drawable/edit_text_bg"
             android:minHeight="100dp"
             android:textColor="@color/md_brown_900"
-            android:textSize="@dimen/text_size_15" />
+            android:textSize="@dimen/text_size_15"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/comment_done"

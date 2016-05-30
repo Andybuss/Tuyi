@@ -32,7 +32,7 @@ import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.util.FileUilt;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
  * Created by 桂栋 on 2015/8/13.
@@ -114,7 +114,10 @@ public class ShareTuyiActivity extends BaseActivity{
 
             }
         });
-        new MyImageAsyn(img,MyImageAsyn.NORMAL).execute(tuyi.gettPic());
+
+        PicassoHelper.load(this,tuyi.gettPic())
+                .placeholder(R.drawable.gallery)
+                .into(img);
         initData();
     }
     
@@ -179,7 +182,7 @@ public class ShareTuyiActivity extends BaseActivity{
             public void onComplete(FeedItemResponse feedItemResponse) {
                 Show("发布成功");
                 progressDialog.dismiss();
-                startActivity(new Intent(ShareTuyiActivity.this, TuyiHomeActivity.class));
+                startActivity(new Intent(ShareTuyiActivity.this, SettingActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 isGeoGet = false;
                 finish();

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/map_bar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/md_red_300">
+
+        <EditText
+            android:id="@+id/map_search_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/circle_rect_alph_white"
+            android:hint="@string/search_near_tuyi"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/map_search_bt"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/search_red" />
+    </FrameLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:id="@+id/capture"
+            android:layout_width="@dimen/tumap_icon"
+            android:layout_height="@dimen/tumap_icon"
+            android:layout_gravity="end|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/capture" />
+
+        <TextView
+            android:id="@+id/near_user"
+            android:layout_width="@dimen/tumap_icon"
+            android:layout_height="@dimen/tumap_icon"
+            android:layout_gravity="end|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/near_user" />
+
+        <TextView
+            android:id="@+id/add_look_more"
+            android:layout_width="@dimen/tumap_icon"
+            android:layout_height="@dimen/tumap_icon"
+            android:layout_gravity="end|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/map" />
+
+        <TextView
+            android:id="@+id/add_tuyi"
+            android:layout_width="@dimen/tumap_icon"
+            android:layout_height="@dimen/tumap_icon"
+            android:layout_gravity="end|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/add_tu" />
+
+        <TextView
+            android:id="@+id/switcher"
+            android:layout_width="@dimen/tumap_icon"
+            android:layout_height="@dimen/tumap_icon"
+            android:layout_gravity="end|top"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/umeng_comm_msg_notice"
+            android:gravity="center"
+            android:textColor="@color/md_green_500"
+            android:textSize="30sp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ffffff">
+
+        <TextView
+            android:id="@+id/near_wan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_red"
+            android:gravity="center"
+            android:text="乐玩"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/near_qing"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_orange"
+            android:gravity="center"
+            android:text="人情"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/near_jing"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_dark_blue"
+            android:gravity="center"
+            android:text="美景"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/near_all"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_orange"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/near_shi"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_green"
+            android:gravity="center"
+            android:text="美食"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/near_za"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_blue"
+            android:gravity="center"
+            android:text="杂记"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/focus_loc"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/circle_green"
+            android:gravity="center"
+            android:text="@string/near"
+            android:textColor="@color/md_white_1000"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/clickPopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/md_green_500"
+        android:paddingTop="16dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/click_to_show_near_tuyi"
+            android:textColor="@color/md_grey_300"
+            android:textSize="20sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/clickPopList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:background="#44ffffff"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+    </FrameLayout>
+</RelativeLayout>

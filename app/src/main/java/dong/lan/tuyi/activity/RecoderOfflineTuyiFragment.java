@@ -45,10 +45,8 @@ import dong.lan.tuyi.utils.TimeUtil;
 public class RecoderOfflineTuyiFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener, SeekBar.OnSeekBarChangeListener {
 
     private EditText content;
-    private TextView bar_left,bar_center,bar_right;
     private ImageView pic;
     private CheckBox checkBox;
-    private RadioGroup radioGroup;
     private RadioButton radioButton[] = new RadioButton[5];
     private int rbId[] = new int[]{R.id.za,R.id.shi,R.id.jing,R.id.qing,R.id.wan};
     private int checkIndex;
@@ -68,9 +66,9 @@ public class RecoderOfflineTuyiFragment extends Fragment implements View.OnClick
     }
 
     private void initView() {
-        bar_center = (TextView) getView().findViewById(R.id.bar_center);
-        bar_left = (TextView) getView().findViewById(R.id.bar_left);
-        bar_right= (TextView) getView().findViewById(R.id.bar_right);
+        TextView bar_center = (TextView) getView().findViewById(R.id.bar_center);
+        TextView bar_left = (TextView) getView().findViewById(R.id.bar_left);
+        TextView bar_right = (TextView) getView().findViewById(R.id.bar_right);
         content = (EditText) getView().findViewById(R.id.offline_content);
         checkBox = (CheckBox) getView().findViewById(R.id.offline_check);
         pic = (ImageView) getView().findViewById(R.id.offline_pic);
@@ -80,7 +78,7 @@ public class RecoderOfflineTuyiFragment extends Fragment implements View.OnClick
         bar_left.setOnClickListener(this);
         bar_center.setText("添加离线图忆");
         bar_right.setText("完成");
-        radioGroup = (RadioGroup) getView().findViewById(R.id.label_layout);
+        RadioGroup radioGroup = (RadioGroup) getView().findViewById(R.id.label_layout);
         for(int i =0;i<5;i++)
         {
             radioButton[i] = (RadioButton) getView().findViewById(rbId[i]);

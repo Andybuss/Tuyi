@@ -10,6 +10,7 @@
 
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -107,13 +108,13 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_weight="1"
-                android:background="@drawable/bg_like_addr"
+                android:background="@drawable/circle_rect_orange"
                 android:gravity="center"
                 android:onClick="login"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
                 android:text="@string/login"
-                android:textColor="@color/md_blue_grey_800"
+                android:textColor="@color/md_white_1000"
                 android:textSize="18sp" />
         </LinearLayout>
     </RelativeLayout>

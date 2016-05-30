@@ -3,6 +3,7 @@
     android:id="@+id/umeng_comm_main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/umeng_comm_default_background_color"
     android:orientation="vertical" >
 
 

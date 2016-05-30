@@ -13,8 +13,6 @@
  */
 package dong.lan.tuyi.adapter;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
@@ -31,6 +29,8 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.VoiceMessageBody;
 import com.easemob.util.EMLog;
+
+import java.io.File;
 
 import applib.controller.HXSDKHelper;
 import dong.lan.tuyi.R;
@@ -151,9 +151,9 @@ public class VoicePlayClickListener implements View.OnClickListener {
 	private void showAnimation() {
 		// play voice, and start animation
 		if (message.direct == EMMessage.Direct.RECEIVE) {
-			voiceIconView.setImageResource(R.anim.voice_from_icon);
+			voiceIconView.setImageResource(R.drawable.voice_from_icon);
 		} else {
-			voiceIconView.setImageResource(R.anim.voice_to_icon);
+			voiceIconView.setImageResource(R.drawable.voice_to_icon);
 		}
 		voiceAnimation = (AnimationDrawable) voiceIconView.getDrawable();
 		voiceAnimation.start();

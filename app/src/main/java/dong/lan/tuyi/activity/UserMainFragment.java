@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     //封装没有查询结果的时候，列表的默认显示内容
     private void initNotList() {
         UserTuyi u = new UserTuyi();
-        u.settContent("无数据，下拉刷新试试看");
+        u.settContent(getString(R.string.no_data_tip));
         notList.add(u);
     }
 
@@ -212,9 +211,6 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
         }
     }
 
-    private void Show(String s) {
-        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-    }
 
     //列表点击事件，跳转查看详情页面
     @Override
@@ -234,11 +230,11 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
         dialog.show();
         dialog.getWindow().setContentView(R.layout.dialog_set_head_img);
         TextView msg = (TextView) dialog.findViewById(R.id.dialog_msg);
-        msg.setText("主人，想怎么处置这个图忆呢？");
+        msg.setText(getString(R.string.how_to_handle_this_tuyi));
         TextView dialog_left = (TextView) dialog.findViewById(R.id.dialog_left);
         TextView dialog_right = (TextView) dialog.findViewById(R.id.dialog_right);
-        dialog_left.setText("修改");
-        dialog_right.setText("分享到图忆");
+        dialog_left.setText(getString(R.string.modefy));
+        dialog_right.setText(getString(R.string.share_to_tuyi));
         dialog_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

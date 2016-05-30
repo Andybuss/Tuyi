@@ -13,6 +13,13 @@
  */
 package dong.lan.tuyi.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,13 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.R;
@@ -38,8 +38,6 @@ import dong.lan.tuyi.widget.Sidebar;
 
 public class PickContactNoCheckboxActivity extends BaseActivity {
 
-	private ListView listView;
-	private Sidebar sidebar;
 	protected ContactAdapter contactAdapter;
 	private List<User> contactList;
 
@@ -47,8 +45,8 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pick_contact_no_checkbox);
-		listView = (ListView) findViewById(R.id.list);
-		sidebar = (Sidebar) findViewById(R.id.sidebar);
+		ListView listView = (ListView) findViewById(R.id.list);
+		Sidebar sidebar = (Sidebar) findViewById(R.id.sidebar);
 		sidebar.setListView(listView);
 		contactList = new ArrayList<>();
 		// 获取设置contactlist

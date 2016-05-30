@@ -6,14 +6,19 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Keep;
 import android.widget.RemoteViews;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.basic.Welcome;
 
 /**
- * Created by Dooze on 2015/8/19.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/8/19  11:26.
+ * Email: 760625325@qq.com
  */
+@Keep
 public class DesktopApp extends AppWidgetProvider {
 
     @Override

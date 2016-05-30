@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,9 +43,9 @@ import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.db.OfflineTuyi;
 import dong.lan.tuyi.db.Tuyi;
-import dong.lan.tuyi.util.AsynImageLoader;
 import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.utils.InputTools;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
  * Created by 桂栋 on 2015/8/8.
@@ -60,18 +59,15 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
     private BaiduMap mBaiduMap;
     private Marker cur_Marker;
     private RelativeLayout markOffLayout;
-    private ProgressBar geoProgress;
     private EditText geoText;
 
     private int from;
     public static final int NORMAL = 1;
     public static final int OFFLINE = 2;
-    private LocationClient mLocClient;
 
 
     BitmapDescriptor location_mark = BitmapDescriptorFactory.fromResource(R.drawable.location_mark);
     private boolean isFirst = true;
-    private TextView mark_done, add_mark, upload;
     private double lat, lng;
 
     @Override
@@ -112,30 +108,30 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
         pic = (ImageView) findViewById(R.id.reedit_pic);
         content = (EditText) findViewById(R.id.et_reedit);
         isOpen = (CheckBox) findViewById(R.id.reedit_isOpen_check);
-        geoProgress = (ProgressBar) findViewById(R.id.geoProgressBar);
         geoText = (EditText) findViewById(R.id.geoResultText);
         bar_right.setText("完成");
         if (from == NORMAL) {
             content.requestFocus();
             bar_center.setText("修改图忆");
-            AsynImageLoader.getInstance().showImageAsyn(pic, tuyi.gettPic()==null ? "" : tuyi.gettPic(), R.drawable.gallery,960,720, AsynImageLoader.ForNormal);
+            PicassoHelper.load(this,tuyi.gettPic())
+                    .placeholder(R.drawable.gallery)
+                    .into(pic);
         } else if (from == OFFLINE) {
             bar_center.setText("离线图忆");
             pic.setImageBitmap(BitmapFactory.decodeFile(tuyi.gettUri()));
-            add_mark = (TextView) findViewById(R.id.add_mark);
+            TextView add_mark = (TextView) findViewById(R.id.add_mark);
             add_mark.setOnClickListener(this);
             add_mark.setVisibility(View.VISIBLE);
             markOffLayout = (RelativeLayout) findViewById(R.id.markOffLayout);
             mMapView = (MapView) findViewById(R.id.bmapView);
-            mark_done = (TextView) findViewById(R.id.mark_done);
-            upload = (TextView) findViewById(R.id.reedit_upload);
+            TextView mark_done = (TextView) findViewById(R.id.mark_done);
             mark_done.setOnClickListener(this);
             mBaiduMap = mMapView.getMap();
             MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
             mBaiduMap.setMapStatus(msu);
             mBaiduMap.setMyLocationEnabled(true);
             mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
-            mLocClient = new LocationClient(this);
+            LocationClient mLocClient = new LocationClient(this);
             mLocClient.registerLocationListener(this);
             LocationClientOption option = new LocationClientOption();
             option.setOpenGps(true);// 打开gps
@@ -315,7 +311,7 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
         if (bdLocation == null || mMapView == null)
             return;
         if (isFirst) {
-            geoText.setText(bdLocation.getAddrStr()+"(点击修改)");
+            geoText.setText(bdLocation.getAddrStr());
             isFirst = false;
             LatLng loc = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
             MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(loc);

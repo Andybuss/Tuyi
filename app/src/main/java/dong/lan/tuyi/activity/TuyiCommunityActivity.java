@@ -27,8 +27,6 @@ public class TuyiCommunityActivity extends Activity implements AdapterView.OnIte
     private TuyiTopAdapter adapter;
     private int count;
     private LinearLayout layout;
-    private TextView bar_left;
-    private TextView bar_center;
     private static final int limit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +39,8 @@ public class TuyiCommunityActivity extends Activity implements AdapterView.OnIte
     {
         layout = (LinearLayout) findViewById(R.id.loading_layout);
         mListView = (XListView) findViewById(R.id.community_xlist);
-        bar_center= (TextView) findViewById(R.id.bar_center);
-        bar_left = (TextView) findViewById(R.id.bar_left);
+        TextView bar_center = (TextView) findViewById(R.id.bar_center);
+        TextView bar_left = (TextView) findViewById(R.id.bar_left);
         bar_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

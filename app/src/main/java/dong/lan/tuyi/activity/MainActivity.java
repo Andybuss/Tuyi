@@ -13,7 +13,6 @@
  */
 package dong.lan.tuyi.activity;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -21,7 +20,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -33,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -56,8 +55,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.model.LatLng;
-import com.bmob.BmobProFile;
-import com.bmob.btp.callback.UploadListener;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
@@ -85,7 +82,7 @@ import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.listeners.Listeners;
 import com.umeng.comm.core.login.LoginListener;
 import com.umeng.comm.core.nets.responses.PortraitUploadResponse;
-import com.umeng.update.UmengUpdateAgent;
+import com.umeng.comm.ui.fragments.CommunityMainFragment;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -103,6 +100,8 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
 import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.DemoHXSDKHelper;
 import dong.lan.tuyi.R;
@@ -117,10 +116,11 @@ import dong.lan.tuyi.domain.InviteMessage;
 import dong.lan.tuyi.domain.User;
 import dong.lan.tuyi.util.PhotoUtil;
 import dong.lan.tuyi.utils.AES;
+import dong.lan.tuyi.utils.CircleTransformation;
 import dong.lan.tuyi.utils.CommonUtils;
 import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.utils.Lock;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 import dong.lan.tuyi.utils.Weather;
 
@@ -129,9 +129,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     LocationClient mLocClient;  //定位的操作管理client
     public static String username;
     protected static final String TAG = "MainActivity";
-    // 未读消息textview
     private TextView unreadLabel;
-    // 未读通讯录textview
     private TextView unreadAddressLable;
 
     private ImageView head;
@@ -141,10 +139,8 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private TextView tip;
     private LinearLayout tipLayout;
     private Button[] mTabs;
-    private UserMainFragment userMainFragment;
     private ContactlistFragment contactListFragment;
     private ChatAllHistoryFragment chatHistoryFragment;
-    private SettingsFragment settingFragment;
     private Fragment[] fragments;
     private int index;
     // 当前fragment的index
@@ -159,12 +155,9 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private MyConnectionListener connectionListener = null;
 
     private MyGroupChangeListener groupChangeListener = null;
-    private SharedPreferences preferences;
     private LocationClientOption option;
 
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
 
 
     /**
@@ -194,7 +187,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         }
         setContentView(R.layout.main_slide);
         Lock.canPop = false;
-        preferences = Config.getSharePreference(this);
         initView();
         if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow) {
             showConflictDialog();
@@ -207,9 +199,13 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         // 显示所有人消息记录的fragment
         chatHistoryFragment = new ChatAllHistoryFragment();
         contactListFragment = new ContactlistFragment();
-        settingFragment = new SettingsFragment();
-        userMainFragment = new UserMainFragment();
-        fragments = new Fragment[]{chatHistoryFragment, contactListFragment, settingFragment, userMainFragment};
+        CommunityMainFragment mFeedsFragment = new CommunityMainFragment();
+        //设置Feed流页面的返回按钮不可见
+        mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
+
+
+        UserMainFragment userMainFragment = new UserMainFragment();
+        fragments = new Fragment[]{chatHistoryFragment, contactListFragment, mFeedsFragment, userMainFragment};
         // 添加显示第一个fragment
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, userMainFragment).add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(userMainFragment)
@@ -225,8 +221,8 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         option.setIsNeedAddress(true);
         mLocClient.setLocOption(option);
         mLocClient.start();
-        UmengUpdateAgent.update(this);
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
+
+        BmobUpdateAgent.update(this);
     }
 
     private void init() {
@@ -409,7 +405,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.footstep:
-                    startActivity(new Intent(MainActivity.this, MyLikeTuyiActivity.class).putExtra(MyLikeTuyiActivity.INTENT_TAG, MyLikeTuyiActivity.FROM_USER));
+                    startActivity(new Intent(MainActivity.this, MyFootStepActivity.class).putExtra(MyFootStepActivity.INTENT_TAG, MyFootStepActivity.FROM_USER));
                     overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                     break;
                 case R.id.addFriend:
@@ -433,7 +429,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             tipLayout.setVisibility(View.VISIBLE);
         }
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("我的图忆");
         toolbar.setTitleTextColor(Color.WHITE);
@@ -442,7 +438,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         toolbar.setOnMenuItemClickListener(itemClickListener);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -499,36 +495,30 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 }
             });
         }
-        head.post(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(!Config.getGuide1(getBaseContext()))
-                        {
-                            guidePop();
-                        }
-                    }
-                });
-            }
-        });
+//        head.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//        if (!Config.getGuide1(getBaseContext())) {
+//            guidePop();
+//        }
     }
 
     PopupWindow p = null;
 
-    private void guidePop()
-    {
-        View view = LayoutInflater.from(this).inflate(R.layout.guide_pop1,null);
+    private void guidePop() {
+        View view = LayoutInflater.from(this).inflate(R.layout.guide_pop1, null);
         view.findViewById(R.id.guide_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 p.dismiss();
-                Config.setGuide1(getBaseContext(),true);
+                Config.setGuide1(getBaseContext(), true);
             }
         });
-        p = new PopupWindow(view, ActionBar.LayoutParams.MATCH_PARENT,ActionBar.LayoutParams.MATCH_PARENT,true);
-        p.showAtLocation(findViewById(R.id.mainLayout), Gravity.CENTER,0,0);
+        p = new PopupWindow(view, LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.MATCH_PARENT, true);
+        p.showAtLocation(findViewById(R.id.slide_Main), Gravity.CENTER, 0, 0);
     }
 
     @Override
@@ -584,8 +574,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
 
     }
 
-    private void saveInterested()
-    {
+    private void saveInterested() {
         Interested interested = new Interested();
         interested.setZaji(0);
         interested.setLewan(0);
@@ -610,19 +599,17 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             }
         });
     }
-    private void initStatus()
-    {
+
+    private void initStatus() {
         BmobQuery<Interested> query = new BmobQuery<>();
-        query.addWhereEqualTo("user",Config.tUser);
+        query.addWhereEqualTo("user", Config.tUser);
         query.findObjects(this, new FindListener<Interested>() {
             @Override
             public void onSuccess(List<Interested> list) {
-                if(list.isEmpty())
-                {
+                if (list.isEmpty()) {
                     saveInterested();
-                }else
-                {
-                    Config.INTERESTED =list.get(0);
+                } else {
+                    Config.INTERESTED = list.get(0);
                 }
             }
 
@@ -632,15 +619,19 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             }
         });
     }
+
     private void initTuser() {
         TUser tUser = DemoDBManager.getInstance().getTUserByName(TuApplication.getInstance().getUserName());
         if (tUser != null)
-            new MyImageAsyn(head, MyImageAsyn.HEAD).execute(tUser.getHead());
+            PicassoHelper.load(this,tUser.getHead())
+            .resize(100,100).transform(new CircleTransformation(50))
+            .placeholder(R.drawable.default_avatar)
+            .error(R.drawable.default_avatar)
+            .into(head);
         tip.setText("更新用户数据中...");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 if (Config.tUser == null) {
                     count++;
                     BmobQuery<TUser> query = new BmobQuery<>();
@@ -658,15 +649,20 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                                 initUmengCommunity();
                                 if (list.get(0).getHead() == null || list.get(0).getHead().equals("")) {
                                     head.setImageResource(R.drawable.default_avatar);
-                                }
-                                else {
-                                    new MyImageAsyn(head, MyImageAsyn.HEAD).execute(list.get(0).getHead());
+                                } else {
+                                    PicassoHelper.load(MainActivity.this,list.get(0).getHead())
+                                            .resize(100,100)
+                                            .transform(new CircleTransformation(50))
+                                            .placeholder(R.drawable.default_avatar)
+                                            .error(R.drawable.default_avatar)
+                                            .into(head);
                                 }
                             }
                         }
 
                         @Override
                         public void onError(int i, String s) {
+                            tip.setText("再次更新用户数据中...");
                             initTuser();
                         }
                     });
@@ -696,7 +692,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 break;
             case R.id.btn_setting:
                 index = 2;
-                toolbar.setTitle("设置");
+                toolbar.setTitle("图忆社区");
                 break;
 
         }
@@ -881,7 +877,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toolbar_community:
-                startActivity(new Intent(MainActivity.this, TuyiHomeActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 break;
             case R.id.toolbar_tuyi:
@@ -1403,6 +1399,10 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     @Override
     protected void onResume() {
         super.onResume();
+        if (Lock.canPop && Config.isSetLock(this)) {
+            Lock.canPop = false;
+            Lock.locking(MainActivity.this, findViewById(R.id.slide_Main), Lock.UNLOCK);
+        }
         if (!isConflict && !isCurrentAccountRemoved) {
             updateUnreadLabel();
             updateUnreadAddressLable();
@@ -1411,10 +1411,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
 
         if (tipLayout.getVisibility() == View.VISIBLE && Config.tUser != null)
             tipLayout.setVisibility(View.GONE);
-        if (Lock.canPop && Config.isSetLock(this)) {
-            Lock.canPop = false;
-            Lock.locking(MainActivity.this, findViewById(R.id.slide_Main), Lock.UNLOCK);
-        }
+
         // unregister this event listener when this activity enters the
         // background
         DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
@@ -1643,23 +1640,18 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
 
     private void uploadAvatar() {
         Show("头像地址：" + path);
-        BmobProFile.getInstance(this).upload(path, new UploadListener() {
+        final BmobFile bmobFile = new BmobFile(new File(path));
+        bmobFile.upload(MainActivity.this, new UploadFileListener() {
             @Override
-            public void onSuccess(String s, String s1, BmobFile bmobFile) {
+            public void onSuccess() {
                 updateUserAvatar(bmobFile.getUrl());
             }
 
             @Override
-            public void onProgress(int i) {
-
-            }
-
-            @Override
-            public void onError(int i, String s) {
+            public void onFailure(int i, String s) {
                 Show("头像上传失败：" + s);
             }
         });
-
     }
 
     /**
@@ -1736,7 +1728,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             TuApplication.communitySDK.updateUserProtrait(bitmap, new Listeners.SimpleFetchListener<PortraitUploadResponse>() {
                 @Override
                 public void onComplete(PortraitUploadResponse portraitUploadResponse) {
-                    print("umeng update avatar" + portraitUploadResponse.mIconUrl);
                 }
             });
         } else {

@@ -11,10 +11,7 @@ import java.io.IOException;
  */
 public class FileUilt {
     private static final String TAG = "FileUtil";
-
-    private FileUilt() {
-    }
-
+    public static final String CACHE_DIR = "/Tuyi/cache";
     public static File getCacheFile(String imageUri){
         File cacheFile = null;
         try {
@@ -23,7 +20,7 @@ public class FileUilt {
                 File sdCardDir = Environment.getExternalStorageDirectory();
                 String fileName = getFileName(imageUri);
                 File dir = new File(sdCardDir.getCanonicalPath()
-                        + AsynImageLoader.CACHE_DIR);
+                        + CACHE_DIR);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }

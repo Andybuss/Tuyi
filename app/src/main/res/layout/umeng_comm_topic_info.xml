@@ -13,10 +13,10 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/circle_rect_green"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/umeng_community_topic_bg"
         android:textColor="@color/umeng_comm_toogle_color"
-        android:textOff="@string/umeng_comm_follow_topic"
-        android:textOn="@string/umeng_comm_topic_followed"
         android:textSize="@dimen/text_big16_size" />
 
     <!-- 昵称、用户等级、用户性别 -->

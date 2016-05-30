@@ -16,12 +16,12 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="12dp"
-        android:text="聊聊你的看法吧"
+        android:text="@string/tell_me_your_thinking"
         android:textColor="@color/md_brown_800"
         android:textSize="30sp" />
     <TextView
         android:gravity="center"
-        android:text="返回"
+        android:text="@string/back"
         android:drawableLeft="@drawable/umeng_comm_back"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/feed_edit"
-            android:hint="写下你的心声"
+            android:hint="@string/write_you_want"
             android:maxLines="4"
             android:paddingRight="8dp"
             android:paddingLeft="8dp"
@@ -62,10 +62,10 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
-            android:text="发送"
-            android:textColor="#aaffffff"
+            android:text="@string/button_send"
+            android:textColor="@color/md_white_1000"
             android:gravity="center"
-            android:background="@drawable/circle_green"
+            android:background="@drawable/circle_blue"
             android:layout_width="45dp"
             android:layout_height="45dp" />
     </LinearLayout>

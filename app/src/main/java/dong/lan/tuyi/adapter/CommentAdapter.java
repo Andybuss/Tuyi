@@ -10,7 +10,8 @@ import java.util.List;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.bean.TuyiComment;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.CircleTransformation;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.utils.TimeUtil;
 
 /**
@@ -35,7 +36,11 @@ public class CommentAdapter extends BaseListAdapter<TuyiComment> {
         if(url==null)
             viewHolder.head.setImageResource(R.drawable.default_avatar);
         else
-            new MyImageAsyn(viewHolder.head,0).execute(url);
+            PicassoHelper.load(mContext,url)
+                    .resize(100,100)
+                    .transform(new CircleTransformation(50))
+                    .placeholder(R.drawable.gallery)
+                    .into(viewHolder.head);
         String con =comment.getComInfo();
         if(con==null)
             con="Nothing on this!";

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="48dp"
-    android:layout_height="48dp"
-    android:indeterminate="false"
-    android:indeterminateDuration="300"
-    android:indeterminateDrawable="@drawable/refresh_progress_bar"
-    >
+    android:layout_height="48dp" >
     
 </ProgressBar>

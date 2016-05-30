@@ -7,26 +7,29 @@ import android.widget.ImageView;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.utils.Lock;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
- * Created by 桂栋 on 2015/8/15.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/8/15  18:27.
+ * Email: 760625325@qq.com
  */
 public class BigImage extends Activity {
-    private ImageView bigImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitvity_big_image);
         String url = getIntent().getStringExtra("PIC");
-        bigImage = (ImageView) findViewById(R.id.bigImage);
-        new MyImageAsyn(bigImage,MyImageAsyn.NORMAL).execute(url);
+        ImageView bigImage = (ImageView) findViewById(R.id.bigImage);
+        PicassoHelper.load(this, url)
+                .placeholder(R.drawable.gallery)
+                .into(bigImage);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
         }
         return super.onKeyDown(keyCode, event);

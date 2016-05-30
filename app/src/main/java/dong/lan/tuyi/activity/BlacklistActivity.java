@@ -27,7 +27,6 @@ import dong.lan.tuyi.R;
  * 
  */
 public class BlacklistActivity extends BaseActivity {
-	private ListView listView;
 	private BlacklistAdapater adapter;
 
 	@Override
@@ -35,7 +34,7 @@ public class BlacklistActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_black_list);
 
-		listView = (ListView) findViewById(R.id.list);
+		ListView listView = (ListView) findViewById(R.id.list);
 
 		// 从本地获取黑名单
 		 List<String> blacklist = EMContactManager.getInstance().getBlackListUsernames();

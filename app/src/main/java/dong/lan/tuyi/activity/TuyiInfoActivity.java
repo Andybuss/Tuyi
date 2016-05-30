@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -26,7 +27,7 @@ import dong.lan.tuyi.adapter.CommentAdapter;
 import dong.lan.tuyi.bean.TuyiComment;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.xlist.XListView;
 
 /**
@@ -35,8 +36,6 @@ import dong.lan.tuyi.xlist.XListView;
 public class TuyiInfoActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener, XListView.IXListViewListener, CompoundButton.OnCheckedChangeListener {
 
     private UserTuyi tuyi;
-    private TextView locDes;
-    private TextView tuyiTag;
     private EditText com_content;
 
     private CheckBox like;
@@ -68,8 +67,8 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
         TextView content = (TextView) findViewById(R.id.info_content);
         ImageView pic = (ImageView) findViewById(R.id.info_head);
         TextView addCom = (TextView) findViewById(R.id.comment_tuyi);
-        locDes = (TextView) findViewById(R.id.locDes);
-        tuyiTag = (TextView) findViewById(R.id.tuyiTag);
+        TextView locDes = (TextView) findViewById(R.id.locDes);
+        TextView tuyiTag = (TextView) findViewById(R.id.tuyiTag);
         addCom.setOnClickListener(this);
         String c = tuyi.gettContent();
         if (c == null)
@@ -105,14 +104,16 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
             if (url == null)
                 pic.setImageResource(R.drawable.signin_local_gallry);
             else
-                new MyImageAsyn(pic, 1).execute(url);
+                PicassoHelper.load(this, url)
+                        .placeholder(R.drawable.load_pic)
+                        .into(pic);
 
-            if(tuyi.getLocDes()==null || tuyi.getLocDes().equals(""))
+            if (tuyi.getLocDes() == null || tuyi.getLocDes().equals(""))
                 locDes.setVisibility(View.GONE);
             else
-            locDes.setText(tuyi.getLocDes());
+                locDes.setText(tuyi.getLocDes());
 
-            like_count.setText(tuyi.getZan() + "");
+            like_count.setText(String.valueOf(tuyi.getZan()));
             fresh();
         }
         content.setText(c);
@@ -163,13 +164,19 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
                     Config.Show(TuyiInfoActivity.this, "评论内容不能为空");
                     return;
                 }
-                TuyiComment comment = new TuyiComment();
+                final TuyiComment comment = new TuyiComment();
                 comment.setComInfo(com_content.getText().toString());
                 comment.setUserTuyi(tuyi);
                 comment.setComUser(Config.tUser);
                 comment.save(TuyiInfoActivity.this, new SaveListener() {
                     @Override
                     public void onSuccess() {
+                        if (adapter == null) {
+                            adapter = new CommentAdapter(TuyiInfoActivity.this, new ArrayList<TuyiComment>());
+                            mListView.setAdapter(adapter);
+                        }
+                        adapter.add(comment);
+                        adapter.notifyDataSetChanged();
                         Config.Show(TuyiInfoActivity.this, "评论成功");
                     }
 
@@ -182,8 +189,8 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
                     layoutShow.setVisibility(View.GONE);
                 break;
             case R.id.comment_tuyi:
-                    if (layoutShow != null)
-                        layoutShow.setVisibility(View.VISIBLE);
+                if (layoutShow != null)
+                    layoutShow.setVisibility(View.VISIBLE);
                 break;
             case R.id.comment_cancel:
                 if (layoutShow != null)
@@ -316,12 +323,10 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(isChecked)
-        {
-            like_count.setText(tuyi.getZan()+1+"");
-        }else
-        {
-            like_count.setText(tuyi.getZan()+"");
+        if (isChecked) {
+            like_count.setText(String.valueOf(tuyi.getZan() + 1));
+        } else {
+            like_count.setText(String.valueOf(tuyi.getZan()));
         }
     }
 }

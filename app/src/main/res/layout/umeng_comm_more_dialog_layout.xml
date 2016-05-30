@@ -2,72 +2,178 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp" >
-
-    <!-- 举报 -->
-
+    <!--帖子收藏-->
     <RelativeLayout
-        android:padding="12dp"
-        android:id="@+id/umeng_comm_report_layout"
+        android:id="@+id/umeng_comm_savepost_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/circle_rect_red" >
+        android:background="@drawable/umeng_comm_more_radius_top" >
 
         <RelativeLayout
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" >
 
-            <ImageView
-                android:id="@+id/umeng_comm_report_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/umeng_comm_desc"
-                android:src="@drawable/umeng_comm_report" />
+
+
+            <TextView
+                android:id="@+id/umeng_comm_savepost_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:text="@string/umeng_comm_favorites"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--分享-->
+    <RelativeLayout
+        android:id="@+id/umeng_comm_share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/umeng_comm_savepost_layout"
+        android:layout_marginTop="1px"
+        android:background="@drawable/umeng_comm_more_radius_none" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+
+
+            <TextView
+                android:id="@+id/umeng_comm_share_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
+                android:gravity="center"
+                android:text="@string/umeng_comm_share"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <!--&lt;!&ndash;用户举报&ndash;&gt;-->
+    <RelativeLayout
+        android:id="@+id/umeng_comm_userreport_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/umeng_comm_share_layout"
+        android:layout_marginTop="1px"
+        android:background="@drawable/umeng_comm_more_radius_none" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+
+            <TextView
+                android:id="@+id/umeng_comm_userreport_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
+                android:gravity="center"
+                android:text="@string/umeng_comm_spam_user"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--设计为精华-管理员可见-->
+    <RelativeLayout
+        android:id="@+id/umeng_comm_recommend_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/umeng_comm_userreport_layout"
+        android:layout_marginTop="1px"
+        android:background="@drawable/umeng_comm_more_radius_none" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+
+
+            <TextView
+                android:id="@+id/umeng_comm_recommend_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
+                android:gravity="center"
+                android:text="@string/umeng_comm_set_jing"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- 举报 -->
+
+    <RelativeLayout
+        android:id="@+id/umeng_comm_report_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/umeng_comm_recommend_layout"
+        android:layout_marginTop="1px"
+        android:background="@drawable/umeng_comm_more_radius_none" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" >
+
+
 
             <TextView
                 android:id="@+id/umeng_comm_report_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/umeng_comm_report_img"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
                 android:gravity="center"
-                android:text="举报"
+                android:text="@string/umeng_comm_spam_content"
                 android:textSize="18sp" />
+
         </RelativeLayout>
     </RelativeLayout>
 
     <!-- 删除 -->
 
     <RelativeLayout
-        android:padding="12dp"
         android:id="@+id/umeng_comm_delete_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/umeng_comm_report_layout"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle_rect_blue">
+        android:layout_marginTop="1px"
+        android:background="@drawable/umeng_comm_more_radius_none">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" >
 
-            <ImageView
-                android:id="@+id/umeng_comm_delete_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/umeng_comm_desc"
-                android:src="@drawable/umeng_comm_delete" />
 
             <TextView
                 android:id="@+id/umeng_comm_delete_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/umeng_comm_delete_img"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
                 android:gravity="center"
-                android:text="删除"
+                android:text="@string/umeng_comm_delete"
                 android:textSize="18sp" />
         </RelativeLayout>
     </RelativeLayout>
@@ -75,25 +181,18 @@
     <!-- 复制 -->
 
     <RelativeLayout
-        android:padding="12dp"
         android:id="@+id/umeng_comm_copy_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/umeng_comm_delete_layout"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle_rect_green" >
+        android:layout_marginTop="1px"
+        android:background="@drawable/umeng_comm_more_radius_bottom" >
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" >
 
-            <ImageView
-                android:id="@+id/umeng_comm_copy_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/umeng_comm_desc"
-                android:src="@drawable/umeng_comm_copy" />
 
             <TextView
                 android:id="@+id/umeng_comm_copy_tv"
@@ -101,9 +200,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/umeng_comm_copy_img"
+                android:layout_centerInParent="true"
+                android:textColor="@color/umeng_comm_color_17"
                 android:gravity="center"
-                android:text="拷贝"
+                android:text="@string/umeng_comm_copy"
                 android:textSize="18sp" />
         </RelativeLayout>
     </RelativeLayout>
@@ -125,7 +225,9 @@
             android:layout_centerHorizontal="true"
             android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="取消"
+            android:text="@string/umeng_comm_cancel"
+            android:layout_centerInParent="true"
+            android:textColor="@color/umeng_comm_color_17"
             android:textSize="18sp" />
     </RelativeLayout>
 

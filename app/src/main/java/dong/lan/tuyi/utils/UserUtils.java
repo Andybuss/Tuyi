@@ -110,9 +110,12 @@ public class UserUtils {
      */
     public static void setUserAvatar(Context context, String username, ImageView imageView){
         User user = getUserInfo(username);
-        if(user != null){
-            new MyImageAsyn(imageView,MyImageAsyn.HEAD).execute(user.getAvatar());
-            //Picasso.with(context).load(user.getAvatar()).placeholder(R.drawable.default_avatar).into(imageView);
+        if(user != null && user.getAvatar()!=null){
+            PicassoHelper.load(context,user.getAvatar())
+                    .resize(100,100)
+                    .transform(new CircleTransformation(50))
+                    .placeholder(R.drawable.default_avatar)
+                    .into(imageView);
         }else{
             Picasso.with(context).load(R.drawable.default_avatar).into(imageView);
         }

@@ -13,10 +13,14 @@ import java.util.List;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.bean.TUser;
-import dong.lan.tuyi.utils.MyImageAsyn;
+import dong.lan.tuyi.utils.CircleTransformation;
+import dong.lan.tuyi.utils.PicassoHelper;
 
 /**
- * Created by 梁桂栋 on 2015/11/7.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/11/7  12:16.
+ * Email: 760625325@qq.com
  */
 public class RadarUserAdapter extends RecyclerView.Adapter<RadarUserHolder> {
 
@@ -24,15 +28,16 @@ public class RadarUserAdapter extends RecyclerView.Adapter<RadarUserHolder> {
     private Context context;
     private List<TUser> users;
     private LayoutInflater inflater;
-    public RadarUserAdapter(Context context,List<TUser> users)
-    {
-        this.context =context;
+
+    public RadarUserAdapter(Context context, List<TUser> users) {
+        this.context = context;
         this.users = users;
         inflater = LayoutInflater.from(context);
     }
+
     @Override
     public RadarUserHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = inflater.inflate(R.layout.item_radar_user,null);
+        View view = inflater.inflate(R.layout.item_radar_user, null);
         return new RadarUserHolder(view);
     }
 
@@ -44,45 +49,48 @@ public class RadarUserAdapter extends RecyclerView.Adapter<RadarUserHolder> {
     @Override
     public void onBindViewHolder(final RadarUserHolder holder, int pos) {
         holder.name.setText(users.get(pos).getUsername());
-        if(users.get(pos).getDes()==null)
-        holder.des.setText("给Ta打个招呼吧");
+        if (users.get(pos).getDes() == null)
+            holder.des.setText(context.getString(R.string.hello_to_ta));
         else
             holder.des.setText(users.get(pos).getDes());
-        new MyImageAsyn(holder.head, MyImageAsyn.NORMAL).execute(users.get(pos).getHead());
-            holder.parent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(clickListener!=null)
+        PicassoHelper.load(context, users.get(pos).getHead())
+                .resize(100, 100)
+                .transform(new CircleTransformation(50))
+                .placeholder(R.drawable.gallery)
+                .into(holder.head);
+        holder.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null)
                     clickListener.onitemClik(users.get(holder.getPosition()));
-                }
-            });
+            }
+        });
     }
 
-    public void replaceUser(List<TUser> users)
-    {
-        this.users =users;
+    public void replaceUser(List<TUser> users) {
+        this.users = users;
     }
 
-    public interface itemClickListener
-    {
+    public interface itemClickListener {
         void onitemClik(TUser user);
     }
+
     itemClickListener clickListener;
-    public void setOnItemClickListener(itemClickListener listener)
-    {
-        clickListener =listener;
+
+    public void setOnItemClickListener(itemClickListener listener) {
+        clickListener = listener;
     }
 
 }
 
-class RadarUserHolder extends RecyclerView.ViewHolder
-{
+class RadarUserHolder extends RecyclerView.ViewHolder {
 
 
     public ImageView head;
     public TextView name;
     public TextView des;
     public RelativeLayout parent;
+
     public RadarUserHolder(View v) {
         super(v);
         parent = (RelativeLayout) v.findViewById(R.id.radar_user_parent);

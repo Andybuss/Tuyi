@@ -13,7 +13,7 @@
         android:textSize="@dimen/text_size_17"
         android:layout_marginTop="18dp"
         android:typeface="serif"
-        android:text="请求好友理由"
+        android:text="@string/invite_reason"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -40,7 +40,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:text="确定"
+        android:text="@string/ok"
         android:gravity="center"
         android:textSize="@dimen/text_size_17"
         android:background="@drawable/circle_blue"
