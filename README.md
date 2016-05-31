@@ -10,3 +10,17 @@
 ##未合并的修改请前往  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi)
 
 ## Click  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi) to see the latest merge 
+___
+## See some sreenshot
+___
+![](sreenshot/Screenshot_2016-05-13-16-56-14.png)
+___
+![](sreenshot/Screenshot_2016-05-13-16-56-23.png)
+___
+ ![](sreenshot/Screenshot_2016-05-13-16-57-09.png)
+___
+![](sreenshot/Screenshot_2016-05-13-16-57-29.png)
+___
+![](sreenshot/Screenshot_2016-05-13-16-59-29.png)
+___
+![](sreenshot/Screenshot_2016-05-13-17-20-45.png)
