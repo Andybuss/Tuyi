@@ -72,4 +72,8 @@ dependencies {
     compile files('libs/umeng_community_sdk_ui_main.jar')
     compile files('libs/okhttp-urlconnection-2.7.5.jar')
     compile files('libs/picasso-2.5.2.jar')
+    compile files('libs/BmobSDK_V3.4.7_0518.jar')
+    compile files('libs/okhttp-3.2.0.jar')
+    compile files('libs/okio-1.7.0.jar')
+    compile files('libs/org.apache.http.legacy.jar')
 }
