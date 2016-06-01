@@ -12,9 +12,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bmob.BmobProFile;
-import com.bmob.btp.callback.UploadListener;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +20,7 @@ import java.util.Map;
 
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.adapter.OfflineAdapter;
 import dong.lan.tuyi.adapter.UserMainAdapter;
@@ -165,7 +164,6 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
     boolean run = false;
     boolean load = true;
     boolean save = false;
-    String url = "";
     Thread thread;
     UserTuyi tuyi = null;
 
@@ -225,20 +223,20 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                             }
                             if (load) {
                                 load = false;
-                                BmobProFile.getInstance(getActivity()).upload(offTuyis.get(map.get(map.size() - 1)).gettUri(), new UploadListener() {
+                                final BmobFile bmobFile = new BmobFile(new File(offTuyis.get(map.get(map.size() - 1)).gettUri()));
+                                bmobFile.uploadblock(getActivity(), new UploadFileListener() {
                                     @Override
-                                    public void onError(int i, String s) {
-                                        Log.i("bmob", "文件上传失败：" + i + s);
+                                    public void onFailure(int code, String msg) {
+                                        Log.i("bmob", "文件上传失败：" + code + msg);
                                         load = true;
-                                        tip.setText("图片上传失败：" + s);
+                                        tip.setText("图片上传失败：" + msg);
                                     }
 
                                     @Override
-                                    public void onSuccess(String fileName, String urlStr, BmobFile file) {
-                                        Log.i("bmob", "文件上传成功：" + urlStr + ",可访问的文件地址：" + file.getUrl());
+                                    public void onSuccess() {
                                         save = true;
                                         tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "的图片上传成功");
-                                        urls.add(file.getUrl());
+                                        urls.add(bmobFile.getFileUrl(getActivity()));
                                         if (!urls.isEmpty())
                                             System.out.println(urls.get(urls.size() - 1));
                                         else
@@ -246,7 +244,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                     }
 
                                     @Override
-                                    public void onProgress(int i) {
+                                    public void onProgress(Integer i) {
                                         tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "上传 ：" + i + " %");
                                     }
                                 });
@@ -271,7 +269,7 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                         map.remove(map.size() - 1);
                                         load = map.size() >= 1;
                                         mListView.deferNotifyDataSetChanged();
-                                        Config.updateStatus(getActivity(),offTuyis.get(map.get(map.size() - 1)).getTAG());
+                                        Config.updateStatus(getActivity(), offTuyis.get(map.get(map.size() - 1)).getTAG());
                                     }
 
                                     @Override
