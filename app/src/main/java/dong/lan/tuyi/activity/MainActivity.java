@@ -13,6 +13,7 @@
  */
 package dong.lan.tuyi.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -20,15 +21,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -43,6 +49,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -187,6 +195,11 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         }
         setContentView(R.layout.main_slide);
         Lock.canPop = false;
+
+
+        if(Build.VERSION.SDK_INT>=23){
+            checkMyPermission();
+        }
         initView();
         if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow) {
             showConflictDialog();
@@ -223,6 +236,20 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         mLocClient.start();
 
         BmobUpdateAgent.update(this);
+    }
+
+    private void checkMyPermission() {
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            },1);
+        }
     }
 
     private void init() {
@@ -462,7 +489,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         mTabs[1] = (Button) findViewById(R.id.btn_address_list);
         mTabs[2] = (Button) findViewById(R.id.btn_setting);
         mTabs[3] = (Button) findViewById(R.id.btn_user_main);
-        // 把第一个tab设为选中状态
         mTabs[3].setSelected(true);
         currentTabIndex = 3;
         TextView user_center = (TextView) findViewById(R.id.user_center);
@@ -695,6 +721,27 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 toolbar.setTitle("图忆社区");
                 break;
 
+        }
+        if(index==2){
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
+            alphaAnimation.setDuration(500);
+            alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {}
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    toolbar.setVisibility(View.GONE);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {}
+            });
+            toolbar.setAnimation(alphaAnimation);
+
+        }else if(toolbar.getVisibility()==View.GONE){
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0f,1f);
+            alphaAnimation.setDuration(500);
+            toolbar.setAnimation(alphaAnimation);
+            toolbar.setVisibility(View.VISIBLE);
         }
         if (currentTabIndex != index) {
             FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
@@ -1735,5 +1782,8 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         }
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

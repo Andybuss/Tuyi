@@ -36,6 +36,7 @@
                 android:textSize="@dimen/umeng_comm_text_36px" />
 
             <View
+                android:visibility="gone"
                 android:id="@+id/umeng_comm_badge_view"
                 android:layout_width="@dimen/umeng_comm_dimen_12px"
                 android:layout_height="@dimen/umeng_comm_dimen_12px"
@@ -53,7 +54,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/umeng_comm_dimen_30px"
                 android:background="@drawable/umeng_comm_settingbutton_bg"
-                android:gravity="center" />
+                android:gravity="center"
+                android:clickable="false"
+                android:visibility="gone"
+                android:focusable="false"
+                android:enabled="false" />
         </RelativeLayout>
 
         <include layout="@layout/umeng_comm_divide_line" />

@@ -33,10 +33,10 @@ import dong.lan.tuyi.adapter.BaseListAdapter;
 /**
  * Created by 桂栋 on 2015/8/4.
  */
-public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapListener, View.OnClickListener, AdapterView.OnItemClickListener {
+public class OfflineMapActivity extends BaseActivity implements MKOfflineMapListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     private MKOfflineMap mOffline = null;
-    private TextView bar_left,bar_center;
+    private TextView bar_left, bar_center;
     private List<City> allCity = new ArrayList<>();
     private LinearLayout downloadLayout;
     private TextView status;
@@ -48,6 +48,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
      */
     private ArrayList<MKOLUpdateElement> localMapList = null;
     private LocalMapAdapter lAdapter = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
         mOffline.init(this);
         initView();
     }
+
     private void initView() {
 
         bar_center = (TextView) findViewById(R.id.bar_center);
@@ -88,15 +90,17 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
         ListView allCityList = (ListView) findViewById(R.id.allcitylist);
         // 获取所有支持离线地图的城市
-        ArrayList<String> allCities = new ArrayList<>();
         ArrayList<MKOLSearchRecord> records2 = mOffline.getOfflineCityList();
-            for (MKOLSearchRecord r : records2) {
-                City city = new City(r.cityName,r.cityID,r.size);
-                allCity.add(city);
-//                allCities.add(r.cityName + "(" + r.cityID + ")" + "   --"
-//                        + this.formatDataSize(r.size));
-            }
-        allCityAdapter adapter = new allCityAdapter(this,allCity);
+        if (records2 == null) {
+            Show("没有离线地图");
+            finish();
+            return;
+        }
+        for (MKOLSearchRecord r : records2) {
+            City city = new City(r.cityName, r.cityID, r.size);
+            allCity.add(city);
+        }
+        allCityAdapter adapter = new allCityAdapter(this, allCity);
         allCityList.setAdapter(adapter);
         allCityList.setOnItemClickListener(this);
 
@@ -156,22 +160,21 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
             searchPro.setVisibility(View.GONE);
             return;
         }
-        ID=records.get(0).cityID;
-        Show(searchName.getText().toString()+"搜索成功~");
+        ID = records.get(0).cityID;
+        Show(searchName.getText().toString() + "搜索成功~");
         searchPro.setVisibility(View.GONE);
-        if(downloadLayout!=null)
+        if (downloadLayout != null)
             downloadLayout.setVisibility(View.VISIBLE);
     }
 
     /**
      * 开始下载
-     *
      */
     public void start(int id) {
         mOffline.start(id);
         downloadLayout.setVisibility(View.VISIBLE);
         status = (TextView) findViewById(R.id.state);
-        ID=id;
+        ID = id;
         clickLocalMapListButton(null);
         Toast.makeText(this, "开始下载离线地图", Toast.LENGTH_SHORT)
                 .show();
@@ -180,7 +183,6 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
     /**
      * 暂停下载
-     *
      */
     public void stop(int id) {
         mOffline.pause(id);
@@ -191,7 +193,6 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
     /**
      * 删除离线地图
-     *
      */
     public void remove(int id) {
         mOffline.remove(id);
@@ -199,25 +200,9 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
                 .show();
         updateView();
         downloadLayout.setVisibility(View.GONE);
-        ID=-1;
+        ID = -1;
     }
 
-    /**
-     * 从SD卡导入离线地图安装包
-     *
-     * @param view
-     */
-    public void importFromSDCard(View view) {
-        int num = mOffline.importOfflineData();
-        String msg;
-        if (num == 0) {
-            msg = "没有导入离线包，这可能是离线包放置位置不正确，或离线包已经导入过";
-        } else {
-            msg = String.format("成功导入 %d 个离线包，可以在下载管理查看", num);
-        }
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        updateView();
-    }
 
     /**
      * 更新状态显示
@@ -281,7 +266,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
                 Log.d("OfflineDemo", String.format("add offlinemap num:%d", state));
                 break;
             case MKOfflineMap.TYPE_VER_UPDATE:
-                 //版本更新提示
+                //版本更新提示
                 // MKOLUpdateElement e = mOffline.getUpdateInfo(state);
 
                 break;
@@ -291,8 +276,7 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.bar_left:
                 finish();
                 break;
@@ -315,9 +299,9 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        new android.app.AlertDialog.Builder(OfflineMapActivity.this,R.style.DialogMDStyle).setTitle("下载")
-                .setMessage("下载："+allCity.get(position).cityName+"?")
-                .setNegativeButton("取消",null)
+        new android.app.AlertDialog.Builder(OfflineMapActivity.this, R.style.DialogMDStyle).setTitle("下载")
+                .setMessage("下载：" + allCity.get(position).cityName + "?")
+                .setNegativeButton("取消", null)
                 .setPositiveButton("下载", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -387,17 +371,17 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
                     Intent intent = new Intent();
                     intent.putExtra("x", e.geoPt.longitude);
                     intent.putExtra("y", e.geoPt.latitude);
-                    intent.putExtra("from","OFFLINE");
+                    intent.putExtra("from", "OFFLINE");
                     intent.setClass(OfflineMapActivity.this, TuMapActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.fade_out,R.anim.fade_in);
+                    overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 }
             });
         }
 
     }
-    public class allCityAdapter extends BaseListAdapter<City>
-    {
+
+    public class allCityAdapter extends BaseListAdapter<City> {
 
         public allCityAdapter(Context context, List<City> list) {
             super(context, list);
@@ -409,38 +393,37 @@ public class OfflineMapActivity  extends  BaseActivity implements MKOfflineMapLi
                 convertView = mInflater.inflate(R.layout.item_offline_citylist, null);
             }
             final City city = allCity.get(position);
-            if(city==null)
-                return  null;
+            if (city == null)
+                return null;
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.cityID = dong.lan.tuyi.adapter.ViewHolder.get(convertView,R.id.city_id);
-            viewHolder.cityName = dong.lan.tuyi.adapter.ViewHolder.get(convertView,R.id.city_name);
-            viewHolder.citySize = dong.lan.tuyi.adapter.ViewHolder.get(convertView,R.id.city_size);
-            viewHolder.cityID.setText(city.cityID+"");
+            viewHolder.cityID = dong.lan.tuyi.adapter.ViewHolder.get(convertView, R.id.city_id);
+            viewHolder.cityName = dong.lan.tuyi.adapter.ViewHolder.get(convertView, R.id.city_name);
+            viewHolder.citySize = dong.lan.tuyi.adapter.ViewHolder.get(convertView, R.id.city_size);
+            viewHolder.cityID.setText(city.cityID + "");
             viewHolder.cityName.setText(city.cityName);
             viewHolder.citySize.setText(getFormatDataSize(city.citySize));
             return convertView;
         }
     }
 
-    private String getFormatDataSize(int si)
-    {
-        return  this.formatDataSize(si);
+    private String getFormatDataSize(int si) {
+        return this.formatDataSize(si);
     }
-    private static class City
-    {
 
-        public City(String cityName,int ID,int citySize)
-        {
-            this.cityName =cityName;
-            this.cityID =ID;
+    private static class City {
+
+        public City(String cityName, int ID, int citySize) {
+            this.cityName = cityName;
+            this.cityID = ID;
             this.citySize = citySize;
         }
+
         public String cityName;
         public int cityID;
         public int citySize;
     }
-    public static class ViewHolder
-    {
+
+    public static class ViewHolder {
         TextView cityName;
         TextView cityID;
         TextView citySize;

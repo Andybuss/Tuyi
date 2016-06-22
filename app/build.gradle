@@ -49,7 +49,6 @@ dependencies {
     compile files('libs/umeng_social_sdk.jar')
     compile files('libs/SocialSDK_QQZone_3.jar')
     compile files('libs/xUtils-2.6.14.jar')
-    compile files('libs/okhttp-2.4.0.jar')
     compile 'com.android.support:support-v4:23.3.0'
     compile files('libs/SocialSDK_WeiXin_1.jar')
     compile files('libs/SocialSDK_WeiXin_2.jar')
@@ -72,8 +71,8 @@ dependencies {
     compile files('libs/umeng_community_sdk_ui_main.jar')
     compile files('libs/okhttp-urlconnection-2.7.5.jar')
     compile files('libs/picasso-2.5.2.jar')
-    compile files('libs/BmobSDK_V3.4.7_0518.jar')
     compile files('libs/okhttp-3.2.0.jar')
     compile files('libs/okio-1.7.0.jar')
     compile files('libs/org.apache.http.legacy.jar')
+    compile files('libs/BmobSDK_V3.4.7_0527.jar')
 }

@@ -20,10 +20,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Vibrator;
 import android.support.multidex.MultiDexApplication;
-import android.widget.TextView;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.EMCallBack;
@@ -52,21 +49,10 @@ public class TuApplication extends MultiDexApplication {
     private static TuApplication instance;
     public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
 
-
     //百度地图定位
     public LocationClient mLocationClient;
-    public MyLocationListener mMyLocationListener;
-
-    public TextView mLocationResult, logMsg;
-    public TextView trigger, exit;
     public Vibrator mVibrator;
-
-
     public static CommunitySDK communitySDK;
-
-
-    // login user name
-    public final String PREF_USERNAME = "username";
 
     /**
      * 当前用户nickname,为了苹果推送不是userid而是昵称
@@ -99,11 +85,8 @@ public class TuApplication extends MultiDexApplication {
 
 
 
-
-        SDKInitializer.initialize(this);// 百度地图 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+        SDKInitializer.initialize(this.getApplicationContext());
         mLocationClient = new LocationClient(this.getApplicationContext());
-        mMyLocationListener = new MyLocationListener();
-        mLocationClient.registerLocationListener(mMyLocationListener);
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         hxSDKHelper.onInit(applicationContext);
         initShare();
@@ -205,56 +188,6 @@ public class TuApplication extends MultiDexApplication {
         PlatformConfig.setQQZone( Constant.QQ_APPID, Constant.QQ_APPKEY);
     }
 
-    /**
-     * 实现实位回调监听
-     */
-    public class MyLocationListener implements BDLocationListener {
 
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            //Receive Location
-            StringBuffer sb = new StringBuffer(256);
-            sb.append("time : ");
-            sb.append(location.getTime());
-            sb.append("\nerror code : ");
-            sb.append(location.getLocType());
-            sb.append("\nlatitude : ");
-            sb.append(location.getLatitude());
-            sb.append("\nlontitude : ");
-            sb.append(location.getLongitude());
-            sb.append("\nradius : ");
-            sb.append(location.getRadius());
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {
-                sb.append("\nspeed : ");
-                sb.append(location.getSpeed());
-                sb.append("\nsatellite : ");
-                sb.append(location.getSatelliteNumber());
-                sb.append("\ndirection : ");
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
-                sb.append(location.getDirection());
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
-                //运营商信息
-                sb.append("\noperationers : ");
-                sb.append(location.getOperators());
-            }
-            logMsg(sb.toString());
-        }
-
-        /**
-         * 显示请求字符串
-         */
-        public void logMsg(String str) {
-            try {
-                if (mLocationResult != null)
-                    mLocationResult.setText(str);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
 
 }

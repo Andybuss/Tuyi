@@ -100,7 +100,7 @@
                 android:paddingTop="7dp"
                 android:text="@string/register"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
             <Button
                 android:layout_width="0dp"
@@ -108,14 +108,14 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:layout_weight="1"
-                android:background="@drawable/circle_rect_orange"
+                android:background="@drawable/circle_rect_green"
                 android:gravity="center"
                 android:onClick="login"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
                 android:text="@string/login"
                 android:textColor="@color/md_white_1000"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 

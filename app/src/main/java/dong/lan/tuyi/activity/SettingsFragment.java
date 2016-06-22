@@ -44,7 +44,6 @@ import com.umeng.comm.core.utils.CommonUtils;
 
 import applib.controller.HXSDKHelper;
 import cn.bmob.v3.listener.UpdateListener;
-import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.DemoHXSDKModel;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
@@ -393,15 +392,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
         });
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (((MainActivity) getActivity()).isConflict) {
-            outState.putBoolean("isConflict", true);
-        } else if (((MainActivity) getActivity()).getCurrentAccountRemoved()) {
-            outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
-        }
-    }
+
 
     private void Show(String s) {
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();

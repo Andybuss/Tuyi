@@ -124,9 +124,6 @@ public class ShareTuyiActivity extends BaseActivity{
 
 
 
-    private void showAtFriendsDialog() {
-
-    }
     GeoCoder mSearch;
     boolean isGeoGet =false;
     Uri uri;
