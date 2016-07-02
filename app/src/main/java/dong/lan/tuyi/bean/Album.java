@@ -1,6 +1,6 @@
 package dong.lan.tuyi.bean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.v3.BmobObject;
 
@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobObject;
  */
 public class Album extends BmobObject {
     TUser user;
-    ArrayList<UserTuyi> tuyis;
+    List<UserTuyi> tuyis;
     String musicType;
 
     public String getMusicType() {
@@ -28,11 +28,11 @@ public class Album extends BmobObject {
         this.user = user;
     }
 
-    public ArrayList<UserTuyi> getTuyis() {
+    public List<UserTuyi> getTuyis() {
         return tuyis;
     }
 
-    public void setTuyis(ArrayList<UserTuyi> tuyis) {
+    public void setTuyis(List<UserTuyi> tuyis) {
         this.tuyis = tuyis;
     }
 }

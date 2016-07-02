@@ -12,6 +12,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.TuApplication;
@@ -133,20 +134,18 @@ public class Config {
     }
 
 
-    public static void updateTUser( Context context,TUser user, LatLng latLng) {
+    public static void updateTUser(final Context context, TUser user, LatLng latLng) {
         TUser tUser = new TUser();
         tUser.setObjectId(user.getObjectId());
         tUser.setDes(user.getDes());
         BmobGeoPoint p = new BmobGeoPoint(latLng.longitude, latLng.latitude);
         tUser.setLoginPoint(p);
-        tUser.update(context, new UpdateListener() {
+        tUser.update(new UpdateListener() {
             @Override
-            public void onSuccess() {
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                System.out.println(i + "  " + s);
+            public void done(BmobException e) {
+                if(e!=null){
+                    Show(context,e.getMessage());
+                }
             }
         });
     }
@@ -172,15 +171,12 @@ public class Config {
                 break;
 
         }
-        interested.update(context, new UpdateListener() {
+        interested.update(new UpdateListener() {
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                updateStatus(context, tag);
+            public void done(BmobException e) {
+                if(e!=null){
+                    updateStatus(context, tag);
+                }
             }
         });
     }
@@ -189,19 +185,15 @@ public class Config {
         if (Config.INTERESTED == null) {
             BmobQuery<Interested> query = new BmobQuery<>();
             query.addWhereEqualTo("user", Config.tUser);
-            query.findObjects(context, new FindListener<Interested>() {
+            query.findObjects(new FindListener<Interested>() {
                 @Override
-                public void onSuccess(List<Interested> list) {
-                    if (!list.isEmpty()) {
-                        Config.INTERESTED = list.get(0);
-                        updateS(context,list.get(0),tag);
+                public void done(List<Interested> list, BmobException e) {
+                    if(e==null){
+                        if (!list.isEmpty()) {
+                            Config.INTERESTED = list.get(0);
+                            updateS(context, list.get(0), tag);
+                        }
                     }
-
-                }
-
-                @Override
-                public void onError(int i, String s) {
-
                 }
             });
         } else {

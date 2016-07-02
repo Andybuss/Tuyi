@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
@@ -31,7 +32,7 @@ public class TuyiPlayActivity extends BaseActivity implements View.OnClickListen
     private TextView palyText;
     private Button prePlay,addPaly,savePlay;
     private Timer timer;
-    private ArrayList<UserTuyi> tuyis = new ArrayList<>();
+    private List<UserTuyi> tuyis = new ArrayList<>();
     private MediaPlayer player;
     private int index;
     private int size;
@@ -64,22 +65,26 @@ public class TuyiPlayActivity extends BaseActivity implements View.OnClickListen
 
     private void savePlay()
     {
+        if(tuyis==null || tuyis.size()==0){
+            Show("没有选择图忆呢");
+            return;
+        }
         savePlay.setEnabled(false);
         Album album = new Album();
         album.setMusicType("0");
         album.setUser(Config.tUser);
-        album.setTuyis(tuyis);
-        album.save(this, new SaveListener() {
+        album.addAllUnique("tuyis",tuyis);
+        album.save(new SaveListener<String>() {
             @Override
-            public void onSuccess() {
-                Show("哈哈~保存成功");
-                savePlay.setEnabled(true);
-            }
+            public void done(String s, BmobException e) {
+                if(e==null){
+                    Show("哈哈~保存成功");
+                    savePlay.setEnabled(true);
+                }else{
+                    Show("保存失败");
+                    savePlay.setEnabled(true);
+                }
 
-            @Override
-            public void onFailure(int i, String s) {
-                Show("保存失败");
-                savePlay.setEnabled(true);
             }
         });
 

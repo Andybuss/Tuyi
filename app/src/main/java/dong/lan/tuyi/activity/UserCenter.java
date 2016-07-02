@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
@@ -42,7 +43,10 @@ import dong.lan.tuyi.utils.PicassoHelper;
 import dong.lan.tuyi.xlist.XListView;
 
 /**
- * Created by 桂栋 on 2015/7/18.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/7/18  16:22.
+ * Email: 760625325@qq.com
  */
 public class UserCenter extends BaseActivity implements XListView.IXListViewListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
@@ -79,23 +83,22 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
             BmobQuery<TUser> query = new BmobQuery<>();
             query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
             query.addWhereEqualTo("username", user.getUsername());
-            query.findObjects(this, new FindListener<TUser>() {
+            query.findObjects(new FindListener<TUser>() {
                 @Override
-                public void onSuccess(List<TUser> list) {
-                    if (!list.isEmpty()) {
-                        user = list.get(0);
-                        initDate();
-                        getUserTuyi();
-                    } else {
-                        Show(getString(R.string.can_not_get_user_data));
+                public void done(List<TUser> list, BmobException e) {
+                    if(e==null){
+                        if (!list.isEmpty()) {
+                            user = list.get(0);
+                            initDate();
+                            getUserTuyi();
+                        } else {
+                            Show(getString(R.string.can_not_get_user_data));
+                            dismiss();
+                        }
+                    }else{
+                        Show("获取用户数据失败 " + e.getMessage());
                         dismiss();
                     }
-                }
-
-                @Override
-                public void onError(int i, String s) {
-                    Show("获取用户数据失败 " + s);
-                    dismiss();
                 }
             });
         } else {
@@ -182,43 +185,42 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         query.order("createAt");
         if (hasLoad)
             query.include("tUser");
-        query.findObjects(this, new FindListener<UserTuyi>() {
+        query.findObjects(new FindListener<UserTuyi>() {
             @Override
-            public void onSuccess(List<UserTuyi> list) {
-                dismiss();
-                if (list.isEmpty()) {
-                    if (isFirst) {
-                        Show(user.getUsername() + " 没有公开的图忆");
-                        isFirst = false;
-                    }
+            public void done(List<UserTuyi> list, BmobException e) {
+                if(e==null){
+                    dismiss();
+                    if (list.isEmpty()) {
+                        if (isFirst) {
+                            Show(user.getUsername() + " 没有公开的图忆");
+                            isFirst = false;
+                        }
 
-                } else {
-                    if (hasLoad && list.get(0).gettUser() != null) {
-                        ContentValues values = new ContentValues();
-                        values.put(TUserDao.COLUMN_IS_OPEN, list.get(0).gettUser().isPublicMyPoint() ? "1" : "0");
-                        values.put(TUserDao.COLUMN_NAME_AVATAR, list.get(0).gettUser().getHead());
-                        values.put(TUserDao.COLUMN_LAT, list.get(0).gettUser().getLoginPoint().getLatitude());
-                        values.put(TUserDao.COLUMN_LONG, list.get(0).gettUser().getLoginPoint().getLongitude());
-                        DemoDBManager.getInstance().updateTuser(list.get(0).gettUser().getUsername(), values);
-                        hasLoad = false;
+                    } else {
+                        if (hasLoad && list.get(0).gettUser() != null) {
+                            ContentValues values = new ContentValues();
+                            values.put(TUserDao.COLUMN_IS_OPEN, list.get(0).gettUser().isPublicMyPoint() ? "1" : "0");
+                            values.put(TUserDao.COLUMN_NAME_AVATAR, list.get(0).gettUser().getHead());
+                            values.put(TUserDao.COLUMN_LAT, list.get(0).gettUser().getLoginPoint().getLatitude());
+                            values.put(TUserDao.COLUMN_LONG, list.get(0).gettUser().getLoginPoint().getLongitude());
+                            DemoDBManager.getInstance().updateTuser(list.get(0).gettUser().getUsername(), values);
+                            hasLoad = false;
+                        }
+                        for (int i = 0; i < list.size(); i++)
+                            tuyilist.add(list.get(i).gettPic());
+                        if (CLICK_STATUS != -1)
+                            adapter = new UserCenterAdapter(UserCenter.this, list, false);
+                        else adapter = new UserCenterAdapter(UserCenter.this, list, true);
+                        skip = list.size();
+                        if (skip < limit)
+                            mListView.setPullLoadEnable(false);
+                        mListView.setAdapter(adapter);
+                        mListView.setPullLoadEnable(true);
                     }
-                    for (int i = 0; i < list.size(); i++)
-                        tuyilist.add(list.get(i).gettPic());
-                    if (CLICK_STATUS != -1)
-                        adapter = new UserCenterAdapter(UserCenter.this, list, false);
-                    else adapter = new UserCenterAdapter(UserCenter.this, list, true);
-                    skip = list.size();
-                    if (skip < limit)
-                        mListView.setPullLoadEnable(false);
-                    mListView.setAdapter(adapter);
-                    mListView.setPullLoadEnable(true);
+                    refreshPull();
+                }else{
+                    dismiss();
                 }
-                refreshPull();
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                dismiss();
             }
         });
     }
@@ -229,28 +231,27 @@ public class UserCenter extends BaseActivity implements XListView.IXListViewList
         query.setLimit(limit);
         query.order("createAt");
         query.and(queries);
-        query.findObjects(this, new FindListener<UserTuyi>() {
+        query.findObjects(new FindListener<UserTuyi>() {
             @Override
-            public void onSuccess(List<UserTuyi> list) {
-                if (list.isEmpty()) {
-                    Show("没有更多啦");
-                    mListView.setPullLoadEnable(false);
-                } else {
-                    adapter.addAll(list);
-                    mListView.setAdapter(adapter);
-                    mListView.setPullLoadEnable(true);
-                    mListView.setSelection(skip);
+            public void done(List<UserTuyi> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Show("没有更多啦");
+                        mListView.setPullLoadEnable(false);
+                    } else {
+                        adapter.addAll(list);
+                        mListView.setAdapter(adapter);
+                        mListView.setPullLoadEnable(true);
+                        mListView.setSelection(skip);
 
-                    skip += list.size();
-                    for (int i = 0; i < list.size(); i++)
-                        tuyilist.add(list.get(i).gettPic());
+                        skip += list.size();
+                        for (int i = 0; i < list.size(); i++)
+                            tuyilist.add(list.get(i).gettPic());
+                    }
+                    refreshLoad();
+                }else{
+                    Show(e.getMessage());
                 }
-                refreshLoad();
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
         });
     }

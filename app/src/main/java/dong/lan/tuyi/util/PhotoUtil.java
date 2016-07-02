@@ -27,6 +27,7 @@ import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,14 +37,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PhotoUtil {
+public final class PhotoUtil {
 
 	private static final String TAG = "PicUtil";
 
 	private PhotoUtil() {
 	}
 
-
+	public static byte[] Bitmap2Bytes(Bitmap bm){
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		return baos.toByteArray();
+	}
 	/**
 	 * 回收垃圾 recycle
 	 * 
@@ -154,13 +159,11 @@ public class PhotoUtil {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-
 		File file = new File(dirpath, filename);
 		// 若存在即删除-默认只保留一张
 		if (isDelete && file.exists()) {
 			file.delete();
 		}
-
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -174,8 +177,6 @@ public class PhotoUtil {
 			if (bitmap.compress(Bitmap.CompressFormat.PNG, 60, out)) {
 				out.flush();
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

@@ -15,10 +15,12 @@ package dong.lan.tuyi.db;
 
 import android.content.Context;
 
+import com.easemob.easeui.domain.EaseUser;
+
 import java.util.List;
 import java.util.Map;
 
-import dong.lan.tuyi.domain.User;
+import dong.lan.tuyi.domain.RobotUser;
 
 
 public class UserDao {
@@ -38,7 +40,6 @@ public class UserDao {
 	
 	
 	public UserDao(Context context) {
-	    DemoDBManager.getInstance().onInit(context);
 	}
 
 	/**
@@ -46,7 +47,7 @@ public class UserDao {
 	 * 
 	 * @param contactList
 	 */
-	public void saveContactList(List<User> contactList) {
+	public void saveContactList(List<EaseUser> contactList) {
 	    DemoDBManager.getInstance().saveContactList(contactList);
 	}
 
@@ -55,7 +56,7 @@ public class UserDao {
 	 * 
 	 * @return
 	 */
-	public Map<String, User> getContactList() {
+	public Map<String, EaseUser> getContactList() {
 		
 	    return DemoDBManager.getInstance().getContactList();
 	}
@@ -72,7 +73,7 @@ public class UserDao {
 	 * 保存一个联系人
 	 * @param user
 	 */
-	public void saveContact(User user){
+	public void saveContact(EaseUser user){
 	    DemoDBManager.getInstance().saveContact(user);
 	}
 	
@@ -92,4 +93,11 @@ public class UserDao {
         return DemoDBManager.getInstance().getDisabledIds();
     }
     
+    public Map<String, RobotUser> getRobotUser(){
+    	return DemoDBManager.getInstance().getRobotList();
+    }
+    
+    public void saveRobotUser(List<RobotUser> robotList){
+    	DemoDBManager.getInstance().saveRobotList(robotList);
+    }
 }

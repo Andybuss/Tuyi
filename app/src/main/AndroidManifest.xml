@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="dong.lan.tuyi">
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="22" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="23" />
 
     <!-- 使用相机 -->
     <uses-feature
@@ -26,6 +25,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -39,29 +39,25 @@
     <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
     <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
-    <!-- SDK1.5需要android.permission.GET_TASKS权限判断本程序是否为当前运行的应用? -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!-- 来电消音 -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <application
         android:name=".TuApplication"
         android:icon="@drawable/logo"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:label="@string/app"
+        android:theme="@style/BaseAppTheme">
 
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="doolan#tuyi" />
-        <!-- 声明sdk所需的service SDK核心功能-->
         <service android:name="com.easemob.chat.EMChatService" />
 
 
         <receiver
             android:name=".activity.DesktopApp"
-            android:label="@string/app_name">
+            android:label="@string/app">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -71,6 +67,7 @@
         </receiver>
 
         <activity android:name=".activity.MyInterestedActivity" />
+        <activity android:name=".activity.UserMainActivity" />
         <activity
             android:name=".activity.SelectTuyiActivity"
             android:theme="@style/DialogActivity" />
@@ -111,47 +108,48 @@
 
         </activity>
 
+        <activity android:name="com.easemob.easeui.ui.EaseBaiduMapActivity"/>
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
-
+        <activity android:name=".activity.UserProfileActivity"/>
         <!-- 登陆 -->
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <!-- 注册 -->
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <!-- 聊天页面 -->
         <activity
             android:name=".activity.ChatActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustResize" />
         <!-- 添加好友 -->
         <activity
             android:name=".activity.AddContactActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="stateVisible" />
         <!-- 群组详情 -->
         <activity
             android:name=".activity.GroupDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
         <!-- 群组列表 -->
         <activity
             android:name=".activity.GroupsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustPan" />
 
 
@@ -159,7 +157,7 @@
         <activity
             android:name=".activity.NewGroupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustPan" />
         <!-- 退出群组提示框 -->
         <activity
@@ -170,90 +168,143 @@
         <activity
             android:name=".activity.GroupPickContactsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustPan" />
         <!-- 地图 -->
         <activity
             android:name=".activity.BaiduMapActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
 
         <!-- 新的朋友邀请消息页面 -->
         <activity
             android:name=".activity.NewFriendsMsgActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
         <!-- 转发消息用户列表页面 -->
         <activity
             android:name=".activity.ForwardMessageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustPan" />
         <!-- 自定义的contextmenu -->
         <activity
             android:name=".activity.ContextMenu"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle" />
+            android:theme="@style/MyAlertDialogStyle" />
         <!-- 自定义的alertdialog -->
         <activity
             android:name=".activity.AlertDialog"
             android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle" />
+            android:theme="@style/MyAlertDialogStyle" />
         <!-- 显示下载大图页面 -->
         <activity
             android:name=".activity.ShowBigImage"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
         <!-- 下载文件 -->
         <activity
             android:name=".activity.ShowNormalFileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
         <!-- 黑名单 -->
         <activity
             android:name=".activity.BlacklistActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
 
         <!-- 公开的群聊列表 -->
         <activity
             android:name=".activity.PublicGroupsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".activity.PublicChatRoomsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="adjustPan" />
 
-        <!-- 语音通话 -->
-        <!-- 视频通话 -->
-        <!-- 群聊简单信息 -->
-        <activity
-            android:name=".activity.GroupSimpleDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
         <!-- 群组黑名单用户列表 -->
         <activity
             android:name=".activity.GroupBlacklistActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
         <activity
             android:name=".activity.PublicGroupsSeachActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide" />
+            android:theme="@style/ac_base_theme" />
         <activity
             android:name=".activity.EditActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".activity.ShowVideoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
+            android:theme="@style/ac_base_theme"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+
+        <!--红包相关界面start-->
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPRedPacketActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan|stateVisible"
+            />
+
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPRecordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"
+            />
+
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPWebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPChangeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
+
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPBankCardActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
+
+        <activity
+            android:name="com.easemob.redpacketui.ui.activity.RPGroupMemberActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            />
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            />
+        <!--红包相关界面end-->
 
 
         <!-- 百度地图所需的service -->
@@ -261,9 +312,6 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"/>
-            </intent-filter>
         </service>
 
         <meta-data
@@ -285,193 +333,78 @@
         </receiver>
 
 
-        <!-- 友盟-->
-        <!-- feed主页面 -->
         <activity
-            android:name="com.umeng.comm.ui.activities.FeedsActivity"
+            android:name="com.umeng.simplify.ui.activities.FeedDetailActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
-            android:taskAffinity="com.umeng.community"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- 发送feedActivity -->
-        <activity
-            android:name="com.umeng.comm.ui.activities.PostFeedActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- 转发页面 -->
-        <activity
-            android:name="com.umeng.comm.ui.activities.ForwardActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <!-- 显示某个位置Feed的Activity -->
-        <activity android:name="com.umeng.comm.ui.activities.LocationFeedActivity" />
-        <!--相册Activity-->
+
+        <activity android:name="com.umeng.common.ui.activities.SettingActivity" />
+
+
+
         <activity android:name="com.umeng.common.ui.activities.AlbumActivity" />
-        <!--已关注的话题Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.FollowedTopicActivity" />
 
-        <!--通知Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.NotificationActivity" />
-        <!--新消息Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.NewMsgActivity" />
 
-        <!-- 图片选择相关 -->
         <activity android:name="com.umeng.common.ui.imagepicker.PhotoSelectorActivity" />
         <activity android:name="com.umeng.common.ui.imagepicker.PhotoPreviewActivity" />
-        <activity android:name="com.umeng.common.ui.activities.MessageChatActivity" />
-        <!-- ###################分享相关Activity##################-->
         <activity
-            android:name="com.umeng.socialize.view.ShareActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask"
-            android:noHistory="true"
-            android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" >
-        </activity>
+            android:name="com.umeng.common.ui.activities.MessageChatActivity"
+            android:windowSoftInputMode="adjustResize" />
 
-        <!-- 点击链接时跳转的Activity -->
+
+        <!--精简版-->
+        <activity
+            android:name="com.umeng.simplify.ui.activities.FindActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.NewMsgActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.SettingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.UserInfoActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.TopicDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.PostFeedActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.LoginSimplifyActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+        <activity
+            android:name="com.umeng.simplify.ui.activities.FeedsActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity
             android:name="com.umeng.common.ui.activities.BrowserActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <!-- 设置页面activity -->
-        <activity android:name="com.umeng.common.ui.activities.SettingActivity" />
-        <!--点赞用户Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.LikeUsersActivity" />
-        <!--搜索Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.SearchActivity" />
-        <!--引导页Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.GuideActivity" />
-        <!--相关用户Activity-->
-        <activity android:name="com.umeng.comm.ui.activities.RelativeUserActivity" />
-        <!-- 友盟登录界面 -->
-        <activity android:name="com.umeng.community.login.LoginActivity" />
-
-
-        <!-- 用户信息页面 -->
-        <activity
-            android:name="com.umeng.comm.ui.activities.UserInfoActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="TUYI.UserInfoActivity" />
-            </intent-filter>
-        </activity>
-        <!-- 话题详情页面 -->
-        <activity
-            android:name="com.umeng.comm.ui.activities.TopicDetailActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- feed详情页面 -->
-        <activity
-            android:name="com.umeng.comm.ui.activities.FeedDetailActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name="com.umeng.comm.ui.activities.FindActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- ##################### 推送相关 ##################### -->
-        <receiver
-            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
-            android:exported="false"
-            android:process=":push" />
-        <receiver
-            android:name="com.umeng.message.SystemReceiver"
-            android:process=":push">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.umeng.message.MessageReceiver"
-            android:process=":push">
-            <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.umeng.message.ElectionReceiver"
-            android:process=":push">
-            <intent-filter>
-                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
-                <category android:name="umeng" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.umeng.message.RegistrationReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="dong.lan.tuyi.intent.action.COMMAND" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.umeng.message.UmengMessageBootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name="com.umeng.message.UmengService"
-            android:exported="true"
-            android:label="PushService"
-            android:process=":push">
-            <intent-filter>
-                <action android:name="dong.lan.tuyi.intent.action.START" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="dong.lan.tuyi.intent.action.COCKROACH" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4" />
-                <category android:name="umeng" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="com.umeng.message.UmengIntentService"
-            android:process=":push" />
-        <service
-            android:name="com.umeng.message.UmengMessageIntentReceiverService"
-            android:exported="true"
-            android:process=":push">
-            <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.android.agoo.client.ElectionReceiverService" />
-            </intent-filter>
-        </service>
-        <!-- V1.3.0添加的service，负责下载通知的资源 -->
-        <service android:name="com.umeng.message.UmengDownloadResourceService" />
-
-        <!-- 腾讯SSO授权的Activity注册 -->
-        <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="tencent100424468" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.tencent.connect.common.AssistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
 
 
         <meta-data

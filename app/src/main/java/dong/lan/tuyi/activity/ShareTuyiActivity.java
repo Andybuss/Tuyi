@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,17 +23,16 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.umeng.comm.core.beans.CommConfig;
 import com.umeng.comm.core.beans.FeedItem;
 import com.umeng.comm.core.beans.ImageItem;
+import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.listeners.Listeners;
 import com.umeng.comm.core.nets.responses.FeedItemResponse;
 import com.umeng.comm.core.utils.DeviceUtils;
 
-import java.io.File;
-
+import dong.lan.tuyi.BuildConfig;
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.util.FileUilt;
-import dong.lan.tuyi.utils.PicassoHelper;
+import dong.lan.tuyi.utils.MyImageDownload;
 
 /**
  * Created by 桂栋 on 2015/8/13.
@@ -115,9 +115,10 @@ public class ShareTuyiActivity extends BaseActivity{
             }
         });
 
-        PicassoHelper.load(this,tuyi.gettPic())
-                .placeholder(R.drawable.gallery)
-                .into(img);
+        new MyImageDownload(img).execute(tuyi.gettPic());
+//        PicassoHelper.load(this,tuyi.gettPic())
+//                .placeholder(R.drawable.gallery)
+//                .into(img);
         initData();
     }
     
@@ -154,11 +155,6 @@ public class ShareTuyiActivity extends BaseActivity{
                 isGeoGet = true;
             }
         });
-        File cacheFile = FileUilt.getCacheFile(tuyi.gettPic());
-        if (cacheFile.exists()) {
-            uri = Uri.fromFile(cacheFile);
-
-        }
     }
     private void shareFeed()
     {
@@ -167,14 +163,25 @@ public class ShareTuyiActivity extends BaseActivity{
             Show("字数不要超过300哟");
             return;
         }
+        uri = ((Uri)img.getTag());
+        if(uri==null){
+            Show("不能获取该图片的本地缓存");
+            return;
+        }
+        String p  = FileUilt.getFileUri(this,uri.getPath());
+        if(p==null){
+            Show("不能获取该图片的本地Uri地址");
+            return;
+        }
+        if (BuildConfig.DEBUG) Log.d("ShareTuyiActivity", p);
         progressDialog.show();
         final FeedItem feedItem = new FeedItem();
         feedItem.text = contetn.getText().toString();
-        feedItem.imageUrls.add(new ImageItem(uri.getPath(), uri.getPath(), uri.getPath()));
+        feedItem.imageUrls.add(new ImageItem(p, p, p));
         feedItem.location = location;
         feedItem.locationAddr = addr;
         feedItem.creator = CommConfig.getConfig().loginedUser;
-        TuApplication.communitySDK.postFeed(feedItem, new Listeners.SimpleFetchListener<FeedItemResponse>() {
+        CommunityFactory.getCommSDK(this).postFeed(feedItem, new Listeners.SimpleFetchListener<FeedItemResponse>() {
             @Override
             public void onComplete(FeedItemResponse feedItemResponse) {
                 Show("发布成功");

@@ -9,14 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/md_red_300">
-
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/open_time_line"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/navigation"
+            />
         <EditText
             android:id="@+id/map_search_et"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="50dp"
             android:background="@drawable/circle_rect_alph_white"
             android:hint="@string/search_near_tuyi"
             android:padding="8dp" />
@@ -26,7 +35,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="end"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/search_red" />
     </FrameLayout>
@@ -43,6 +52,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_marginTop="50dp">
+
+
 
         <TextView
             android:id="@+id/capture"
@@ -203,6 +214,7 @@
             android:text="@string/near"
             android:textColor="@color/md_white_1000"
             android:textSize="16sp" />
+
     </FrameLayout>
 
     <FrameLayout
@@ -215,6 +227,11 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/near_close"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:drawablePadding="12dp"
+            android:drawableRight="@drawable/disimiss"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

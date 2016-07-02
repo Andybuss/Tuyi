@@ -2,7 +2,7 @@ package dong.lan.tuyi.utils;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,44 +11,45 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.util.FileUilt;
 
 /**
- * Created by 桂栋 on 2015/7/26.
+ * 项目：  Tuyi
+ * 作者：  梁桂栋
+ * 日期：  2015/7/26  14:55.
+ * Email: 760625325@qq.com
  */
-public class MyImageDownload extends AsyncTask<String,Integer,Integer> {
-    private List<Uri> uriList = new ArrayList<>();
-    private ImageSwitcher switcher;
+public class MyImageDownload extends AsyncTask<String,Integer,Uri> {
 
+    private ImageView imageView;
+    public MyImageDownload(ImageView imageView){
+        this.imageView = imageView;
+    }
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
     }
 
     @Override
-    protected void onPostExecute(Integer result) {
-        for(int i = 0;i<uriList.size();i++) {
-            if(uriList.get(i)==null)
-                switcher.setImageResource(R.drawable.pic3);
-            else
-            switcher.setImageURI(uriList.get(i));
+    protected void onPostExecute(Uri result) {
+        if(result==null)
+            imageView.setImageResource(R.drawable.default_image);
+        else{
+            imageView.setTag(result);
+            imageView.setImageURI(result);
         }
     }
 
     @Override
-    protected Integer doInBackground(String... params) {
+    protected Uri doInBackground(String... params) {
 
         if(params[0]==null ||params[0].equals("") )
             return null;
         File cacheFile = FileUilt.getCacheFile(params[0]);
         if (cacheFile.exists()) {
-            Uri uri = Uri.fromFile(cacheFile);
-            uriList.add(uri);
-            return 1;
+            return Uri.fromFile(cacheFile);
         } else {
             InputStream is = null;
             BufferedOutputStream bos = null;
@@ -71,12 +72,8 @@ public class MyImageDownload extends AsyncTask<String,Integer,Integer> {
                 }
 
                 Uri uri = Uri.fromFile(cacheFile);
-                uriList.add(uri);
                 Config.print(uri.toString());
-                // 从本地加载图片
-//                bitmap = BitmapFactory.decodeFile(cacheFile.getCanonicalPath());
-                //String name = MD5Util.MD5(imageUri);
-
+                return uri;
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -94,6 +91,6 @@ public class MyImageDownload extends AsyncTask<String,Integer,Integer> {
                 }
             }
         }
-        return 1;
+        return null;
     }
 }

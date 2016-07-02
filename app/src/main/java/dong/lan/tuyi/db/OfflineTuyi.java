@@ -1,7 +1,5 @@
 package dong.lan.tuyi.db;
 
-import android.content.Context;
-
 /**
  * Created by 桂栋 on 2015/8/21.
  */
@@ -21,8 +19,4 @@ public class OfflineTuyi {
     public static final String COLUMN_TAG = "tag";
 
 
-    public OfflineTuyi(Context context)
-    {
-        DemoDBManager.getInstance().onInit(context);
-    }
 }

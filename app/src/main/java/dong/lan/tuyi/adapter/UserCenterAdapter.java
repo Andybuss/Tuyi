@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.TuyiInfoActivity;
@@ -28,9 +29,10 @@ import dong.lan.tuyi.utils.TimeUtil;
  */
 public class UserCenterAdapter extends BaseListAdapter<UserTuyi> {
     private boolean isMe;
-    public UserCenterAdapter(Context context, List<UserTuyi> list,boolean isMe) {
+
+    public UserCenterAdapter(Context context, List<UserTuyi> list, boolean isMe) {
         super(context, list);
-        this.isMe =isMe;
+        this.isMe = isMe;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class UserCenterAdapter extends BaseListAdapter<UserTuyi> {
         viewHolder.rankIcon.setVisibility(View.GONE);
         viewHolder.popular.setVisibility(View.GONE);
         viewHolder.delete.setVisibility(View.VISIBLE);
-        if(isMe)
+        if (isMe)
             viewHolder.delete.setText("保密");
         else
             viewHolder.delete.setText("收藏");
@@ -72,7 +74,7 @@ public class UserCenterAdapter extends BaseListAdapter<UserTuyi> {
         }
         viewHolder.time.setText(TimeUtil.getDescriptionTimeFromTimestamp(currentTime));
         String url = tuyi.gettPic();
-        PicassoHelper.load(mContext,url).placeholder(R.drawable.logo).into(viewHolder.pic);
+        PicassoHelper.load(mContext, url).placeholder(R.drawable.logo).into(viewHolder.pic);
         viewHolder.content.setText(tuyi.gettContent());
         setPrivate(convertView, viewHolder.delete, position);
         return convertView;
@@ -87,36 +89,33 @@ public class UserCenterAdapter extends BaseListAdapter<UserTuyi> {
                     parent.getLayoutParams().height = 0;
                     parent.requestLayout();
                     list.get(pos).setIsPublic(false);
-                    list.get(pos).update(mContext, new UpdateListener() {
-                                @Override
-                                public void onSuccess() {
-                                    ContentValues values = new ContentValues();
-                                    values.put(Tuyi.COLUMN_NAME_IS_PUBLIC, "0");
-                                    DemoDBManager.getInstance().updateTuyi(list.get(pos).getObjectId(), values);
-                                    list.remove(pos);
-                                    UserCenterAdapter.this.notifyDataSetChanged();
-                                }
-
-                                @Override
-                                public void onFailure(int i, String s) {
-                                    Config.Show(mContext, "设置失败");
-                                }
+                    list.get(pos).update(new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                ContentValues values = new ContentValues();
+                                values.put(Tuyi.COLUMN_NAME_IS_PUBLIC, "0");
+                                DemoDBManager.getInstance().updateTuyi(list.get(pos).getObjectId(), values);
+                                list.remove(pos);
+                                UserCenterAdapter.this.notifyDataSetChanged();
+                            } else {
+                                Config.Show(mContext, "设置失败" + e.getMessage());
                             }
-                    );
-                }else
-                {
+                        }
+
+                    });
+                } else {
                     BmobRelation relation = new BmobRelation();
                     relation.add(list.get(pos));
                     Config.tUser.setFavoraite(relation);
-                    Config.tUser.update(mContext, new UpdateListener() {
+                    Config.tUser.update(new UpdateListener() {
                         @Override
-                        public void onSuccess() {
-                            Toast.makeText(mContext,"收藏成功",Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onFailure(int i, String s) {
-                            Toast.makeText(mContext,"收藏失败 T _ T",Toast.LENGTH_SHORT).show();
+                        public void done(BmobException e) {
+                            if(e==null){
+                                Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(mContext, "收藏失败 T _ T"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 }
@@ -129,7 +128,7 @@ public class UserCenterAdapter extends BaseListAdapter<UserTuyi> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext, TuyiInfoActivity.class).putExtra("TUYI", list.get(pos)));
+                mContext.startActivity(new Intent(mContext, TuyiInfoActivity.class).putExtra("TUYI", list.get(pos)));
             }
         });
     }

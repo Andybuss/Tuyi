@@ -19,11 +19,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView.BufferType;
 
+import dong.lan.tuyi.BuildConfig;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.AlertDialog;
 import dong.lan.tuyi.activity.ChatActivity;
@@ -62,6 +62,7 @@ public class PasteEditText extends EditText{
                 return false;
             }
             String text = clip.getText().toString();
+            if (BuildConfig.DEBUG) Log.d("PasteEditText", text);
             if(text.startsWith(ChatActivity.COPY_IMAGE)){
 //                intent.setDataAndType(Uri.fromFile(new File("/sdcard/mn1.jpg")), "image/*");     
                 text = text.replace(ChatActivity.COPY_IMAGE, "");

@@ -19,6 +19,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -134,14 +135,9 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
             BmobRelation relation = new BmobRelation();
             relation.add(Config.tUser);
             userTuyi.setLikes(relation);
-            userTuyi.update(this, new UpdateListener() {
+            userTuyi.update(new UpdateListener() {
                 @Override
-                public void onSuccess() {
-                }
-
-                @Override
-                public void onFailure(int i, String s) {
-
+                public void done(BmobException e) {
                 }
             });
 
@@ -168,21 +164,20 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
                 comment.setComInfo(com_content.getText().toString());
                 comment.setUserTuyi(tuyi);
                 comment.setComUser(Config.tUser);
-                comment.save(TuyiInfoActivity.this, new SaveListener() {
+                comment.save(new SaveListener<String>() {
                     @Override
-                    public void onSuccess() {
-                        if (adapter == null) {
-                            adapter = new CommentAdapter(TuyiInfoActivity.this, new ArrayList<TuyiComment>());
-                            mListView.setAdapter(adapter);
+                    public void done(String s, BmobException e) {
+                        if(e==null){
+                            if (adapter == null) {
+                                adapter = new CommentAdapter(TuyiInfoActivity.this, new ArrayList<TuyiComment>());
+                                mListView.setAdapter(adapter);
+                            }
+                            adapter.add(comment);
+                            adapter.notifyDataSetChanged();
+                            Config.Show(TuyiInfoActivity.this, "评论成功");
+                        }else{
+
                         }
-                        adapter.add(comment);
-                        adapter.notifyDataSetChanged();
-                        Config.Show(TuyiInfoActivity.this, "评论成功");
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-
                     }
                 });
                 if (layoutShow != null)
@@ -219,30 +214,29 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
         query.setSkip(count);
         query.setLimit(limit);
         query.order("-createAt");
-        query.findObjects(this, new FindListener<TuyiComment>() {
+        query.findObjects(new FindListener<TuyiComment>() {
             @Override
-            public void onSuccess(List<TuyiComment> list) {
-                if (list.isEmpty()) {
-                    Show("木有人评论");
-                    refreshPull();
-                    mListView.setPullLoadEnable(false);
-                } else {
-                    mListView.setPullLoadEnable(true);
-                    count += list.size();
-                    adapter = new CommentAdapter(TuyiInfoActivity.this, list);
-                    mListView.setAdapter(adapter);
-                    refreshPull();
-                    if (list.size() < limit)
+            public void done(List<TuyiComment> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Show("木有人评论");
+                        refreshPull();
                         mListView.setPullLoadEnable(false);
-                    else
+                    } else {
                         mListView.setPullLoadEnable(true);
+                        count += list.size();
+                        adapter = new CommentAdapter(TuyiInfoActivity.this, list);
+                        mListView.setAdapter(adapter);
+                        refreshPull();
+                        if (list.size() < limit)
+                            mListView.setPullLoadEnable(false);
+                        else
+                            mListView.setPullLoadEnable(true);
+                    }
+                }else{
+                    Show(e.getMessage());
+                    refreshPull();
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Show(s);
-                refreshPull();
             }
         });
     }
@@ -257,27 +251,26 @@ public class TuyiInfoActivity extends BaseActivity implements View.OnClickListen
         query.setSkip(count);
         query.setLimit(limit);
         query.order("-createAt");
-        query.findObjects(this, new FindListener<TuyiComment>() {
+        query.findObjects(new FindListener<TuyiComment>() {
             @Override
-            public void onSuccess(List<TuyiComment> list) {
-                if (list.isEmpty()) {
-                    Config.Show(getBaseContext(), "木有更多了");
-                    mListView.setPullLoadEnable(false);
-                    refreshLoad();
-                } else {
-                    count += list.size();
-                    adapter.addAll(list);
-                    mListView.setAdapter(adapter);
-                    mListView.setSelection(count - list.size());
-                    refreshLoad();
-                    if (list.size() < limit)
+            public void done(List<TuyiComment> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Config.Show(getBaseContext(), "木有更多了");
                         mListView.setPullLoadEnable(false);
+                        refreshLoad();
+                    } else {
+                        count += list.size();
+                        adapter.addAll(list);
+                        mListView.setAdapter(adapter);
+                        mListView.setSelection(count - list.size());
+                        refreshLoad();
+                        if (list.size() < limit)
+                            mListView.setPullLoadEnable(false);
+                    }
+                }else{
+                    refreshLoad();
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                refreshLoad();
             }
         });
     }

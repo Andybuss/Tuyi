@@ -14,18 +14,19 @@
 
 package dong.lan.tuyi.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.easemob.easeui.controller.EaseUI;
+import com.umeng.analytics.MobclickAgent;
 
-import applib.controller.HXSDKHelper;
 import dong.lan.tuyi.utils.Lock;
 
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
 
     private ProgressDialog progressDialog;
@@ -50,14 +51,15 @@ public class BaseActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        // onresume时，取消notification显示
-        HXSDKHelper.getInstance().getNotifier().reset();
+        EaseUI.getInstance().getNotifier().reset();
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         Lock.canPop = false;
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -64,44 +65,43 @@ public class MyInterestedActivity extends BaseActivity implements CompoundButton
     {
         BmobQuery<Interested> query = new BmobQuery<>();
         query.addWhereEqualTo("user", Config.tUser);
-        query.findObjects(this, new FindListener<Interested>() {
+        query.findObjects(new FindListener<Interested>() {
             @Override
-            public void onSuccess(List<Interested> list) {
-                if (list.isEmpty()) {
-                    Show("赶紧你的兴趣标签吧");
-                } else {
-                    Interested interested =list.get(0);
-                    zj.setChecked(interested.getZj());
-                    lw.setChecked(interested.getLw());
-                    rq.setChecked(interested.getRq());
-                    ms.setChecked(interested.getMs());
-                    mj.setChecked(interested.getMj());
-                    StringBuffer s = new StringBuffer();
-                    s.append("<html><body>");
-                    s.append("<h3> 您的标签记录统计</h3>");
-                    s.append("<h5>  杂记记录： ");
-                    s.append(interested.getZaji());
-                    s.append(" 个</h5>");
-                    s.append("<h5>  乐玩记录： ");
-                    s.append(interested.getLewan());
-                    s.append(" 个</h5>");
-                    s.append("<h5>  人情记录： ");
-                    s.append(interested.getRenqing());
-                    s.append(" 个</h5>");
-                    s.append("<h5>  美食记录： ");
-                    s.append(interested.getMeishi());
-                    s.append(" 个</h5>");
-                    s.append("<h5>  美景记录： ");
-                    s.append(interested.getMeijing());
-                    s.append(" 个</h5>");
-                    s.append("</body></html>");
-                    status.setText(Html.fromHtml(s.toString()));
+            public void done(List<Interested> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Show("赶紧你的兴趣标签吧");
+                    } else {
+                        Interested interested = list.get(0);
+                        zj.setChecked(interested.getZj());
+                        lw.setChecked(interested.getLw());
+                        rq.setChecked(interested.getRq());
+                        ms.setChecked(interested.getMs());
+                        mj.setChecked(interested.getMj());
+                        StringBuffer s = new StringBuffer();
+                        s.append("<html><body>");
+                        s.append("<h3> 您的标签记录统计</h3>");
+                        s.append("<h5>  杂记记录： ");
+                        s.append(interested.getZaji());
+                        s.append(" 个</h5>");
+                        s.append("<h5>  乐玩记录： ");
+                        s.append(interested.getLewan());
+                        s.append(" 个</h5>");
+                        s.append("<h5>  人情记录： ");
+                        s.append(interested.getRenqing());
+                        s.append(" 个</h5>");
+                        s.append("<h5>  美食记录： ");
+                        s.append(interested.getMeishi());
+                        s.append(" 个</h5>");
+                        s.append("<h5>  美景记录： ");
+                        s.append(interested.getMeijing());
+                        s.append(" 个</h5>");
+                        s.append("</body></html>");
+                        status.setText(Html.fromHtml(s.toString()));
+                    }
+                }else{
+                    Show(e.getMessage());
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
         });
 
@@ -164,56 +164,51 @@ public class MyInterestedActivity extends BaseActivity implements CompoundButton
        {
            BmobQuery<Interested> query = new BmobQuery<>();
            query.addWhereEqualTo("user", Config.tUser);
-           query.findObjects(this, new FindListener<Interested>() {
+           query.findObjects(new FindListener<Interested>() {
                @Override
-               public void onSuccess(List<Interested> list) {
-                   if (list.isEmpty()) {
-                       Interested interested = new Interested();
-                       interested.setUser(Config.tUser);
-                       interested.setZj(tag[0]);
-                       interested.setLw(tag[1]);
-                       interested.setRq(tag[2]);
-                       interested.setMs(tag[4]);
-                       interested.setMj(tag[3]);
-                       interested.setZaji(0);
-                       interested.setLewan(0);
-                       interested.setRenqing(0);
-                       interested.setMeishi(0);
-                       interested.setMeijing(0);
-                       interested.save(getBaseContext(), new SaveListener() {
-                           @Override
-                           public void onSuccess() {
-                               Show("保存成功");
-                           }
-
-                           @Override
-                           public void onFailure(int i, String s) {
-
-                           }
-                       });
-                   } else {
-                       Interested interested = list.get(0);
-                       interested.setZj(tag[0]);
-                       interested.setLw(tag[1]);
-                       interested.setRq(tag[2]);
-                       interested.setMs(tag[4]);
-                       interested.setMj(tag[3]);
-                       interested.update(getBaseContext(), new UpdateListener() {
-                           @Override
-                           public void onSuccess() {
-                           }
-
-                           @Override
-                           public void onFailure(int i, String s) {
-
-                           }
-                       });
+               public void done(List<Interested> list, BmobException e) {
+                   if(e==null){
+                       if (list.isEmpty()) {
+                           Interested interested = new Interested();
+                           interested.setUser(Config.tUser);
+                           interested.setZj(tag[0]);
+                           interested.setLw(tag[1]);
+                           interested.setRq(tag[2]);
+                           interested.setMs(tag[4]);
+                           interested.setMj(tag[3]);
+                           interested.setZaji(0);
+                           interested.setLewan(0);
+                           interested.setRenqing(0);
+                           interested.setMeishi(0);
+                           interested.setMeijing(0);
+                           interested.save(new SaveListener<String>() {
+                               @Override
+                               public void done(String s, BmobException e) {
+                                   if(e==null){
+                                       Show("保存成功");
+                                   }else{
+                                       Show(e.getMessage());
+                                   }
+                               }
+                           });
+                       } else {
+                           Interested interested = list.get(0);
+                           interested.setZj(tag[0]);
+                           interested.setLw(tag[1]);
+                           interested.setRq(tag[2]);
+                           interested.setMs(tag[4]);
+                           interested.setMj(tag[3]);
+                           interested.update(new UpdateListener() {
+                               @Override
+                               public void done(BmobException e) {
+                                   if(e!=null)
+                                       Show(e.getMessage());
+                               }
+                           });
+                       }
+                   }else{
+                        Show(e.getMessage());
                    }
-               }
-
-               @Override
-               public void onError(int i, String s) {
-
                }
            });
 

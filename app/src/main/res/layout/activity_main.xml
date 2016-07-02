@@ -23,7 +23,7 @@
                 android:id="@+id/btn_user_main"
                 android:onClick="onTabClicked"
                 android:scaleType="matrix"
-                android:text="@string/app_name"
+                android:text="@string/app"
                 style="@style/bottom_tab" />
 
             <TextView

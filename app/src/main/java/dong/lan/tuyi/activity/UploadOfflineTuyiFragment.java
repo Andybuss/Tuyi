@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import dong.lan.tuyi.R;
@@ -26,7 +26,6 @@ import dong.lan.tuyi.adapter.OfflineAdapter;
 import dong.lan.tuyi.adapter.UserMainAdapter;
 import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
-import dong.lan.tuyi.db.OfflineTuyi;
 import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.xlist.XListView;
 
@@ -53,9 +52,8 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (getActivity().getIntent().hasExtra("FROM_DESK")) {
-            OfflineTuyi offlineTuyi = new OfflineTuyi(getActivity());
-        }
+//        if (getActivity().getIntent().hasExtra("FROM_DESK")) {
+//        }
         mListView = (XListView) getView().findViewById(R.id.offline_list);
         mListView.setOnItemClickListener(this);
         mListView.setPullLoadEnable(false);
@@ -224,28 +222,26 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                             if (load) {
                                 load = false;
                                 final BmobFile bmobFile = new BmobFile(new File(offTuyis.get(map.get(map.size() - 1)).gettUri()));
-                                bmobFile.uploadblock(getActivity(), new UploadFileListener() {
+                                bmobFile.uploadblock(new UploadFileListener() {
                                     @Override
-                                    public void onFailure(int code, String msg) {
-                                        Log.i("bmob", "文件上传失败：" + code + msg);
-                                        load = true;
-                                        tip.setText("图片上传失败：" + msg);
+                                    public void done(BmobException e) {
+                                        if(e==null){
+                                            save = true;
+                                            tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "的图片上传成功");
+                                            urls.add(bmobFile.getFileUrl());
+                                            if (!urls.isEmpty())
+                                                System.out.println(urls.get(urls.size() - 1));
+                                            else
+                                                System.out.println("EMPTY");
+                                        }else{
+                                            load = true;
+                                            tip.setText("图片上传失败：" + e.getMessage());
+                                        }
                                     }
 
                                     @Override
-                                    public void onSuccess() {
-                                        save = true;
-                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "的图片上传成功");
-                                        urls.add(bmobFile.getFileUrl(getActivity()));
-                                        if (!urls.isEmpty())
-                                            System.out.println(urls.get(urls.size() - 1));
-                                        else
-                                            System.out.println("EMPTY");
-                                    }
-
-                                    @Override
-                                    public void onProgress(Integer i) {
-                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "上传 ：" + i + " %");
+                                    public void onProgress(Integer value) {
+                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + "上传 ：" + value + " %");
                                     }
                                 });
                             }
@@ -255,28 +251,28 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
                                 tuyi.setZan(0);
                                 tuyi.settUser(Config.tUser);
                                 tuyi.settPic(urls.get(urls.size() - 1));
-                                tuyi.save(getActivity(), new SaveListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        if (map.size() > 0)
-                                            Config.Show(getActivity(), offTuyis.get(map.get(map.size() - 1)).gettContent() + "保存成功");
-                                        DemoDBManager.getInstance().deleteOffTuyiByTime(offTuyis.get(map.get(map.size() - 1)).getTime());
-                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + " 上传成功");
-                                        offTuyis.get(map.get(map.size() - 1)).settPic(urls.get(urls.size() - 1));
-                                        offTuyis.get(map.get(map.size() - 1)).settUser(Config.tUser);
-                                        DemoDBManager.getInstance().saveTuyi(tuyi);
-                                        adapter.remove(map.get(map.size() - 1));
-                                        map.remove(map.size() - 1);
-                                        load = map.size() >= 1;
-                                        mListView.deferNotifyDataSetChanged();
-                                        Config.updateStatus(getActivity(), offTuyis.get(map.get(map.size() - 1)).getTAG());
-                                    }
+                                tuyi.save(new SaveListener<String>() {
 
                                     @Override
-                                    public void onFailure(int i, String s) {
-                                        save = true;
-                                        tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + " 上传失败：" + s);
+                                    public void done(String id, BmobException e) {
+                                        if(e==null){
+                                            if (map.size() > 0)
+                                                Config.Show(getActivity(), offTuyis.get(map.get(map.size() - 1)).gettContent() + "保存成功");
+                                            DemoDBManager.getInstance().deleteOffTuyiByTime(offTuyis.get(map.get(map.size() - 1)).getTime());
+                                            tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + " 上传成功");
+                                            offTuyis.get(map.get(map.size() - 1)).settPic(urls.get(urls.size() - 1));
+                                            offTuyis.get(map.get(map.size() - 1)).settUser(Config.tUser);
+                                            DemoDBManager.getInstance().saveTuyi(tuyi);
+                                            adapter.remove(map.get(map.size() - 1));
+                                            map.remove(map.size() - 1);
+                                            load = map.size() >= 1;
+                                            mListView.deferNotifyDataSetChanged();
+                                            Config.updateStatus(getActivity(), offTuyis.get(map.get(map.size() - 1)).getTAG());
+                                        }else{
+                                            save = true;
+                                            tip.setText("离线图忆 " + offTuyis.get(map.get(map.size() - 1)).gettContent() + " 上传失败：" + e.getMessage());
 
+                                        }
                                     }
                                 });
                             }

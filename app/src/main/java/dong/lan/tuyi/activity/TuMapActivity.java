@@ -1,15 +1,20 @@
 package dong.lan.tuyi.activity;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -47,11 +52,6 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -62,6 +62,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.R;
@@ -190,6 +191,12 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        if(Build.VERSION.SDK_INT>=23&&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION},100);
+        }
         if (intent.hasExtra("x") && intent.hasExtra("y")) {
             // 当用intent参数时，设置中心点为指定点
             Bundle b = intent.getExtras();
@@ -274,39 +281,6 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    /*
-        打开分享面板
-     */
-    private void setShareContent(Bitmap img) {
-        UMImage image = new UMImage(this, img);
-        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
-                {
-                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
-                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SMS
-                };
-        new ShareAction(this).setDisplayList(displaylist)
-                .withText("我在图忆的足迹，你也来吧")
-                .withTitle("图忆")
-                .withTargetUrl("http://tuyiapp.bmob.cn")
-                .withMedia(image)
-                .setListenerList(new UMShareListener() {
-                    @Override
-                    public void onResult(SHARE_MEDIA share_media) {
-
-                    }
-
-                    @Override
-                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-
-                    }
-
-                    @Override
-                    public void onCancel(SHARE_MEDIA share_media) {
-
-                    }
-                })
-                .open();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -348,32 +322,32 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             query.addWhereEqualTo("isPublic", true);
         }
         query.include("tUser");
-        query.findObjects(TuMapActivity.this, new FindListener<UserTuyi>() {
+        query.findObjects(new FindListener<UserTuyi>() {
+
             @Override
-            public void onSuccess(List<UserTuyi> list) {
-                if (!list.isEmpty()) {
-                    Show("附近有 " + list.size() + " 个图忆");
-                    tuyiList.clear();
-                    mBaiduMap.clear();
-                    for (int i = 0; i < list.size(); i++) {
-                        tuyiList = list;
-                        LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
-                        OverlayOptions ooA = new MarkerOptions().position(p).icon(btm_near)
-                                .zIndex(9).draggable(true);
-                        Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(BUNDLE_TAG, list.get(i));
-                        marker.setExtraInfo(bundle);
-                        if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
-                            mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
+            public void done(List<UserTuyi> list, BmobException e) {
+                if(e==null){
+                    if (!list.isEmpty()) {
+                        Show("附近有 " + list.size() + " 个图忆");
+                        tuyiList.clear();
+                        mBaiduMap.clear();
+                        for (int i = 0; i < list.size(); i++) {
+                            tuyiList = list;
+                            LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
+                            OverlayOptions ooA = new MarkerOptions().position(p).icon(btm_near)
+                                    .zIndex(9).draggable(true);
+                            Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable(BUNDLE_TAG, list.get(i));
+                            marker.setExtraInfo(bundle);
+                            if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
+                                mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
+                            }
                         }
                     }
+                }else{
+                    Show(e.getMessage());
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
         });
     }
@@ -398,21 +372,20 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 query.addWhereEqualTo("tUser", Config.tUser);
                 query.order("-time,-createAt");
                 query.include("tUser");
-                query.findObjects(TuMapActivity.this, new FindListener<UserTuyi>() {
+                query.findObjects(new FindListener<UserTuyi>() {
                     @Override
-                    public void onSuccess(List<UserTuyi> list) {
-                        if (list.isEmpty()) {
-                            Show("无数据");
-                        } else {
-                            showMarkerOfUser(list);
-                            tuyiList = list;
-                            DemoDBManager.getInstance().saveTuyiFromNet(list);
+                    public void done(List<UserTuyi> list, BmobException e) {
+                        if(e==null){
+                            if (list.isEmpty()) {
+                                Show("无数据");
+                            } else {
+                                showMarkerOfUser(list);
+                                tuyiList = list;
+                                DemoDBManager.getInstance().saveTuyiFromNet(list);
+                            }
+                        }else{
+                           Show(e.getMessage());
                         }
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-
                     }
                 });
             }
@@ -459,15 +432,15 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 BmobRelation relation = new BmobRelation();
                 relation.add(tuyi);
                 Config.tUser.setFavoraite(relation);
-                Config.tUser.update(TuMapActivity.this, new UpdateListener() {
+                Config.tUser.update(new UpdateListener() {
                     @Override
-                    public void onSuccess() {
-                        Show("收藏成功");
-                    }
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Show("收藏成功");
+                        }else{
+                            Show("收藏失败 T _ T");
+                        }
 
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Show("收藏失败 T _ T");
                     }
                 });
 
@@ -481,14 +454,9 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                     BmobRelation r = new BmobRelation();
                     relation.add(Config.tUser);
                     userTuyi.setLikes(r);
-                    userTuyi.update(TuMapActivity.this, new UpdateListener() {
+                    userTuyi.update(new UpdateListener() {
                         @Override
-                        public void onSuccess() {
-                        }
-
-                        @Override
-                        public void onFailure(int i, String s) {
-
+                        public void done(BmobException e) {
                         }
                     });
 
@@ -591,25 +559,24 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
         query.addWhereWithinRadians("loginPoint", point, 10000);
         query.addWhereEqualTo("publicMyPoint", true);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(this, new FindListener<TUser>() {
+        query.findObjects(new FindListener<TUser>() {
             @Override
-            public void onSuccess(List<TUser> list) {
-                if (!list.isEmpty()) {
-                    nearUsers = list;
-                    if (!userMarkers.isEmpty())
-                        userMarkers.clear();
-                    for (int i = 0; i < list.size(); i++) {
-                        LatLng p = new LatLng(list.get(i).getLoginPoint().getLatitude(), list.get(i).getLoginPoint().getLongitude());
-                        OverlayOptions ooA = new MarkerOptions().position(p).icon(userIcon)
-                                .zIndex(9).draggable(false);
-                        userMarkers.add((Marker) (mBaiduMap.addOverlay(ooA)));
+            public void done(List<TUser> list, BmobException e) {
+                if(e==null){
+                    if (!list.isEmpty()) {
+                        nearUsers = list;
+                        if (!userMarkers.isEmpty())
+                            userMarkers.clear();
+                        for (int i = 0; i < list.size(); i++) {
+                            LatLng p = new LatLng(list.get(i).getLoginPoint().getLatitude(), list.get(i).getLoginPoint().getLongitude());
+                            OverlayOptions ooA = new MarkerOptions().position(p).icon(userIcon)
+                                    .zIndex(9).draggable(false);
+                            userMarkers.add((Marker) (mBaiduMap.addOverlay(ooA)));
+                        }
                     }
+                }else{
+                    Show(e.getMessage());
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
         });
     }
@@ -678,35 +645,34 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
             query.and(ands);
             query.setLimit(50);
             query.order("-createAt,-zan");
-            query.findObjects(this, new FindListener<UserTuyi>() {
+            query.findObjects(new FindListener<UserTuyi>() {
                 @Override
-                public void onSuccess(List<UserTuyi> list) {
-                    if (list.isEmpty()) {
-                        Show("没有相似图忆存在");
-                    } else {
-                        mBaiduMap.clear();
-                        Show("找到" + list.size() + " 个图忆");
-                        for (int i = 0; i < list.size(); i++) {
-                            tuyiList = list;
-                            LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
-                            OverlayOptions ooA = new MarkerOptions().position(p).icon(btm_near)
-                                    .zIndex(9).draggable(true);
-                            Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable(BUNDLE_TAG, list.get(i));
-                            marker.setExtraInfo(bundle);
-                            if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
-                                mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
+                public void done(List<UserTuyi> list, BmobException e) {
+                    if(e==null){
+                        if (list.isEmpty()) {
+                            Show("没有相似图忆存在");
+                        } else {
+                            mBaiduMap.clear();
+                            Show("找到" + list.size() + " 个图忆");
+                            for (int i = 0; i < list.size(); i++) {
+                                tuyiList = list;
+                                LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
+                                OverlayOptions ooA = new MarkerOptions().position(p).icon(btm_near)
+                                        .zIndex(9).draggable(true);
+                                Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(BUNDLE_TAG, list.get(i));
+                                marker.setExtraInfo(bundle);
+                                if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
+                                    mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
+                                }
                             }
+                            msu = MapStatusUpdateFactory.zoomTo(4.0f);
+                            mBaiduMap.setMapStatus(msu);
                         }
-                        msu = MapStatusUpdateFactory.zoomTo(4.0f);
-                        mBaiduMap.setMapStatus(msu);
+                    }else{
+                        Show("搜索失败"+e.getMessage());
                     }
-                }
-
-                @Override
-                public void onError(int i, String s) {
-                    Show("搜索失败");
                 }
             });
         } else {
@@ -814,7 +780,6 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                         out.flush();
                         out.close();
                     }
-                    setShareContent(BitmapFactory.decodeFile(file.toString()));
                     isSnaping = false;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -880,48 +845,47 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
                 query.order("-zan,-createAt");
                 query.include("tUser");
                 query.setLimit(10);
-                query.findObjects(TuMapActivity.this, new FindListener<UserTuyi>() {
+                query.findObjects(new FindListener<UserTuyi>() {
                     @Override
-                    public void onSuccess(final List<UserTuyi> list) {
-                        if (!list.isEmpty()) {
-                            lastLoc = loc;
-                            goFetck = true;
-                            final Dialog dialog = new android.app.AlertDialog.Builder(TuMapActivity.this).create();
-                            dialog.setCancelable(true);
-                            dialog.show();
-                            dialog.getWindow().setContentView(R.layout.recomman_dialog);
-                            TextView text = (TextView) dialog.findViewById(R.id.recommend_text);
-                            text.setText("为你推荐了附近的" + list.size() + "个图忆哟~");
-                            TextView look = (TextView) dialog.findViewById(R.id.recommend_look);
-                            look.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    for (int i = 0; i < list.size(); i++) {
-                                        tuyiList = list;
-                                        LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
-                                        OverlayOptions ooA = new MarkerOptions().position(p).icon(btm_near)
-                                                .zIndex(11).draggable(true);
-                                        Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
-                                        marker.setPerspective(true);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("TU", list.get(i));
-                                        marker.setExtraInfo(bundle);
-                                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.nav));
-                                        if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
-                                            mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
+                    public void done(final List<UserTuyi> list, BmobException e) {
+                        if(e==null){
+                            if (!list.isEmpty()) {
+                                lastLoc = loc;
+                                goFetck = true;
+                                final Dialog dialog = new android.app.AlertDialog.Builder(TuMapActivity.this).create();
+                                dialog.setCancelable(true);
+                                dialog.show();
+                                dialog.getWindow().setContentView(R.layout.recomman_dialog);
+                                TextView text = (TextView) dialog.findViewById(R.id.recommend_text);
+                                text.setText("为你推荐了附近的" + list.size() + "个图忆哟~");
+                                TextView look = (TextView) dialog.findViewById(R.id.recommend_look);
+                                look.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        for (int i = 0; i < list.size(); i++) {
+                                            tuyiList = list;
+                                            LatLng p = new LatLng(list.get(i).gettPoint().getLatitude(), list.get(i).gettPoint().getLongitude());
+                                            OverlayOptions ooA = new MarkerOptions().position(p).icon(btm_near)
+                                                    .zIndex(11).draggable(true);
+                                            Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
+                                            marker.setPerspective(true);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable("TU", list.get(i));
+                                            marker.setExtraInfo(bundle);
+                                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.nav));
+                                            if (Config.DistanceOfTwoPoints(loc.latitude, loc.longitude, tuyiList.get(i).gettPoint().getLatitude(), tuyiList.get(i).gettPoint().getLongitude()) < 100) {
+                                                mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(locationMode, true, null));
+                                            }
+                                            dialog.dismiss();
+
+
                                         }
-                                        dialog.dismiss();
-
-
                                     }
-                                }
-                            });
+                                });
+                            }
+                        }else{
+                            goFetck = true;
                         }
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-                        goFetck = true;
                     }
                 });
             }
@@ -983,11 +947,15 @@ public class TuMapActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     boolean run = false;
     final static int RUN = 0;
     int tag = 0;
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

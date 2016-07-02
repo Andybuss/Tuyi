@@ -14,7 +14,6 @@
 package dong.lan.tuyi.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.easemob.easeui.domain.EaseUser;
 import com.easemob.util.EMLog;
 
 import java.util.ArrayList;
@@ -32,7 +32,6 @@ import java.util.List;
 
 import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.domain.User;
 import dong.lan.tuyi.utils.AES;
 import dong.lan.tuyi.utils.UserUtils;
 
@@ -40,11 +39,11 @@ import dong.lan.tuyi.utils.UserUtils;
  * 简单的好友Adapter实现
  *
  */
-public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexer{
+public class ContactAdapter extends ArrayAdapter<EaseUser>  implements SectionIndexer{
     private static final String TAG = "ContactAdapter";
 	List<String> list;
-	List<User> userList;
-	List<User> copyUserList;
+	List<EaseUser> userList;
+	List<EaseUser> copyUserList;
 	private LayoutInflater layoutInflater;
 	private SparseIntArray positionOfSection;
 	private SparseIntArray sectionOfPosition;
@@ -52,7 +51,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 	private MyFilter myFilter;
     private boolean notiyfyByFilter;
 
-	public ContactAdapter(Context context, int resource, List<User> objects) {
+	public ContactAdapter(Context context, int resource, List<EaseUser> objects) {
 		super(context, resource, objects);
 		this.res = resource;
 		this.userList = objects;
@@ -81,31 +80,30 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		}else{
 		    holder = (ViewHolder) convertView.getTag();
 		}
-		
-		User user = getItem(position);
+
+		EaseUser user = getItem(position);
 		//设置nick，demo里不涉及到完整user，用username代替nick显示
 		String username = user.getUsername();
-		String header = user.getHeader();
-		if (position == 0 || header != null && !header.equals(getItem(position - 1).getHeader())) {
-			if (TextUtils.isEmpty(header)) {
-			    holder.tvHeader.setVisibility(View.GONE);
-			} else {
-			    holder.tvHeader.setVisibility(View.VISIBLE);
-			    holder.tvHeader.setText(header);
-			}
-		} else {
-		    holder.tvHeader.setVisibility(View.GONE);
-		}
+//		if (position == 0 || header != null && !header.equals(getItem(position - 1).getHeader())) {
+//			if (TextUtils.isEmpty(header)) {
+//			    holder.tvHeader.setVisibility(View.GONE);
+//			} else {
+//			    holder.tvHeader.setVisibility(View.VISIBLE);
+//			    holder.tvHeader.setText(header);
+//			}
+//		} else {
+//		    holder.tvHeader.setVisibility(View.GONE);
+//		}
 		//显示申请与通知item
 		if(username.equals(Constant.NEW_FRIENDS_USERNAME)){
 		    holder.nameTextview.setText(AES.decode(user.getNick()));
 		    holder.avatar.setImageResource(R.drawable.new_friends_icon);
-			if(user.getUnreadMsgCount() > 0){
-			    holder.unreadMsgView.setVisibility(View.VISIBLE);
-			    holder.unreadMsgView.setText(user.getUnreadMsgCount()+"");
-			}else{
+//			if(user.getUnreadMsgCount() > 0){
+//			    holder.unreadMsgView.setVisibility(View.VISIBLE);
+//			    holder.unreadMsgView.setText(user.getUnreadMsgCount()+"");
+//			}else{
 			    holder.unreadMsgView.setVisibility(View.INVISIBLE);
-			}
+//			}
 		}else if(username.equals(Constant.GROUP_USERNAME)){
 			//群聊item
 		    holder.nameTextview.setText(user.getNick());
@@ -123,7 +121,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 	}
 	
 	@Override
-	public User getItem(int position) {
+	public EaseUser getItem(int position) {
 		return super.getItem(position);
 	}
 	
@@ -149,33 +147,31 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		list.add(getContext().getString(R.string.search_header));
 		positionOfSection.put(0, 0);
 		sectionOfPosition.put(0, 0);
-		for (int i = 1; i < count; i++) {
-
-			String letter = getItem(i).getHeader();
-			EMLog.d(TAG, "contactadapter getsection getHeader:" + letter + " name:" + getItem(i).getUsername());
-			int section = list.size() - 1;
-			if (list.get(section) != null && !list.get(section).equals(letter)) {
-				list.add(letter);
-				section++;
-				positionOfSection.put(section, i);
-			}
-			sectionOfPosition.put(i, section);
-		}
+//		for (int i = 1; i < count; i++) {
+//
+//			int section = list.size() - 1;
+//			if (list.get(section) != null && !list.get(section).equals(letter)) {
+//				list.add(letter);
+//				section++;
+//				positionOfSection.put(section, i);
+//			}
+//			sectionOfPosition.put(i, section);
+//		}
 		return list.toArray(new String[list.size()]);
 	}
 	
-	@Override
-	public Filter getFilter() {
-		if(myFilter==null){
-			myFilter = new MyFilter(userList);
-		}
-		return myFilter;
-	}
-	
+//	@Override
+//	public Filter getFilter() {
+//		if(myFilter==null){
+//			myFilter = new MyFilter(userList);
+//		}
+//		return myFilter;
+//	}
+//
 	private class  MyFilter extends Filter{
-        List<User> mOriginalList = null;
+        List<EaseUser> mOriginalList = null;
 		
-		public MyFilter(List<User> myList) {
+		public MyFilter(List<EaseUser> myList) {
 			this.mOriginalList = myList;
 		}
 
@@ -194,9 +190,9 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 			}else{
 				String prefixString = prefix.toString();
 				final int count = mOriginalList.size();
-				final ArrayList<User> newValues = new ArrayList<>();
+				final ArrayList<EaseUser> newValues = new ArrayList<>();
 				for(int i=0;i<count;i++){
-					final User user = mOriginalList.get(i);
+					final EaseUser user = mOriginalList.get(i);
 					String username = user.getUsername();
 					
 					if(username.startsWith(prefixString)){
@@ -226,7 +222,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		protected synchronized void publishResults(CharSequence constraint,
 				FilterResults results) {
 			userList.clear();
-			userList.addAll((List<User>)results.values);
+			userList.addAll((List<EaseUser>)results.values);
 			EMLog.d(TAG, "publish contacts filter results size: " + results.count);
 			if (results.count > 0) {
 			    notiyfyByFilter = true;

@@ -19,9 +19,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.adapter.NewFriendsMsgAdapter;
 import dong.lan.tuyi.db.InviteMessgeDao;
 import dong.lan.tuyi.domain.InviteMessage;
@@ -32,19 +30,20 @@ import dong.lan.tuyi.domain.InviteMessage;
  *
  */
 public class NewFriendsMsgActivity extends BaseActivity {
+	private ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_friends_msg);
+		setContentView(R.layout.em_activity_new_friends_msg);
 
-		ListView listView = (ListView) findViewById(R.id.list);
+		listView = (ListView) findViewById(R.id.list);
 		InviteMessgeDao dao = new InviteMessgeDao(this);
 		List<InviteMessage> msgs = dao.getMessagesList();
 		//设置adapter
 		NewFriendsMsgAdapter adapter = new NewFriendsMsgAdapter(this, 1, msgs);
 		listView.setAdapter(adapter);
-		TuApplication.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME).setUnreadMsgCount(0);
+		dao.saveUnreadMessageCount(0);
 		
 	}
 

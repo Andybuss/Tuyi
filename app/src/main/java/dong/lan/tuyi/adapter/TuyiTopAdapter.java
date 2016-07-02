@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.TuyiInfoActivity;
@@ -91,24 +92,23 @@ public class TuyiTopAdapter extends BaseListAdapter<UserTuyi> {
                 relation.add(Config.tUser);
                 list.get(position).setZan(list.get(position).getZan() + 1);
                 list.get(position).setLikes(relation);
-                list.get(position).update(mContext, new UpdateListener() {
+                list.get(position).update(new UpdateListener() {
                     @Override
-                    public void onSuccess() {
-                        ContentValues values = new ContentValues();
-                        values.put(Tuyi.COLUMN_NAME_ZAN, list.get(position).getZan());
-                        DemoDBManager.getInstance().updateTuyi(list.get(position).getObjectId(), values);
-                        if(position>0 && list.get(position).getZan()>list.get(position-1).getZan())
-                        {
+                    public void done(BmobException e) {
+                        if(e==null){
+                            ContentValues values = new ContentValues();
+                            values.put(Tuyi.COLUMN_NAME_ZAN, list.get(position).getZan());
+                            DemoDBManager.getInstance().updateTuyi(list.get(position).getObjectId(), values);
+                            if (position > 0 && list.get(position).getZan() > list.get(position - 1).getZan()) {
 
-                            UserTuyi tuyi = list.get(position-1);
-                            list.set(position-1,list.get(position));
-                            list.set(position,tuyi);
+                                UserTuyi tuyi = list.get(position - 1);
+                                list.set(position - 1, list.get(position));
+                                list.set(position, tuyi);
+                            }
+                            TuyiTopAdapter.this.notifyDataSetChanged();
+                        }else{
+                            ShowToast(e.getMessage());
                         }
-                        TuyiTopAdapter.this.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
 
                     }
                 });

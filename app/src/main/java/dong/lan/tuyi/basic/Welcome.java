@@ -1,8 +1,15 @@
 package dong.lan.tuyi.basic;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,11 +22,13 @@ import android.widget.ViewFlipper;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.redpacketsdk.RedPacket;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import dong.lan.tuyi.DemoHXSDKHelper;
+import dong.lan.tuyi.DemoHelper;
 import dong.lan.tuyi.R;
+import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.activity.LoginActivity;
 import dong.lan.tuyi.activity.MainActivity;
 import dong.lan.tuyi.activity.OfflineTuyiActivity;
@@ -48,50 +57,49 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.welcome);
         Config.preferences = Config.getSharePreference(this);
         ViewUtils.inject(this);
-//        flipper.setAutoStart(true);
-//        flipper.setFlipInterval(4000);
         initView();
     }
 
+    private void jump() {
+        RedPacket.getInstance().initContext(TuApplication.applicationContext);
+        RedPacket.getInstance().setDebugMode(true);
+        if (DemoHelper.getInstance().isLoggedIn()) {
+            long start = System.currentTimeMillis();
+            EMGroupManager.getInstance().loadAllGroups();
+            EMChatManager.getInstance().loadAllConversations();
+            long costTime = System.currentTimeMillis() - start;
+            if (sleepTime - costTime > 0) {
+                try {
+                    Thread.sleep(sleepTime - costTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            //进入主页面
+            TuApplication.getInstance().setUserName(DemoHelper.getInstance().getCurrentUsernName());
+            startActivity(new Intent(Welcome.this, MainActivity.class));
+            overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+            finish();
+        } else {
+            try {
+                Thread.sleep(sleepTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            startActivity(new Intent(Welcome.this, LoginActivity.class));
+            overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+            finish();
+        }
+    }
 
     private void login() {
-
         new Thread(new Runnable() {
             public void run() {
-                if (DemoHXSDKHelper.getInstance().isLogined()) {
-                    // ** 免登陆情况 加载所有本地群和会话
-                    //不是必须的，不加sdk也会自动异步去加载(不会重复加载)；
-                    //加上的话保证进了主页面会话和群组都已经load完毕
-                    long start = System.currentTimeMillis();
-                    EMGroupManager.getInstance().loadAllGroups();
-                    EMChatManager.getInstance().loadAllConversations();
-                    long costTime = System.currentTimeMillis() - start;
-                    //等待sleeptime时长
-                    if (sleepTime - costTime > 0) {
-                        try {
-                            Thread.sleep(sleepTime - costTime);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    //进入主页面
-                    startActivity(new Intent(Welcome.this, MainActivity.class));
-                    overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-                    finish();
-                } else {
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(new Intent(Welcome.this, LoginActivity.class));
-                    overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-                    finish();
-                }
+                jump();
             }
         }).start();
     }
@@ -99,8 +107,25 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
     @Override
     protected void onStart() {
         super.onStart();
-        if (!isFirst) {
-            login();
+        if (Build.VERSION.SDK_INT >= 23 && ((ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
+                .WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED) ||
+                ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
+                        .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)||
+                ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
+                        .WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Welcome.this, new String[]{
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_SETTINGS,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_SECURE_SETTINGS
+            }, 1);
+        } else if (!isFirst) {
+                login();
         }
     }
 
@@ -122,15 +147,13 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
             AlphaAnimation animation = new AlphaAnimation(0.3f, 1.0f);
             animation.setDuration(1500);
             //flipper.startAnimation(animation);
-            if(getIntent().hasExtra("OFFLINE") && getIntent().getBooleanExtra("OFFLINE",false))
-            {
+            if (getIntent().hasExtra("OFFLINE") && getIntent().getBooleanExtra("OFFLINE", false)) {
 
-                startActivity(new Intent(this, OfflineTuyiActivity.class).putExtra("FROM_DESK",true));
+                startActivity(new Intent(this, OfflineTuyiActivity.class).putExtra("FROM_DESK", true));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 finish();
             }
-            if(getIntent().hasExtra("ADD_TUYI") && getIntent().getBooleanExtra("ADD_TUYI",false))
-            {
+            if (getIntent().hasExtra("ADD_TUYI") && getIntent().getBooleanExtra("ADD_TUYI", false)) {
 
                 startActivity(new Intent(this, TuMapActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
@@ -191,5 +214,36 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return mGestureDetector.onTouchEvent(event);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
+                .READ_PHONE_STATE)==PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
+                        .WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+                ) {
+            jump();
+        } else {
+            new AlertDialog.Builder(Welcome.this)
+                    .setMessage("为了使用红包功能我们需要读取您手机的状态，以获取唯一的设备ID。")
+                    .setPositiveButton("请求权限", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(Welcome.this, new String[]{
+                                    Manifest.permission.READ_PHONE_STATE,
+                                    Manifest.permission.WRITE_SETTINGS,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.READ_PHONE_STATE,
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.WRITE_SECURE_SETTINGS
+                            }, 1);
+                        }
+                    }).show();
+        }
     }
 }

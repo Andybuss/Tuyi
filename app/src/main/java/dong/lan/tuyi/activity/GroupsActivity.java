@@ -13,8 +13,6 @@
  */
 package dong.lan.tuyi.activity;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,12 +29,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.easemob.chat.EMChatManager;
+import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
-import com.easemob.util.EMLog;
 
-import applib.controller.HXSDKHelper;
+import java.util.List;
+
+import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.adapter.GroupAdapter;
 
@@ -47,63 +46,64 @@ public class GroupsActivity extends BaseActivity {
 	private GroupAdapter groupAdapter;
 	private InputMethodManager inputMethodManager;
 	public static GroupsActivity instance;
-	private SyncListener syncListener;
 	private View progressBar;
 	private SwipeRefreshLayout swipeRefreshLayout;
-	Handler handler = new Handler();
+	
+	
+	Handler handler = new Handler(){
+	    public void handleMessage(android.os.Message msg) {
+	        swipeRefreshLayout.setRefreshing(false);
+	        switch (msg.what) {
+            case 0:
+                refresh();
+                break;
+            case 1:
+                Toast.makeText(GroupsActivity.this, R.string.Failed_to_get_group_chat_information, Toast.LENGTH_LONG).show();
+                break;
 
-	class SyncListener implements HXSDKHelper.HXSyncListener {
-		@Override
-		public void onSyncSucess(final boolean success) {
-			EMLog.d(TAG, "onSyncGroupsFinish success:" + success);
-			runOnUiThread(new Runnable() {
-				public void run() {
-					swipeRefreshLayout.setRefreshing(false);
-					if (success) {
-						handler.postDelayed(new Runnable() {
-							@Override
-							public void run() {
-								refresh();
-								progressBar.setVisibility(View.GONE);
-							}
-						}, 1000);
-					} else {
-						if (!GroupsActivity.this.isFinishing()) {
-							String s1 = getResources()
-									.getString(
-											R.string.Failed_to_get_group_chat_information);
-							Toast.makeText(GroupsActivity.this, s1, Toast.LENGTH_LONG).show();
-							progressBar.setVisibility(View.GONE);
-						}
-					}
-				}
-			});
-		}
-	}
+            default:
+                break;
+            }
+	    };
+	};
+
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_groups);
+		setContentView(R.layout.em_fragment_groups);
 
 		instance = this;
 		inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		grouplist = EMGroupManager.getInstance().getAllGroups();
 		groupListView = (ListView) findViewById(R.id.list);
+		//show group list
+        groupAdapter = new GroupAdapter(this, 1, grouplist);
+        groupListView.setAdapter(groupAdapter);
 		
 		swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
-		swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-		                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+		swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light,
+		                R.color.holo_orange_light, R.color.holo_red_light);
+		//下拉刷新
 		swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 
 			@Override
 			public void onRefresh() {
-			    MainActivity.asyncFetchGroupsFromServer();
+			    EMGroupManager.getInstance().asyncGetGroupsFromServer(new EMValueCallBack<List<EMGroup>>() {
+                    
+                    @Override
+                    public void onSuccess(List<EMGroup> value) {
+                        handler.sendEmptyMessage(0);
+                    }
+                    
+                    @Override
+                    public void onError(int error, String errorMsg) {
+                        handler.sendEmptyMessage(1);
+                    }
+                });
 			}
 		});
 		
-		groupAdapter = new GroupAdapter(this, 1, grouplist);
-		groupListView.setAdapter(groupAdapter);
 		groupListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -118,8 +118,8 @@ public class GroupsActivity extends BaseActivity {
 					// 进入群聊
 					Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);
 					// it is group chat
-					intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-					intent.putExtra("groupId", groupAdapter.getItem(position - 3).getGroupId());
+					intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
+					intent.putExtra("userId", groupAdapter.getItem(position - 3).getGroupId());
 					startActivityForResult(intent, 0);
 				}
 			}
@@ -138,18 +138,6 @@ public class GroupsActivity extends BaseActivity {
 			}
 		});
 		
-		progressBar = findViewById(R.id.progress_bar);
-		
-		syncListener = new SyncListener();
-		HXSDKHelper.getInstance().addSyncGroupListener(syncListener);
-
-		if (!HXSDKHelper.getInstance().isGroupsSyncedWithServer()) {
-			progressBar.setVisibility(View.VISIBLE);
-		} else {
-			progressBar.setVisibility(View.GONE);
-		}
-		
-		refresh();
 	}
 
 	/**
@@ -167,31 +155,22 @@ public class GroupsActivity extends BaseActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		grouplist = EMGroupManager.getInstance().getAllGroups();
-		groupAdapter = new GroupAdapter(this, 1, grouplist);
-		groupListView.setAdapter(groupAdapter);
-		groupAdapter.notifyDataSetChanged();
+		refresh();
+	}
+	
+	private void refresh(){
+	    grouplist = EMGroupManager.getInstance().getAllGroups();
+        groupAdapter = new GroupAdapter(this, 1, grouplist);
+        groupListView.setAdapter(groupAdapter);
+        groupAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (syncListener != null) {
-			HXSDKHelper.getInstance().removeSyncGroupListener(syncListener);
-			syncListener = null;
-		}
 		super.onDestroy();
 		instance = null;
 	}
 	
-	public void refresh() {
-		if (groupListView != null && groupAdapter != null) {
-			grouplist = EMGroupManager.getInstance().getAllGroups();
-			groupAdapter = new GroupAdapter(GroupsActivity.this, 1,
-					grouplist);
-			groupListView.setAdapter(groupAdapter);
-			groupAdapter.notifyDataSetChanged();
-		}
-	}
 
 	/**
 	 * 返回

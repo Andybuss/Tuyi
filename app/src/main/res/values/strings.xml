@@ -55,7 +55,7 @@
     <string name="text_help">百度hi官方技术讨论群：1405944\nQQ群：324533810（可加）\n云推送微信公众账号：云推送（微信号：baidu-push）\n</string>
 
 
-    <string name="app_name">图忆</string>
+    <string name="app">图忆</string>
     <string name="animate">Animate</string>
     <string name="basic_map">基本地图</string>
 
@@ -249,7 +249,7 @@
     <string name="now_refresh_list">重新刷新联系人</string>
     <string name="Application_and_notify">邀请与通知</string>
     <string name="save_new_nickname">保存新昵称</string>
-    <string name="group_chat">圈语</string>
+    <string name="group_chat_str">圈语</string>
     <string name="add_friend">添加好友</string>
     <string name="search">搜索</string>
     <string name="black_item">黑名单</string>
@@ -496,4 +496,15 @@
     <string name="near">附近</string>
     <string name="can_not_get_user_data">获取用户数据失败</string>
     <string name="community">图区</string>
+    <string name="send_redpack">发红包</string>
+    <string name="revoke">撤回</string>
+    <string name="revoking">撤回中...</string>
+    <string name="revoke_error">撤回消息失败</string>
+    <string name="revoke_error_maxtime">撤回消息时间过长</string>
+    <string name="chatroom_not_support_forward">聊天室的消息不支持转发</string>
+    <string name="attach_read_fire">阅后即焚</string>
+    <string name="group_nick">圈子昵称</string>
+    <string name="group_owner">圈子的主人</string>
+    <string name="messages_are_empty">消息是空的</string>
+    <string name="adaptive_video_encode">视频编码</string>
 </resources>

@@ -44,7 +44,10 @@ public class TUser extends BmobObject {
         this.des = des;
     }
 
-    public TUser(){};
+    public TUser(){}
+    public TUser(String username){
+        this.username = username;
+    }
 
     public TUser(String username,String id,String head,String des,String lat,String lng)
     {

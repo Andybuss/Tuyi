@@ -33,6 +33,7 @@ import com.easemob.chat.EMContactManager;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
@@ -94,29 +95,29 @@ public class AddContactActivity extends BaseActivity {
             searchBtn.setVisibility(View.GONE);
             BmobQuery<TUser> query = new BmobQuery<>();
             query.addWhereEqualTo("username",toAddUsername);
-            query.findObjects(this, new FindListener<TUser>() {
+            query.findObjects(new FindListener<TUser>() {
                 @Override
-                public void onSuccess(List<TUser> list) {
-                    searchBtn.setVisibility(View.VISIBLE);
-                    if (list.isEmpty()) {
-                        Show("没有此用户");
-                    } else {
-                        //服务器存在此用户，显示此用户和添加按钮
-                        searchedUserLayout.setVisibility(View.VISIBLE);
-                        nameText.setText(toAddUsername);
-                        add = (Button) findViewById(R.id.indicator);
-                        add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                addContact();
-                            }
-                        });
+                public void done(List<TUser> list, BmobException e) {
+                    if(e==null){
+                        searchBtn.setVisibility(View.VISIBLE);
+                        if (list.isEmpty()) {
+                            Show("没有此用户");
+                        } else {
+                            //服务器存在此用户，显示此用户和添加按钮
+                            searchedUserLayout.setVisibility(View.VISIBLE);
+                            nameText.setText(toAddUsername);
+                            add = (Button) findViewById(R.id.indicator);
+                            add.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    addContact();
+                                }
+                            });
+                        }
+                    }else{
+                        Show(e.getMessage());
+                        searchBtn.setVisibility(View.VISIBLE);
                     }
-                }
-
-                @Override
-                public void onError(int i, String s) {
-                    searchBtn.setVisibility(View.VISIBLE);
                 }
             });
 

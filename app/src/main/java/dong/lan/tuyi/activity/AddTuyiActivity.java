@@ -37,6 +37,7 @@ import java.util.List;
 
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import dong.lan.tuyi.Constant;
@@ -359,20 +360,19 @@ public class AddTuyiActivity extends BaseActivity implements View.OnClickListene
                 if (dlLayout != null)
                     dlLayout.setVisibility(View.VISIBLE);
                 final BmobFile bmobFile = new BmobFile(new File(path));
-                bmobFile.upload(AddTuyiActivity.this, new UploadFileListener() {
+                bmobFile.upload(new UploadFileListener() {
                     @Override
-                    public void onSuccess() {
-                        FileUrl = bmobFile.getUrl();
-                        saveInfo(FileUrl, new LatLng(lat, lng), contetnt.getText().toString());
-                        if (dlLayout != null)
-                            dlLayout.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Show("图片上传失败：" + s);
-                        if (dlLayout != null)
-                            dlLayout.setVisibility(View.GONE);
+                    public void done(BmobException e) {
+                        if(e==null){
+                            FileUrl = bmobFile.getUrl();
+                            saveInfo(FileUrl, new LatLng(lat, lng), contetnt.getText().toString());
+                            if (dlLayout != null)
+                                dlLayout.setVisibility(View.GONE);
+                        }else{
+                            Show("图片上传失败：" + e.getMessage());
+                            if (dlLayout != null)
+                                dlLayout.setVisibility(View.GONE);
+                        }
                     }
                 });
             } else {
@@ -407,19 +407,18 @@ public class AddTuyiActivity extends BaseActivity implements View.OnClickListene
             userTuyi.settContent(content);
             userTuyi.settPoint(new BmobGeoPoint(lng, lat));
             userTuyi.setLocDes(addr.getText().toString());
-            userTuyi.save(AddTuyiActivity.this, new SaveListener() {
+            userTuyi.save(new SaveListener<String>() {
                 @Override
-                public void onSuccess() {
-                    Show("嚯嚯~保存成功");
-                    Config.updateStatus(getBaseContext(), checkStr[checkIndex]);
-                    DemoDBManager.getInstance().saveTuyi(userTuyi);
-                    finish();
-                }
-
-                @Override
-                public void onFailure(int i, String s) {
-                    if (dlLayout != null)
-                        dlLayout.setVisibility(View.GONE);
+                public void done(String s, BmobException e) {
+                    if(e==null){
+                        Show("嚯嚯~保存成功");
+                        Config.updateStatus(getBaseContext(), checkStr[checkIndex]);
+                        DemoDBManager.getInstance().saveTuyi(userTuyi);
+                        finish();
+                    }else{
+                        if (dlLayout != null)
+                            dlLayout.setVisibility(View.GONE);
+                    }
                 }
             });
         } else {

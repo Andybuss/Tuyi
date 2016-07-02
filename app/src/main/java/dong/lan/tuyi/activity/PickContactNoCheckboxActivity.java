@@ -20,6 +20,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.easemob.easeui.adapter.EaseContactAdapter;
+import com.easemob.easeui.domain.EaseUser;
+import com.easemob.easeui.widget.EaseSidebar;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,30 +33,28 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import dong.lan.tuyi.Constant;
+import dong.lan.tuyi.DemoHelper;
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.TuApplication;
-import dong.lan.tuyi.adapter.ContactAdapter;
-import dong.lan.tuyi.domain.User;
-import dong.lan.tuyi.widget.Sidebar;
-
 
 public class PickContactNoCheckboxActivity extends BaseActivity {
 
-	protected ContactAdapter contactAdapter;
-	private List<User> contactList;
+	private ListView listView;
+	private EaseSidebar sidebar;
+	protected EaseContactAdapter contactAdapter;
+	private List<EaseUser> contactList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pick_contact_no_checkbox);
-		ListView listView = (ListView) findViewById(R.id.list);
-		Sidebar sidebar = (Sidebar) findViewById(R.id.sidebar);
+		setContentView(R.layout.em_activity_pick_contact_no_checkbox);
+		listView = (ListView) findViewById(R.id.list);
+		sidebar = (EaseSidebar) findViewById(R.id.sidebar);
 		sidebar.setListView(listView);
-		contactList = new ArrayList<>();
+		contactList = new ArrayList<EaseUser>();
 		// 获取设置contactlist
 		getContactList();
 		// 设置adapter
-		contactAdapter = new ContactAdapter(this, R.layout.row_contact, contactList);
+		contactAdapter = new EaseContactAdapter(this, R.layout.ease_row_contact, contactList);
 		listView.setAdapter(contactAdapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -78,21 +80,31 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 
 	private void getContactList() {
 		contactList.clear();
-		Map<String, User> users = TuApplication.getInstance().getContactList();
-		Iterator<Entry<String, User>> iterator = users.entrySet().iterator();
+		Map<String, EaseUser> users = DemoHelper.getInstance().getContactList();
+		Iterator<Entry<String, EaseUser>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
-			Entry<String, User> entry = iterator.next();
+			Entry<String, EaseUser> entry = iterator.next();
 			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME) && !entry.getKey().equals(Constant.GROUP_USERNAME) && !entry.getKey().equals(Constant.CHAT_ROOM) && !entry.getKey().equals(Constant.CHAT_ROBOT))
 				contactList.add(entry.getValue());
 		}
 		// 排序
-		Collections.sort(contactList, new Comparator<User>() {
+        Collections.sort(contactList, new Comparator<EaseUser>() {
 
-			@Override
-			public int compare(User lhs, User rhs) {
-				return lhs.getUsername().compareTo(rhs.getUsername());
-			}
-		});
+            @Override
+            public int compare(EaseUser lhs, EaseUser rhs) {
+                if(lhs.getInitialLetter().equals(rhs.getInitialLetter())){
+                    return lhs.getNick().compareTo(rhs.getNick());
+                }else{
+                    if("#".equals(lhs.getInitialLetter())){
+                        return 1;
+                    }else if("#".equals(rhs.getInitialLetter())){
+                        return -1;
+                    }
+                    return lhs.getInitialLetter().compareTo(rhs.getInitialLetter());
+                }
+                
+            }
+        });
 	}
 
 }

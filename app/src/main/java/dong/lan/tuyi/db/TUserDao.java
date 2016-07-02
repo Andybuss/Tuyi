@@ -1,7 +1,5 @@
 package dong.lan.tuyi.db;
 
-import android.content.Context;
-
 /**
  * Created by 桂栋 on 2015/7/27.
  *
@@ -19,10 +17,5 @@ public class TUserDao  {
     public static final String COLUMN_LONGIN_ID="loginID";
     public static final String COLUMN_LONG="lng";
     public static final String COLUMN_IS_OPEN="isOpen";
-
-    public TUserDao(Context context)
-    {
-        DemoDBManager.getInstance().onInit(context);
-    }
 
 }

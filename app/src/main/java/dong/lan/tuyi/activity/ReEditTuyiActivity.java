@@ -35,6 +35,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import java.io.File;
 
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -196,25 +197,24 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
                     t.setIsPublic(true);
                 else
                     t.setIsPublic(false);
-                t.update(ReEditTuyiActivity.this, tuyi.getObjectId(), new UpdateListener() {
-                    @Override
-                    public void onSuccess() {
-                        ContentValues values = new ContentValues();
-                        values.put(Tuyi.COLUME_NAME_CONTENT, content.getText().toString());
-                        if (isOpen.isChecked())
-                            values.put(Tuyi.COLUMN_NAME_IS_PUBLIC, "1");
-                        else
-                            values.put(Tuyi.COLUMN_NAME_IS_PUBLIC, "0");
-                        DemoDBManager.getInstance().updateTuyi(tuyi.getObjectId(), values);
-                        UserMainFragment.isChange = true;
-                        Show("修改图忆成功");
-                        finish();
-
-                    }
+                t.update( tuyi.getObjectId(), new UpdateListener() {
 
                     @Override
-                    public void onFailure(int i, String s) {
-                        Show("修改失败：" + s);
+                    public void done(BmobException e) {
+                        if(e==null){
+                            ContentValues values = new ContentValues();
+                            values.put(Tuyi.COLUME_NAME_CONTENT, content.getText().toString());
+                            if (isOpen.isChecked())
+                                values.put(Tuyi.COLUMN_NAME_IS_PUBLIC, "1");
+                            else
+                                values.put(Tuyi.COLUMN_NAME_IS_PUBLIC, "0");
+                            DemoDBManager.getInstance().updateTuyi(tuyi.getObjectId(), values);
+                            UserMainFragment.isChange = true;
+                            Show("修改图忆成功");
+                            finish();
+                        }else{
+                            Show(e.getMessage());
+                        }
                     }
                 });
             } else if (from == OFFLINE) {
@@ -271,19 +271,20 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
 
     private void saveTuyi(final String url) {
         tuyi.settPic(url);
-        tuyi.save(this, new SaveListener() {
-            @Override
-            public void onSuccess() {
-                Show("离线图忆保存成功");
-                finish();
-            }
+        tuyi.save( new SaveListener<String>() {
 
             @Override
-            public void onFailure(int i, String s) {
-                Show("离线图忆保存失败 : " + s);
-                saveTuyi(url);
-                UploadOfflineTuyiFragment.hasChange=true;
+            public void done(String id, BmobException e) {
+                if(e==null){
+                    Show("离线图忆保存成功");
+                    finish();
+                }else{
+                    Show("离线图忆保存失败 : " + e.getMessage());
+                    saveTuyi(url);
+                    UploadOfflineTuyiFragment.hasChange=true;
+                }
             }
+
         });
     }
 
@@ -291,16 +292,15 @@ public class ReEditTuyiActivity extends BaseActivity implements View.OnClickList
 
     public void UploadTuyi(View view) {
         final BmobFile bmobFile = new BmobFile(new File(tuyi.gettUri()));
-        bmobFile.upload(this, new UploadFileListener() {
+        bmobFile.upload(new UploadFileListener() {
             @Override
-            public void onSuccess() {
-                url = bmobFile.getUrl();
-                saveTuyi(url);
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Show("上传图片失败：" + s);
+            public void done(BmobException e) {
+                if(e==null){
+                    url = bmobFile.getUrl();
+                    saveTuyi(url);
+                }else{
+                    Show("上传图片失败：" + e.getMessage());
+                }
             }
         });
     }

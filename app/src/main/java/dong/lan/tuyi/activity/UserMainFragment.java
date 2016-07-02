@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.Constant;
 import dong.lan.tuyi.R;
@@ -29,7 +30,6 @@ import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.xlist.XListView;
 
 /**
- *
  * 项目：  Tuyi
  * 作者：  梁桂栋
  * 日期：  2015/7/22  21:28.
@@ -111,42 +111,41 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
         tuyilist = DemoDBManager.getInstance().getUserAllTuyi(username);
         if (tuyilist == null || tuyilist.isEmpty()) {
             tuyilist = new ArrayList<>();
-                if (Config.tUser == null) {
-                    adapter = new UserMainAdapter(getActivity(), notList,UserMainAdapter.USERMAIN);
-                    mListView.setAdapter(adapter);
-                    ShowDialog(false);
-                } else {
-                    BmobQuery<UserTuyi> query = new BmobQuery<>();
-                    query.order("-time,-createAt");
-                    query.addWhereEqualTo("tUser", Config.tUser);
-                    query.include("tUser");
-                    query.findObjects(getActivity(), new FindListener<UserTuyi>() {
-                        @Override
-                        public void onSuccess(List<UserTuyi> list) {
+            if (Config.tUser == null) {
+                adapter = new UserMainAdapter(getActivity(), notList, UserMainAdapter.USERMAIN);
+                mListView.setAdapter(adapter);
+                ShowDialog(false);
+            } else {
+                BmobQuery<UserTuyi> query = new BmobQuery<>();
+                query.order("-time,-createAt");
+                query.addWhereEqualTo("tUser", Config.tUser);
+                query.include("tUser");
+                query.findObjects(new FindListener<UserTuyi>() {
+                    @Override
+                    public void done(List<UserTuyi> list, BmobException e) {
+                        if (e == null) {
                             if (list.isEmpty()) {
                                 ShowDialog(false);
-                                adapter = new UserMainAdapter(getActivity(), notList,UserMainAdapter.USERMAIN);
+                                adapter = new UserMainAdapter(getActivity(), notList, UserMainAdapter.USERMAIN);
                                 mListView.setAdapter(adapter);
                             } else {
                                 tuyilist = list;
-                                adapter = new UserMainAdapter(getActivity(), list,UserMainAdapter.USERMAIN);
+                                adapter = new UserMainAdapter(getActivity(), list, UserMainAdapter.USERMAIN);
                                 mListView.setAdapter(adapter);
                                 DemoDBManager.getInstance().saveTuyiFromNet(list);
                                 ShowDialog(false);
                             }
-                        }
-
-                        @Override
-                        public void onError(int i, String s) {
+                        } else {
                             ShowDialog(false);
                             adapter = new UserMainAdapter(getActivity(), notList);
                             mListView.setAdapter(adapter);
                         }
-                    });
-                }
+                    }
+                });
+            }
         } else {
             ShowDialog(false);
-            adapter = new UserMainAdapter(getActivity(), tuyilist,UserMainAdapter.USERMAIN);
+            adapter = new UserMainAdapter(getActivity(), tuyilist, UserMainAdapter.USERMAIN);
             mListView.setAdapter(adapter);
         }
 
@@ -155,12 +154,12 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     private void refresh() {
         //下拉刷新功能时本地数据库有更新，直接从数据库获取更新的内容
         if (!tuyilist.isEmpty() && DemoDBManager.getInstance().getTuyiCount() > adapter.getCount()) {
-            List<UserTuyi> l ;
+            List<UserTuyi> l;
             l = DemoDBManager.getInstance().getTuyiGreaterThanID(adapter.getCount());
-            if(l!=null)
-            adapter.addAll(l);
+            if (l != null)
+                adapter.addAll(l);
             mListView.deferNotifyDataSetChanged();
-            mListView.setSelection(adapter.getCount()-1);
+            mListView.setSelection(adapter.getCount() - 1);
         }
         //内容列表为空则再次initDB（）
         if (tuyilist == null || tuyilist.isEmpty()) {
@@ -209,8 +208,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
             if (Show) {
                 dialog.setVisibility(View.VISIBLE);
                 dialog.requestFocus();
-            }
-            else
+            } else
                 dialog.setVisibility(View.GONE);
         }
     }
@@ -252,7 +250,7 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
             public void onClick(View v) {
                 dialog.dismiss();
                 UserTuyi tuyi = adapter.getList().get(position - 1);
-                startActivity(new Intent(getActivity(),ShareTuyiActivity.class).putExtra("SHARE_TUYI",tuyi));
+                startActivity(new Intent(getActivity(), ShareTuyiActivity.class).putExtra("SHARE_TUYI", tuyi));
             }
         });
         return true;

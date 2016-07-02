@@ -14,32 +14,43 @@
 
 package dong.lan.tuyi.basic;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.easemob.easeui.controller.EaseUI;
+import com.umeng.analytics.MobclickAgent;
 
-import applib.controller.HXSDKHelper;
 
-
-public class BaseMainActivity extends ActionBarActivity {
+public class BaseMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
+        if(!this.isTaskRoot()) {
+            Intent intent = this.getIntent();
+            String action = intent.getAction();
+            if(intent.hasCategory("android.intent.category.LAUNCHER") && action.equals("android.intent.action.MAIN")) {
+                this.finish();
+                return;
+            }
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        HXSDKHelper.getInstance().getNotifier().reset();
-
+        EaseUI.getInstance().getNotifier().reset();
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
 
     }
 

@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
- * <p/>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,6 +34,8 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
+import com.easemob.easeui.widget.EaseSwitchButton;
+import com.easemob.redpacketui.utils.RedPacketUtil;
 import com.umeng.comm.core.beans.CommConfig;
 import com.umeng.comm.core.beans.CommUser;
 import com.umeng.comm.core.login.LoginListener;
@@ -42,11 +43,11 @@ import com.umeng.comm.core.push.Pushable;
 import com.umeng.comm.core.sdkmanager.PushSDKManager;
 import com.umeng.comm.core.utils.CommonUtils;
 
-import applib.controller.HXSDKHelper;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
-import dong.lan.tuyi.DemoHXSDKModel;
+import dong.lan.tuyi.DemoHelper;
+import dong.lan.tuyi.DemoModel;
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.basic.Welcome;
 import dong.lan.tuyi.bean.TUser;
 import dong.lan.tuyi.utils.Config;
@@ -55,7 +56,7 @@ import dong.lan.tuyi.utils.Lock;
 /**
  * 设置界面
  *
- * @author Administrator
+ *
  */
 public class SettingsFragment extends Fragment implements OnClickListener {
 
@@ -74,54 +75,44 @@ public class SettingsFragment extends Fragment implements OnClickListener {
     /**
      * 设置扬声器布局
      */
+    private RelativeLayout rl_switch_speaker;
 
-    /**
-     * 打开新消息通知imageView
-     */
-    private ImageView iv_switch_open_notification;
-    /**
-     * 关闭新消息通知imageview
-     */
-    private ImageView iv_switch_close_notification;
-    /**
-     * 打开声音提示imageview
-     */
-    private ImageView iv_switch_open_sound;
-    /**
-     * 关闭声音提示imageview
-     */
-    private ImageView iv_switch_close_sound;
-    /**
-     * 打开消息震动提示
-     */
-    private ImageView iv_switch_open_vibrate;
-    /**
-     * 关闭消息震动提示
-     */
-    private ImageView iv_switch_close_vibrate;
 
     /**
      * 声音和震动中间的那条线
      */
-    private TextView textview1, textview2, addShortcut,reset_lock;
+    private TextView textview1, textview2,addShortcut,reset_lock;;
 
     private LinearLayout blacklistContainer;
+
+    private LinearLayout userProfileContainer;
 
     /**
      * 退出按钮
      */
     private Button logoutBtn;
 
+    /**
+     * 零钱
+     */
+    private LinearLayout llChange;
+
+
+    private EaseSwitchButton notifiSwitch;
+    private EaseSwitchButton soundSwitch;
+    private EaseSwitchButton vibrateSwitch;
+    private EaseSwitchButton speakerSwitch;
+    private DemoModel settingsModel;
+    private EMChatOptions chatOptions;
+
     private LinearLayout parent;
     private TextView offlineMap;
-    private EMChatOptions chatOptions;
     private CheckBox check, lock;
     private boolean isPublic = false;
-    DemoHXSDKModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_conversation_settings, container, false);
+        return inflater.inflate(R.layout.em_fragment_conversation_settings, container, false);
     }
 
     @Override
@@ -129,30 +120,10 @@ public class SettingsFragment extends Fragment implements OnClickListener {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
             return;
+
         isPublic = Config.getUserPointOpenConfig(getActivity());
-        rl_switch_notification = (RelativeLayout) getView().findViewById(R.id.rl_switch_notification);
-        rl_switch_sound = (RelativeLayout) getView().findViewById(R.id.rl_switch_sound);
-        rl_switch_vibrate = (RelativeLayout) getView().findViewById(R.id.rl_switch_vibrate);
-
-        iv_switch_open_notification = (ImageView) getView().findViewById(R.id.iv_switch_open_notification);
-        iv_switch_close_notification = (ImageView) getView().findViewById(R.id.iv_switch_close_notification);
-        iv_switch_open_sound = (ImageView) getView().findViewById(R.id.iv_switch_open_sound);
-        iv_switch_close_sound = (ImageView) getView().findViewById(R.id.iv_switch_close_sound);
-        iv_switch_open_vibrate = (ImageView) getView().findViewById(R.id.iv_switch_open_vibrate);
-        iv_switch_close_vibrate = (ImageView) getView().findViewById(R.id.iv_switch_close_vibrate);
-
-
         parent = (LinearLayout) getView().findViewById(R.id.setting_layout);
-        logoutBtn = (Button) getView().findViewById(R.id.btn_logout);
-        if (!TextUtils.isEmpty(EMChatManager.getInstance().getCurrentUser())) {
-            logoutBtn.setText("退出登录");
-        }
-
-        textview1 = (TextView) getView().findViewById(R.id.textview1);
-        textview2 = (TextView) getView().findViewById(R.id.textview2);
         offlineMap = (TextView) getView().findViewById(R.id.offline_map_tv);
-        blacklistContainer = (LinearLayout) getView().findViewById(R.id.ll_black_list);
-
         addShortcut = (TextView) getView().findViewById(R.id.add_shortcut);
 
         check = (CheckBox) getView().findViewById(R.id.open_check);
@@ -162,17 +133,6 @@ public class SettingsFragment extends Fragment implements OnClickListener {
         reset_lock.setOnClickListener(this);
         addShortcut.setOnClickListener(this);
         offlineMap.setOnClickListener(this);
-        blacklistContainer.setOnClickListener(this);
-        rl_switch_notification.setOnClickListener(this);
-        rl_switch_sound.setOnClickListener(this);
-        rl_switch_vibrate.setOnClickListener(this);
-        logoutBtn.setOnClickListener(this);
-
-        chatOptions = EMChatManager.getInstance().getChatOptions();
-
-        model = (DemoHXSDKModel) HXSDKHelper.getInstance().getModel();
-
-
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -190,56 +150,96 @@ public class SettingsFragment extends Fragment implements OnClickListener {
                     if (Config.isSetLock(getActivity())) {
                         Show("已开启应用锁");
                     } else {
-                        Lock.locking(getActivity(),parent,Lock.SETLOCK);
+                        Lock.locking(getActivity(), parent, Lock.SETLOCK);
                     }
                 } else {
-                    Lock.locking(getActivity(),parent,Lock.OFFLOCK);
+                    Lock.locking(getActivity(), parent, Lock.OFFLOCK);
                 }
             }
         });
+        rl_switch_notification = (RelativeLayout) getView().findViewById(R.id.rl_switch_notification);
+        rl_switch_sound = (RelativeLayout) getView().findViewById(R.id.rl_switch_sound);
+        rl_switch_vibrate = (RelativeLayout) getView().findViewById(R.id.rl_switch_vibrate);
+        rl_switch_speaker = (RelativeLayout) getView().findViewById(R.id.rl_switch_speaker);
+        llChange = (LinearLayout) getView().findViewById(R.id.ll_change);
+
+        notifiSwitch = (EaseSwitchButton) getView().findViewById(R.id.switch_notification);
+        soundSwitch = (EaseSwitchButton) getView().findViewById(R.id.switch_sound);
+        vibrateSwitch = (EaseSwitchButton) getView().findViewById(R.id.switch_vibrate);
+        speakerSwitch = (EaseSwitchButton) getView().findViewById(R.id.switch_speaker);
+
+        logoutBtn = (Button) getView().findViewById(R.id.btn_logout);
+        if (!TextUtils.isEmpty(EMChatManager.getInstance().getCurrentUser())) {
+            logoutBtn.setText(getString(R.string.button_logout) + "(" + EMChatManager.getInstance().getCurrentUser() + ")");
+        }
+
+        textview1 = (TextView) getView().findViewById(R.id.textview1);
+        textview2 = (TextView) getView().findViewById(R.id.textview2);
+
+        blacklistContainer = (LinearLayout) getView().findViewById(R.id.ll_black_list);
+        userProfileContainer = (LinearLayout) getView().findViewById(R.id.ll_user_profile);
+
+        settingsModel = DemoHelper.getInstance().getModel();
+        chatOptions = EMChatManager.getInstance().getChatOptions();
+
+        blacklistContainer.setOnClickListener(this);
+        userProfileContainer.setOnClickListener(this);
+        rl_switch_notification.setOnClickListener(this);
+        rl_switch_sound.setOnClickListener(this);
+        rl_switch_vibrate.setOnClickListener(this);
+        rl_switch_speaker.setOnClickListener(this);
+        logoutBtn.setOnClickListener(this);
+        llChange.setOnClickListener(this);
+
         // 震动和声音总开关，来消息时，是否允许此开关打开
         // the vibrate and sound notification are allowed or not?
-        if (model.getSettingMsgNotification()) {
-            iv_switch_open_notification.setVisibility(View.VISIBLE);
-            iv_switch_close_notification.setVisibility(View.INVISIBLE);
+        if (settingsModel.getSettingMsgNotification()) {
+            notifiSwitch.openSwitch();
         } else {
-            iv_switch_open_notification.setVisibility(View.INVISIBLE);
-            iv_switch_close_notification.setVisibility(View.VISIBLE);
+            notifiSwitch.closeSwitch();
         }
 
         // 是否打开声音
         // sound notification is switched on or not?
-        if (model.getSettingMsgSound()) {
-            iv_switch_open_sound.setVisibility(View.VISIBLE);
-            iv_switch_close_sound.setVisibility(View.INVISIBLE);
+        if (settingsModel.getSettingMsgSound()) {
+            soundSwitch.openSwitch();
         } else {
-            iv_switch_open_sound.setVisibility(View.INVISIBLE);
-            iv_switch_close_sound.setVisibility(View.VISIBLE);
+            soundSwitch.closeSwitch();
         }
 
         // 是否打开震动
         // vibrate notification is switched on or not?
-        if (model.getSettingMsgVibrate()) {
-            iv_switch_open_vibrate.setVisibility(View.VISIBLE);
-            iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
+        if (settingsModel.getSettingMsgVibrate()) {
+            vibrateSwitch.openSwitch();
         } else {
-            iv_switch_open_vibrate.setVisibility(View.INVISIBLE);
-            iv_switch_close_vibrate.setVisibility(View.VISIBLE);
+            vibrateSwitch.closeSwitch();
+        }
+
+        // 是否打开扬声器
+        // the speaker is switched on or not?
+        if (settingsModel.getSettingMsgSpeaker()) {
+            speakerSwitch.openSwitch();
+        } else {
+            speakerSwitch.closeSwitch();
         }
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.offline_map_tv:
+            startActivity(new Intent(getActivity(), OfflineMapActivity.class));
+            break;
             case R.id.feedback:
-                startActivity(new Intent(getActivity(),FeedBackActivity.class));
-                getActivity().overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
+                startActivity(new Intent(getActivity(), FeedBackActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 break;
             case R.id.reset_lock:
-                if(Config.isSetLock(getActivity()))
-                Lock.locking(getActivity(),parent,Lock.RESETLOCK);
+                if (Config.isSetLock(getActivity()))
+                    Lock.locking(getActivity(), parent, Lock.RESETLOCK);
                 else
-                Show("未设置应用锁");
+                    Show("未设置应用锁");
                 break;
             case R.id.add_shortcut:
                 Intent addIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
@@ -251,69 +251,63 @@ public class SettingsFragment extends Fragment implements OnClickListener {
                 getActivity().sendBroadcast(addIntent);
                 Show("添加桌面快捷方式成功");
                 break;
+            case R.id.ll_change:
+                RedPacketUtil.startChangeActivity(getActivity());
+                break;
             case R.id.rl_switch_notification:
-                if (iv_switch_open_notification.getVisibility() == View.VISIBLE) {
-                    iv_switch_open_notification.setVisibility(View.INVISIBLE);
-                    iv_switch_close_notification.setVisibility(View.VISIBLE);
+                if (notifiSwitch.isSwitchOpen()) {
+                    notifiSwitch.closeSwitch();
                     rl_switch_sound.setVisibility(View.GONE);
                     rl_switch_vibrate.setVisibility(View.GONE);
                     textview1.setVisibility(View.GONE);
                     textview2.setVisibility(View.GONE);
-                    chatOptions.setNotificationEnable(false);
-                    EMChatManager.getInstance().setChatOptions(chatOptions);
 
-                    HXSDKHelper.getInstance().getModel().setSettingMsgNotification(false);
+                    settingsModel.setSettingMsgNotification(false);
                 } else {
-                    iv_switch_open_notification.setVisibility(View.VISIBLE);
-                    iv_switch_close_notification.setVisibility(View.INVISIBLE);
+                    notifiSwitch.openSwitch();
                     rl_switch_sound.setVisibility(View.VISIBLE);
                     rl_switch_vibrate.setVisibility(View.VISIBLE);
                     textview1.setVisibility(View.VISIBLE);
                     textview2.setVisibility(View.VISIBLE);
-                    chatOptions.setNotificationEnable(true);
-                    EMChatManager.getInstance().setChatOptions(chatOptions);
-                    HXSDKHelper.getInstance().getModel().setSettingMsgNotification(true);
+                    settingsModel.setSettingMsgNotification(true);
                 }
                 break;
             case R.id.rl_switch_sound:
-                if (iv_switch_open_sound.getVisibility() == View.VISIBLE) {
-                    iv_switch_open_sound.setVisibility(View.INVISIBLE);
-                    iv_switch_close_sound.setVisibility(View.VISIBLE);
-                    chatOptions.setNoticeBySound(false);
-                    EMChatManager.getInstance().setChatOptions(chatOptions);
-                    HXSDKHelper.getInstance().getModel().setSettingMsgSound(false);
+                if (soundSwitch.isSwitchOpen()) {
+                    soundSwitch.closeSwitch();
+                    settingsModel.setSettingMsgSound(false);
                 } else {
-                    iv_switch_open_sound.setVisibility(View.VISIBLE);
-                    iv_switch_close_sound.setVisibility(View.INVISIBLE);
-                    chatOptions.setNoticeBySound(true);
-                    EMChatManager.getInstance().setChatOptions(chatOptions);
-                    HXSDKHelper.getInstance().getModel().setSettingMsgSound(true);
+                    soundSwitch.openSwitch();
+                    settingsModel.setSettingMsgSound(true);
                 }
                 break;
             case R.id.rl_switch_vibrate:
-                if (iv_switch_open_vibrate.getVisibility() == View.VISIBLE) {
-                    iv_switch_open_vibrate.setVisibility(View.INVISIBLE);
-                    iv_switch_close_vibrate.setVisibility(View.VISIBLE);
-                    chatOptions.setNoticedByVibrate(false);
-                    EMChatManager.getInstance().setChatOptions(chatOptions);
-                    HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(false);
+                if (vibrateSwitch.isSwitchOpen()) {
+                    vibrateSwitch.closeSwitch();
+                    settingsModel.setSettingMsgVibrate(false);
                 } else {
-                    iv_switch_open_vibrate.setVisibility(View.VISIBLE);
-                    iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
-                    chatOptions.setNoticedByVibrate(true);
-                    EMChatManager.getInstance().setChatOptions(chatOptions);
-                    HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
+                    vibrateSwitch.openSwitch();
+                    settingsModel.setSettingMsgVibrate(true);
                 }
                 break;
-
+            case R.id.rl_switch_speaker:
+                if (speakerSwitch.isSwitchOpen()) {
+                    speakerSwitch.closeSwitch();
+                    settingsModel.setSettingMsgSpeaker(false);
+                } else {
+                    speakerSwitch.openSwitch();
+                    settingsModel.setSettingMsgVibrate(true);
+                }
+                break;
             case R.id.btn_logout: //退出登陆
                 logout();
                 break;
             case R.id.ll_black_list:
                 startActivity(new Intent(getActivity(), BlacklistActivity.class));
                 break;
-            case R.id.offline_map_tv:
-                startActivity(new Intent(getActivity(), OfflineMapActivity.class));
+            case R.id.ll_user_profile:
+                startActivity(new Intent(getActivity(), UserProfileActivity.class).putExtra("setting", true)
+                        .putExtra("username", EMChatManager.getInstance().getCurrentUser()));
                 break;
             default:
                 break;
@@ -327,7 +321,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
         pd.setMessage(st);
         pd.setCanceledOnTouchOutside(false);
         pd.show();
-        TuApplication.getInstance().logout(new EMCallBack() {
+        DemoHelper.getInstance().logout(true, new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -364,14 +358,23 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 
             @Override
             public void onError(int code, String message) {
+                getActivity().runOnUiThread(new Runnable() {
 
+                    @Override
+                    public void run() {
+                        pd.dismiss();
+                        Toast.makeText(getActivity(), "unbind devicetokens failed", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
             }
         });
     }
 
     /*
-    更新用户是否公开每次登陆的坐标的状态
-     */
+       更新用户是否公开每次登陆的坐标的状态
+        */
     private void updatePointStatus() {
         if (Config.tUser == null)
             Show("用户更新未完成");
@@ -379,22 +382,27 @@ public class SettingsFragment extends Fragment implements OnClickListener {
             return;
         TUser tUser = new TUser();
         tUser.setPublicMyPoint(check.isChecked());
-        tUser.update(getActivity(), Config.tUser.getObjectId(), new UpdateListener() {
+        tUser.update(Config.tUser.getObjectId(), new UpdateListener() {
             @Override
-            public void onSuccess() {
-                Config.updateIsPointOpen(getActivity(), check.isChecked());
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Config.print(s);
-            }
-        });
+            public void done(BmobException e) {
+                if(e==null){
+                    Config.updateIsPointOpen(getActivity(), check.isChecked());
+                }
+            }});
     }
 
 
 
     private void Show(String s) {
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        if(((MainActivity)getActivity()).isConflict){
+//        	outState.putBoolean("isConflict", true);
+//        }else if(((MainActivity)getActivity()).getCurrentAccountRemoved()){
+//        	outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
+//        }
     }
 }

@@ -26,11 +26,11 @@ import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.exceptions.EaseMobException;
 
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.TUser;
-import dong.lan.tuyi.utils.AES;
 import dong.lan.tuyi.utils.Config;
 
 /**
@@ -60,7 +60,7 @@ public class RegisterActivity extends BaseActivity {
      * 注册
      */
     public void register(View view) {
-        username = AES.encode(userNameEditText.getText().toString().trim());
+        username = userNameEditText.getText().toString().trim();
         pwd = passwordEditText.getText().toString().trim();
         String confirm_pwd = confirmPwdEditText.getText().toString().trim();
         if (TextUtils.isEmpty(username)) {
@@ -144,16 +144,15 @@ public class RegisterActivity extends BaseActivity {
         tUser.setPublicMyPoint(false);
         tUser.setNick("请设置昵称");
         tUser.setDes("");
-        tUser.save(RegisterActivity.this, new SaveListener() {
+        tUser.save(new SaveListener<String>() {
             @Override
-            public void onSuccess() {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
-                finish();
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                saveUser2Bmob(username,p);
+            public void done(String s, BmobException e) {
+                if(e==null){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    saveUser2Bmob(username, p);
+                }
             }
         });
     }

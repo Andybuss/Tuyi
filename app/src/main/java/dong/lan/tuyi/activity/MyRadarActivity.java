@@ -1,9 +1,15 @@
 package dong.lan.tuyi.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -35,6 +41,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobRealTimeData;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.ValueEventListener;
 import dong.lan.tuyi.R;
@@ -80,6 +87,12 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_radar);
+        if(Build.VERSION.SDK_INT>=23&&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION},100);
+        }
         initView();
 
     }
@@ -126,23 +139,22 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
                     if (query == null)
                         query = new BmobQuery<>();
                     query.addWhereContains("username", s);
-                    query.findObjects(getBaseContext(), new FindListener<TUser>() {
+                    query.findObjects(new FindListener<TUser>() {
                         @Override
-                        public void onSuccess(List<TUser> list) {
-                            if (list.isEmpty()) {
-                                Show("没有找到相关用户");
-                            } else {
-                                TUser user = null;
-                                Show("找到 " + list.size() + " 个用户");
-                                adapter.replaceUser(list);
-                                adapter.notifyDataSetChanged();
-                                recyclerView.setVisibility(View.VISIBLE);
+                        public void done(List<TUser> list, BmobException e) {
+                            if(e==null){
+                                if (list.isEmpty()) {
+                                    Show("没有找到相关用户");
+                                } else {
+                                    TUser user = null;
+                                    Show("找到 " + list.size() + " 个用户");
+                                    adapter.replaceUser(list);
+                                    adapter.notifyDataSetChanged();
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                }
+                            }else{
+                                Show(e.getMessage());
                             }
-                        }
-
-                        @Override
-                        public void onError(int i, String s) {
-
                         }
                     });
 
@@ -167,14 +179,13 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
     }
 
     private void startBmobRealTimeDate() {
-        data.start(this, new ValueEventListener() {
+        data.start(new ValueEventListener() {
             @Override
-            public void onConnectCompleted() {
+            public void onConnectCompleted(Exception e) {
                 if (data.isConnected()) {
                     data.subTableUpdate("TUser");
                     init =true;
                 }
-
             }
 
             @Override
@@ -206,7 +217,7 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
                     }
                 }
             }
-        });
+        } );
     }
 
 
@@ -349,5 +360,10 @@ public class MyRadarActivity extends BaseActivity implements BDLocationListener,
     protected void onResume() {
         super.onResume();
         isBack =false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.ReEditTuyiActivity;
 import dong.lan.tuyi.activity.ShareTuyiActivity;
@@ -144,21 +145,18 @@ public class UserMainAdapter extends BaseListAdapter<UserTuyi> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 parent.getLayoutParams().height = 0;
                 parent.requestLayout();
-                list.get(position).delete(mContext, new DeleteListener() {
+                list.get(position).delete(new UpdateListener() {
                     @Override
-                    public void onSuccess() {
-                        DemoDBManager.getInstance().deleteTuyiByObjectID(list.get(position).getObjectId());
-                        list.remove(position);
-                        UserMainAdapter.this.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Config.Show(mContext, mContext.getString(R.string.network_unavailable));
+                    public void done(BmobException e) {
+                        if(e==null){
+                            DemoDBManager.getInstance().deleteTuyiByObjectID(list.get(position).getObjectId());
+                            list.remove(position);
+                            UserMainAdapter.this.notifyDataSetChanged();
+                        }else{
+                            Config.Show(mContext, e.getMessage());
+                        }
                     }
                 });
 

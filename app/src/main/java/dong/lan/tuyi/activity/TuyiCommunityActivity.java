@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.adapter.TuyiTopAdapter;
@@ -71,31 +72,30 @@ public class TuyiCommunityActivity extends Activity implements AdapterView.OnIte
         BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.order("-zan");
         query.setLimit(limit);
-        query.findObjects(this, new FindListener<UserTuyi>() {
+        query.findObjects(new FindListener<UserTuyi>() {
             @Override
-            public void onSuccess(List<UserTuyi> list) {
-                layout.setVisibility(View.GONE);
-                if (list.isEmpty()) {
-                    Config.Show(TuyiCommunityActivity.this, "木有数据");
-                    refreshPull();
-                } else {
-                    adapter = new TuyiTopAdapter(TuyiCommunityActivity.this, list);
-                    mListView.setAdapter(adapter);
-                    refreshPull();
-                    if (list.size() < limit)
-                        mListView.setPullLoadEnable(false);
-                    else {
-                        mListView.setPullLoadEnable(true);
-                        mListView.setPullRefreshEnable(false);
+            public void done(List<UserTuyi> list, BmobException e) {
+                if(e==null){
+                    layout.setVisibility(View.GONE);
+                    if (list.isEmpty()) {
+                        Config.Show(TuyiCommunityActivity.this, "木有数据");
+                        refreshPull();
+                    } else {
+                        adapter = new TuyiTopAdapter(TuyiCommunityActivity.this, list);
+                        mListView.setAdapter(adapter);
+                        refreshPull();
+                        if (list.size() < limit)
+                            mListView.setPullLoadEnable(false);
+                        else {
+                            mListView.setPullLoadEnable(true);
+                            mListView.setPullRefreshEnable(false);
+                        }
+                        count += list.size();
                     }
-                    count += list.size();
+                }else{
+                    refreshPull();
+                    layout.setVisibility(View.GONE);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                refreshPull();
-                layout.setVisibility(View.GONE);
             }
         });
     }
@@ -106,31 +106,30 @@ public class TuyiCommunityActivity extends Activity implements AdapterView.OnIte
         query.order("zan");
         query.setLimit(limit);
         query.setSkip(count);
-        query.findObjects(this, new FindListener<UserTuyi>() {
+        query.findObjects(new FindListener<UserTuyi>() {
             @Override
-            public void onSuccess(List<UserTuyi> list) {
-                if (list.isEmpty()) {
-                    Config.Show(TuyiCommunityActivity.this, "木有数据");
-                    refreshLoad();
-                    mListView.setPullLoadEnable(false);
-                } else {
-                    adapter.addAll(list);
-                    mListView.setAdapter(adapter);
-                    refreshLoad();
-                    if (list.size() < limit) {
+            public void done(List<UserTuyi> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Config.Show(TuyiCommunityActivity.this, "木有数据");
+                        refreshLoad();
                         mListView.setPullLoadEnable(false);
-                        mListView.setPullRefreshEnable(true);
-                    } else
-                        mListView.setPullLoadEnable(true);
+                    } else {
+                        adapter.addAll(list);
+                        mListView.setAdapter(adapter);
+                        refreshLoad();
+                        if (list.size() < limit) {
+                            mListView.setPullLoadEnable(false);
+                            mListView.setPullRefreshEnable(true);
+                        } else
+                            mListView.setPullLoadEnable(true);
 
-                    mListView.setSelection(count);
-                    count += list.size();
+                        mListView.setSelection(count);
+                        count += list.size();
+                    }
+                }else{
+                    refreshLoad();
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                refreshLoad();
             }
         });
     }

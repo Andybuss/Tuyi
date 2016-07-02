@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.easeui.domain.EaseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,14 +37,14 @@ import java.util.List;
 import java.util.Map;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.Constant;
-import dong.lan.tuyi.DemoHXSDKHelper;
+import dong.lan.tuyi.DemoHelper;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.TUser;
 import dong.lan.tuyi.db.UserDao;
-import dong.lan.tuyi.domain.User;
 import dong.lan.tuyi.utils.AES;
 import dong.lan.tuyi.utils.CommonUtils;
 import dong.lan.tuyi.utils.Config;
@@ -53,15 +54,12 @@ import dong.lan.tuyi.utils.Config;
  *
  */
 public class LoginActivity extends BaseActivity {
-    private static final String TAG = "LoginActivity";
-    public static final int REQUEST_CODE_SETNICK = 1;
     private EditText usernameEditText;
     private EditText passwordEditText;
 
     private boolean progressShow;
     private boolean autoLogin = false;
 
-    private String currentUsername;
     private String currentPassword;
 
     @Override
@@ -69,7 +67,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // 如果用户名密码都有，直接进入主页面
-        if (DemoHXSDKHelper.getInstance().isLogined()) {
+        if (DemoHelper.getInstance().isLoggedIn()) {
             autoLogin = true;
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
@@ -112,7 +110,7 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(this, R.string.network_isnot_available, Toast.LENGTH_SHORT).show();
             return;
         }
-            currentUsername = AES.encode(usernameEditText.getText().toString().trim());
+        String currentUsername = AES.encode(usernameEditText.getText().toString().trim());
         currentPassword = passwordEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(currentUsername)) {
@@ -137,7 +135,6 @@ public class LoginActivity extends BaseActivity {
         pd.setMessage(getString(R.string.Is_landing));
         pd.show();
 
-        final long start = System.currentTimeMillis();
         // 调用sdk登陆方法登陆聊天服务器
         EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
@@ -152,7 +149,6 @@ public class LoginActivity extends BaseActivity {
                 saveUserPref(usernameEditText.getText().toString().trim());
                 try {
                     // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
-                    // ** manually load all local groups and
                     EMGroupManager.getInstance().loadAllGroups();
                     EMChatManager.getInstance().loadAllConversations();
                     // 处理好友和群组
@@ -207,21 +203,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initializeContacts() {
-        Map<String, User> userlist = new HashMap<>();
+        Map<String, EaseUser> userlist = new HashMap<>();
         // 添加user"申请与通知"
-        User newFriends = new User();
-        newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
+        EaseUser newFriends = new EaseUser(Constant.NEW_FRIENDS_USERNAME);
         String strChat = getResources().getString(
                 R.string.Application_and_notify);
         newFriends.setNick(strChat);
 
         userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
         // 添加"群聊"
-        User groupUser = new User();
-        String strGroup = getResources().getString(R.string.group_chat);
-        groupUser.setUsername(Constant.GROUP_USERNAME);
+        EaseUser groupUser = new EaseUser(Constant.GROUP_USERNAME);
+        String strGroup = getResources().getString(R.string.group_chat_str);
         groupUser.setNick(strGroup);
-        groupUser.setHeader("");
         userlist.put(Constant.GROUP_USERNAME, groupUser);
 
 
@@ -229,7 +222,7 @@ public class LoginActivity extends BaseActivity {
         TuApplication.getInstance().setContactList(userlist);
         // 存入db
         UserDao dao = new UserDao(LoginActivity.this);
-        List<User> users = new ArrayList<>(userlist.values());
+        List<EaseUser> users = new ArrayList<>(userlist.values());
         dao.saveContactList(users);
     }
 
@@ -239,20 +232,19 @@ public class LoginActivity extends BaseActivity {
         if (cur.equals("0")) {
             BmobQuery<TUser> query = new BmobQuery<>();
             query.addWhereEqualTo("username", name);
-            query.findObjects(LoginActivity.this, new FindListener<TUser>() {
+            query.findObjects(new FindListener<TUser>() {
                 @Override
-                public void onSuccess(List<TUser> list) {
-                    if (!list.isEmpty()) {
-                        Config.tUser = list.get(0);
-                        Config.preferences.edit().putString(list.get(0).getUsername(), list.get(0).getUsername()).apply();
-                        Config.preferences.edit().putString(list.get(0).getUsername() + "_ID", list.get(0).getObjectId()).apply();
-                        Config.preferences.edit().putString(list.get(0).getUsername() + "_Avatar", list.get(0).getHead()).apply();
+                public void done(List<TUser> list, BmobException e) {
+                    if(e==null){
+                        if (!list.isEmpty()) {
+                            Config.tUser = list.get(0);
+                            Config.preferences.edit().putString(list.get(0).getUsername(), list.get(0).getUsername()).apply();
+                            Config.preferences.edit().putString(list.get(0).getUsername() + "_ID", list.get(0).getObjectId()).apply();
+                            Config.preferences.edit().putString(list.get(0).getUsername() + "_Avatar", list.get(0).getHead()).apply();
+                        }
+                    }else{
+                        Show(e.getMessage());
                     }
-                }
-
-                @Override
-                public void onError(int i, String s) {
-
                 }
             });
         }

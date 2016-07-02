@@ -29,7 +29,6 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.utils.AES;
 
 public class GroupSimpleDetailActivity extends BaseActivity {
 	private Button btn_add_group;
@@ -43,7 +42,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_group_simle_details);
+		setContentView(R.layout.em_activity_group_simle_details);
 		tv_name = (TextView) findViewById(R.id.name);
 		tv_admin = (TextView) findViewById(R.id.tv_admin);
 		btn_add_group = (Button) findViewById(R.id.btn_add_to_group);
@@ -51,7 +50,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 		progressBar = (ProgressBar) findViewById(R.id.loading);
 
 		EMGroupInfo groupInfo = (EMGroupInfo) getIntent().getSerializableExtra("groupinfo");
-		String groupname;
+		String groupname = null;
 		if(groupInfo != null){
 		    groupname = groupInfo.getGroupName();
 		    groupid = groupInfo.getGroupId();
@@ -122,9 +121,9 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 						public void run() {
 							pd.dismiss();
 							if(group.isMembersOnly())
-								Show(st3);
+								Toast.makeText(GroupSimpleDetailActivity.this, st3, Toast.LENGTH_SHORT).show();
 							else
-								Show(st4);
+								Toast.makeText(GroupSimpleDetailActivity.this, st4,  Toast.LENGTH_SHORT).show();
 							btn_add_group.setEnabled(false);
 						}
 					});
@@ -133,7 +132,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 					runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
-							Show(st5+e.getMessage());
+							Toast.makeText(GroupSimpleDetailActivity.this, st5+e.getMessage(),  Toast.LENGTH_SHORT).show();
 						}
 					});
 				}
@@ -147,7 +146,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
          if(!group.getMembers().contains(EMChatManager.getInstance().getCurrentUser()))
              btn_add_group.setEnabled(true);
          tv_name.setText(group.getGroupName());
-         tv_admin.setText(AES.decode(group.getOwner()));
+         tv_admin.setText(group.getOwner());
          tv_introduction.setText(group.getDescription());
      }
 	

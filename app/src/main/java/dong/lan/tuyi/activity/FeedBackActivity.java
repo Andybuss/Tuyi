@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import dong.lan.tuyi.R;
@@ -54,25 +55,23 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
                 final FeedBack feedBack = new FeedBack();
                 feedBack.setUser(Config.tUser);
                 feedBack.setFeek(feed.getText().toString());
-                feedBack.save(FeedBackActivity.this, new SaveListener() {
+                feedBack.save(new SaveListener<String>() {
                     @Override
-                    public void onSuccess() {
-                        Show("感谢您的反馈");
-                        if (adapter == null) {
-                            List<FeedBack> feedBacks = new ArrayList<>();
-                            feedBacks.add(feedBack);
-                            adapter = new FeedBackAdapter(FeedBackActivity.this,feedBacks);
-                            mListView.setAdapter(adapter);
-                        }else
-                        {
-                            adapter.add(feedBack);
-                            mListView.deferNotifyDataSetChanged();
+                    public void done(String s, BmobException e) {
+                        if(e==null){
+                            Show("感谢您的反馈");
+                            if (adapter == null) {
+                                List<FeedBack> feedBacks = new ArrayList<>();
+                                feedBacks.add(feedBack);
+                                adapter = new FeedBackAdapter(FeedBackActivity.this, feedBacks);
+                                mListView.setAdapter(adapter);
+                            } else {
+                                adapter.add(feedBack);
+                                mListView.deferNotifyDataSetChanged();
+                            }
+                        }else{
+                            Show("反馈失败：" + e.getMessage());
                         }
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Show("反馈失败："+s);
                     }
                 });
                 break;
@@ -86,24 +85,20 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         query.setLimit(30);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.order("-updateAt");
-        query.findObjects(this, new FindListener<FeedBack>() {
+        query.findObjects(new FindListener<FeedBack>() {
             @Override
-            public void onSuccess(List<FeedBack> list) {
-                if(list.isEmpty())
-                {
-                    Show("没有反馈信息~");
+            public void done(List<FeedBack> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Show("没有反馈信息~");
+                    } else {
+                        adapter = new FeedBackAdapter(FeedBackActivity.this, list);
+                        mListView.setAdapter(adapter);
+                        mListView.setSelection(list.size());
+                    }
+                }else{
+                    Show(e.getMessage());
                 }
-                else
-                {
-                    adapter = new FeedBackAdapter(FeedBackActivity.this,list);
-                    mListView.setAdapter(adapter);
-                    mListView.setSelection(list.size());
-                }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
         });
         if (mListView.getPullRefreshing()) {

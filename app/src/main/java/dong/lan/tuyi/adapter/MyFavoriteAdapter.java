@@ -12,6 +12,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import cn.bmob.v3.datatype.BmobRelation;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.activity.TuyiInfoActivity;
@@ -84,17 +85,16 @@ public class MyFavoriteAdapter extends BaseListAdapter<UserTuyi> {
                 BmobRelation relation = new BmobRelation();
                 relation.remove(list.get(pos));
                 Config.tUser.setFavoraite(relation);
-                Config.tUser.update(mContext, new UpdateListener() {
+                Config.tUser.update(new UpdateListener() {
                     @Override
-                    public void onSuccess() {
-                        Toast.makeText(mContext, "移除收藏成功", Toast.LENGTH_SHORT).show();
-                        list.remove(pos);
-                        MyFavoriteAdapter.this.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Toast.makeText(mContext, "移除收藏失败", Toast.LENGTH_SHORT).show();
+                    public void done(BmobException e) {
+                        if(e==null){
+                            Toast.makeText(mContext, "移除收藏成功", Toast.LENGTH_SHORT).show();
+                            list.remove(pos);
+                            MyFavoriteAdapter.this.notifyDataSetChanged();
+                        }else{
+                            Toast.makeText(mContext, "移除收藏失败"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }

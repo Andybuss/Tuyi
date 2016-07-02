@@ -8,6 +8,7 @@ import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.adapter.MyFavoriteAdapter;
@@ -50,19 +51,19 @@ public class FavoriteActivity extends BaseActivity implements  XListView.IXListV
         final BmobQuery<UserTuyi> query = new BmobQuery<>();
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.addWhereRelatedTo("favoraite", new BmobPointer(Config.tUser));
-        query.findObjects(this, new FindListener<UserTuyi>() {
+        query.findObjects(new FindListener<UserTuyi>() {
             @Override
-            public void onSuccess(List<UserTuyi> list) {
-                if (list.isEmpty()) {
-                    Show("没有收藏");
-                } else {
-                    adapter = new MyFavoriteAdapter(FavoriteActivity.this, list);
-                    mListView.setAdapter(adapter);
+            public void done(List<UserTuyi> list, BmobException e) {
+                if(e==null){
+                    if (list.isEmpty()) {
+                        Show("没有收藏");
+                    } else {
+                        adapter = new MyFavoriteAdapter(FavoriteActivity.this, list);
+                        mListView.setAdapter(adapter);
+                    }
+                }else{
+                    Show("获取收藏失败:"+e.getMessage());
                 }
-            }
-            @Override
-            public void onError(int i, String s) {
-                Show("获取收藏失败");
             }
         });
     }

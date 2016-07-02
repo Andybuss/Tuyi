@@ -21,7 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -30,16 +30,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -56,62 +55,54 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.model.LatLng;
-import com.easemob.EMCallBack;
-import com.easemob.EMConnectionListener;
-import com.easemob.EMError;
 import com.easemob.EMEventListener;
-import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
-import com.easemob.EMValueCallBack;
+import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMContactListener;
-import com.easemob.chat.EMContactManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMConversation.EMConversationType;
-import com.easemob.chat.EMGroup;
-import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
-import com.easemob.chat.TextMessageBody;
+import com.easemob.easeui.EaseConstant;
+import com.easemob.easeui.utils.EaseCommonUtils;
+import com.easemob.redpacketui.RedPacketConstant;
+import com.easemob.redpacketui.utils.RedPacketUtil;
 import com.easemob.util.EMLog;
-import com.easemob.util.HanziToPinyin;
 import com.easemob.util.NetUtils;
 import com.umeng.comm.core.CommunitySDK;
+import com.umeng.comm.core.beans.CommConfig;
 import com.umeng.comm.core.beans.CommUser;
 import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.listeners.Listeners;
 import com.umeng.comm.core.login.LoginListener;
 import com.umeng.comm.core.nets.responses.PortraitUploadResponse;
-import com.umeng.comm.ui.fragments.CommunityMainFragment;
+import com.umeng.simplify.ui.fragments.CommunityMainFragment;
+import com.umeng.simplify.ui.presenter.impl.LoginSuccessStrategory;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
-import applib.controller.HXSDKHelper;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobGeoPoint;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
+import dong.lan.tuyi.BuildConfig;
 import dong.lan.tuyi.Constant;
-import dong.lan.tuyi.DemoHXSDKHelper;
+import dong.lan.tuyi.DemoHelper;
 import dong.lan.tuyi.R;
 import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.Interested;
@@ -121,11 +112,8 @@ import dong.lan.tuyi.db.InviteMessgeDao;
 import dong.lan.tuyi.db.TUserDao;
 import dong.lan.tuyi.db.UserDao;
 import dong.lan.tuyi.domain.InviteMessage;
-import dong.lan.tuyi.domain.User;
 import dong.lan.tuyi.util.PhotoUtil;
-import dong.lan.tuyi.utils.AES;
 import dong.lan.tuyi.utils.CircleTransformation;
-import dong.lan.tuyi.utils.CommonUtils;
 import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.utils.Lock;
 import dong.lan.tuyi.utils.PicassoHelper;
@@ -147,24 +135,18 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private TextView tip;
     private LinearLayout tipLayout;
     private Button[] mTabs;
-    private ContactlistFragment contactListFragment;
-    private ChatAllHistoryFragment chatHistoryFragment;
+    private ContactListFragment contactListFragment;
+    private ConversationListFragment conversationListFragment;
     private Fragment[] fragments;
     private int index;
-    // 当前fragment的index
     private int currentTabIndex;
-    // 账号在别处登录
     public boolean isConflict = false;
-    //更新用户位置信息
     private static boolean isFirstLoc = true;
-
-    // 账号被移除
     private boolean isCurrentAccountRemoved = false;
-    private MyConnectionListener connectionListener = null;
 
-    private MyGroupChangeListener groupChangeListener = null;
     private LocationClientOption option;
-
+    private BroadcastReceiver broadcastReceiver;
+    private LocalBroadcastManager broadcastManager;
     private Toolbar toolbar;
 
 
@@ -180,15 +162,11 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         super.onCreate(savedInstanceState);
         username = Config.Tusername = TuApplication.getInstance().getUserName();
         if (savedInstanceState != null && savedInstanceState.getBoolean(Constant.ACCOUNT_REMOVED, false)) {
-            // 防止被移除后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
-            // 三个fragment里加的判断同理
             TuApplication.getInstance().logout(null);
             finish();
             startActivity(new Intent(this, LoginActivity.class));
             return;
         } else if (savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false)) {
-            // 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
-            // 三个fragment里加的判断同理
             finish();
             startActivity(new Intent(this, LoginActivity.class));
             return;
@@ -197,31 +175,42 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         Lock.canPop = false;
 
 
-        if(Build.VERSION.SDK_INT>=23){
-            checkMyPermission();
+
+        if(Build.VERSION.SDK_INT>=23 && !Settings.System.canWrite(this)){
+            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, 601);
         }
+
         initView();
+
         if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow) {
             showConflictDialog();
         } else if (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false) && !isAccountRemovedDialogShow) {
             showAccountRemovedDialog();
         }
+
+        String[] mPermissionList = new String[]{Manifest.permission.CHANGE_CONFIGURATION,Manifest.permission.CHANGE_WIFI_STATE,Manifest.permission.WAKE_LOCK,Manifest.permission.WRITE_SETTINGS,Manifest.permission.VIBRATE,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE};
+        if(Build.VERSION.SDK_INT>=23){
+            requestPermissions(mPermissionList,100);
+        }
         inviteMessgeDao = new InviteMessgeDao(this);
         userDao = new UserDao(this);
         // 这个fragment只显示好友和群组的聊天记录
         // 显示所有人消息记录的fragment
-        chatHistoryFragment = new ChatAllHistoryFragment();
-        contactListFragment = new ContactlistFragment();
+        contactListFragment = new ContactListFragment();
+        conversationListFragment = new ConversationListFragment();
+        CommunitySDK mCommSDK = CommunityFactory.getCommSDK(this);
+        mCommSDK.initSDK(this);
         CommunityMainFragment mFeedsFragment = new CommunityMainFragment();
-        //设置Feed流页面的返回按钮不可见
         mFeedsFragment.setBackButtonVisibility(View.INVISIBLE);
+        CommConfig.getConfig().setLoginResultStrategy(new LoginSuccessStrategory());
 
-
-        UserMainFragment userMainFragment = new UserMainFragment();
-        fragments = new Fragment[]{chatHistoryFragment, contactListFragment, mFeedsFragment, userMainFragment};
+        FragmentTuMap fragmentTuMap = new FragmentTuMap();
+        fragments = new Fragment[]{conversationListFragment, contactListFragment, mFeedsFragment, fragmentTuMap};
         // 添加显示第一个fragment
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, userMainFragment).add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(userMainFragment)
+                .add(R.id.fragment_container, fragmentTuMap).add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(fragmentTuMap)
                 .commit();
         init();
         // 定位初始化
@@ -238,32 +227,12 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         BmobUpdateAgent.update(this);
     }
 
-    private void checkMyPermission() {
-        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            },1);
-        }
-    }
 
     private void init() {
-        // setContactListener监听联系人的变化等
-        EMContactManager.getInstance().setContactListener(new MyContactListener());
-        // 注册一个监听连接状态的listener
-
-        connectionListener = new MyConnectionListener();
-        EMChatManager.getInstance().addConnectionListener(connectionListener);
-
-        groupChangeListener = new MyGroupChangeListener();
-        // 注册群聊相关的listener
-        EMGroupManager.getInstance().addGroupChangeListener(groupChangeListener);
         initTuser();
+        // 注册群组和联系人监听
+        DemoHelper.getInstance().registerGroupAndContactListener();
+        registerBroadcastReceiver();
     }
 
 
@@ -285,145 +254,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             DemoDBManager.getInstance().updateTuser(Config.tUser.getUsername(), values);
         } else {
             DemoDBManager.getInstance().saveOneTuser(Config.tUser);
-        }
-    }
-
-    static void asyncFetchGroupsFromServer() {
-        HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
-
-            @Override
-            public void onSuccess() {
-                HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
-
-                if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
-                    HXSDKHelper.getInstance().notifyForRecevingEvents();
-                }
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-
-            }
-
-        });
-    }
-
-    static void asyncFetchContactsFromServer() {
-        HXSDKHelper.getInstance().asyncFetchContactsFromServer(new EMValueCallBack<List<String>>() {
-
-            @Override
-            public void onSuccess(List<String> usernames) {
-                Context context = HXSDKHelper.getInstance().getAppContext();
-
-                System.out.println("----------------" + usernames.toString());
-                EMLog.d("roster", "contacts size: " + usernames.size());
-                Map<String, User> userlist = new HashMap<>();
-                for (String username : usernames) {
-                    User user = new User();
-                    user.setUsername(username);
-                    setUserHearder(username, user);
-                    userlist.put(username, user);
-                }
-                // 添加user"申请与通知"
-                User newFriends = new User();
-                newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
-                String strChat = context.getString(R.string.Application_and_notify);
-                newFriends.setNick(strChat);
-
-                userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
-                // 添加"群聊"
-                User groupUser = new User();
-                String strGroup = context.getString(R.string.group_chat);
-                groupUser.setUsername(Constant.GROUP_USERNAME);
-                groupUser.setNick(strGroup);
-                groupUser.setHeader("");
-                userlist.put(Constant.GROUP_USERNAME, groupUser);
-
-                // 添加"聊天室"
-                User chatRoomItem = new User();
-                String strChatRoom = context.getString(R.string.chat_room);
-                chatRoomItem.setUsername(Constant.CHAT_ROOM);
-                chatRoomItem.setNick(strChatRoom);
-                chatRoomItem.setHeader("");
-                userlist.put(Constant.CHAT_ROOM, chatRoomItem);
-
-                // 添加"Robot"
-                User robotUser = new User();
-                String strRobot = context.getString(R.string.robot_chat);
-                robotUser.setUsername(Constant.CHAT_ROBOT);
-                robotUser.setNick(strRobot);
-                robotUser.setHeader("");
-                userlist.put(Constant.CHAT_ROBOT, robotUser);
-
-                // 存入内存
-                TuApplication.getInstance().setContactList(userlist);
-                // 存入db
-                UserDao dao = new UserDao(context);
-                List<User> users = new ArrayList<>(userlist.values());
-                dao.saveContactList(users);
-
-                HXSDKHelper.getInstance().notifyContactsSyncListener(true);
-
-                if (HXSDKHelper.getInstance().isGroupsSyncedWithServer()) {
-                    HXSDKHelper.getInstance().notifyForRecevingEvents();
-                }
-
-            }
-
-            @Override
-            public void onError(int error, String errorMsg) {
-                HXSDKHelper.getInstance().notifyContactsSyncListener(false);
-            }
-
-        });
-    }
-
-    static void asyncFetchBlackListFromServer() {
-        HXSDKHelper.getInstance().asyncFetchBlackListFromServer(new EMValueCallBack<List<String>>() {
-
-            @Override
-            public void onSuccess(List<String> value) {
-                EMContactManager.getInstance().saveBlackList(value);
-                HXSDKHelper.getInstance().notifyBlackListSyncListener(true);
-            }
-
-            @Override
-            public void onError(int error, String errorMsg) {
-                HXSDKHelper.getInstance().notifyBlackListSyncListener(false);
-            }
-
-        });
-    }
-
-    /**
-     * 设置hearder属性，方便通讯中对联系人按header分类显示，以及通过右侧ABCD...字母栏快速定位联系人
-     *
-     * @param username
-     * @param user
-     */
-    private static void setUserHearder(String username, User user) {
-        String headerName;
-        if (!TextUtils.isEmpty(user.getNick())) {
-            headerName = user.getNick();
-        } else {
-            headerName = user.getUsername();
-        }
-        if (username.equals(Constant.NEW_FRIENDS_USERNAME)) {
-            user.setHeader("");
-        } else if (Character.isDigit(headerName.charAt(0))) {
-            user.setHeader("#");
-        } else {
-            user.setHeader(HanziToPinyin.getInstance().get(headerName.substring(0, 1)).get(0).target.substring(0, 1)
-                    .toUpperCase());
-            char header = user.getHeader().toLowerCase().charAt(0);
-            if (header < 'a' || header > 'z') {
-                user.setHeader("#");
-            }
         }
     }
 
@@ -559,16 +389,14 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         tUser.setObjectId(user.getObjectId());
         BmobGeoPoint p = new BmobGeoPoint(latLng.longitude, latLng.latitude);
         tUser.setLoginPoint(p);
-        tUser.update(this, new UpdateListener() {
+        tUser.update(new UpdateListener() {
             @Override
-            public void onSuccess() {
-                isFirstLoc = false;
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                System.out.println(i + "  " + s);
-                isFirstLoc = true;
+            public void done(BmobException e) {
+                if (e == null) {
+                    isFirstLoc = false;
+                } else {
+                    isFirstLoc = true;
+                }
             }
         });
     }
@@ -613,15 +441,12 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         interested.setMs(false);
         interested.setMj(false);
         interested.setUser(Config.tUser);
-        interested.save(this, new SaveListener() {
+        interested.save(new SaveListener<String>() {
             @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                saveInterested();
+            public void done(String id, BmobException e) {
+                if (e != null) {
+                    saveInterested();
+                }
             }
         });
     }
@@ -629,67 +454,69 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private void initStatus() {
         BmobQuery<Interested> query = new BmobQuery<>();
         query.addWhereEqualTo("user", Config.tUser);
-        query.findObjects(this, new FindListener<Interested>() {
+        query.findObjects(new FindListener<Interested>() {
             @Override
-            public void onSuccess(List<Interested> list) {
-                if (list.isEmpty()) {
-                    saveInterested();
+            public void done(List<Interested> list, BmobException e) {
+                if (e == null) {
+                    if (list.isEmpty()) {
+                        saveInterested();
+                    } else {
+                        Config.INTERESTED = list.get(0);
+                    }
                 } else {
-                    Config.INTERESTED = list.get(0);
+                    initStatus();
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                initStatus();
             }
         });
     }
 
     private void initTuser() {
+        System.out.println(TuApplication.getInstance().getUserName());
         TUser tUser = DemoDBManager.getInstance().getTUserByName(TuApplication.getInstance().getUserName());
+
         if (tUser != null)
-            PicassoHelper.load(this,tUser.getHead())
-            .resize(100,100).transform(new CircleTransformation(50))
-            .placeholder(R.drawable.default_avatar)
-            .error(R.drawable.default_avatar)
-            .into(head);
+            PicassoHelper.load(this, tUser.getHead())
+                    .resize(100, 100).transform(new CircleTransformation(50))
+                    .placeholder(R.drawable.default_avatar)
+                    .error(R.drawable.default_avatar)
+                    .into(head);
         tip.setText("更新用户数据中...");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (Config.tUser == null) {
                     count++;
-                    BmobQuery<TUser> query = new BmobQuery<>();
+                    if (BuildConfig.DEBUG) Log.d(TAG, Config.Tusername);
+                    BmobQuery<TUser> query = new BmobQuery<TUser>();
                     query.addWhereEqualTo("username", Config.Tusername);
-                    query.findObjects(MainActivity.this, new FindListener<TUser>() {
+                    query.findObjects(new FindListener<TUser>() {
                         @Override
-                        public void onSuccess(List<TUser> list) {
-                            if (!list.isEmpty()) {
-                                Config.tUser = list.get(0);
-                                Show("更新用户数据成功");
-                                initStatus();
-                                updateCurrentUser();
-                                tipLayout.setVisibility(View.GONE);
-                                Config.updateIsPointOpen(MainActivity.this, Config.tUser.isPublicMyPoint());
-                                initUmengCommunity();
-                                if (list.get(0).getHead() == null || list.get(0).getHead().equals("")) {
-                                    head.setImageResource(R.drawable.default_avatar);
-                                } else {
-                                    PicassoHelper.load(MainActivity.this,list.get(0).getHead())
-                                            .resize(100,100)
-                                            .transform(new CircleTransformation(50))
-                                            .placeholder(R.drawable.default_avatar)
-                                            .error(R.drawable.default_avatar)
-                                            .into(head);
+                        public void done(List<TUser> list, BmobException e) {
+                            if (e == null) {
+                                if (BuildConfig.DEBUG) Log.d("DDDDDDDDDDDD", list.toString());
+                                if (!list.isEmpty()) {
+                                    Config.tUser = list.get(0);
+                                    Show("更新用户数据成功");
+                                    initStatus();
+                                    updateCurrentUser();
+                                    tipLayout.setVisibility(View.GONE);
+                                    Config.updateIsPointOpen(MainActivity.this, Config.tUser.isPublicMyPoint());
+                                    initUmengCommunity();
+                                    if (list.get(0).getHead() == null || list.get(0).getHead().equals("")) {
+                                        head.setImageResource(R.drawable.default_avatar);
+                                    } else {
+                                        PicassoHelper.load(MainActivity.this, list.get(0).getHead())
+                                                .resize(100, 100)
+                                                .transform(new CircleTransformation(50))
+                                                .placeholder(R.drawable.default_avatar)
+                                                .error(R.drawable.default_avatar)
+                                                .into(head);
+                                    }
                                 }
+                            } else {
+                                tip.setText("再次更新用户数据中...");
+                                initTuser();
                             }
-                        }
-
-                        @Override
-                        public void onError(int i, String s) {
-                            tip.setText("再次更新用户数据中...");
-                            initTuser();
                         }
                     });
                 }
@@ -722,23 +549,27 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 break;
 
         }
-        if(index==2){
-            AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
+        if (index == 2) {
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1f, 0f);
             alphaAnimation.setDuration(500);
             alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
-                public void onAnimationStart(Animation animation) {}
+                public void onAnimationStart(Animation animation) {
+                }
+
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     toolbar.setVisibility(View.GONE);
                 }
+
                 @Override
-                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationRepeat(Animation animation) {
+                }
             });
             toolbar.setAnimation(alphaAnimation);
 
-        }else if(toolbar.getVisibility()==View.GONE){
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0f,1f);
+        } else if (toolbar.getVisibility() == View.GONE) {
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
             alphaAnimation.setDuration(500);
             toolbar.setAnimation(alphaAnimation);
             toolbar.setVisibility(View.VISIBLE);
@@ -764,43 +595,77 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     public void onEvent(EMNotifierEvent event) {
         switch (event.getEvent()) {
             case EventNewMessage: // 普通消息
-            {
                 EMMessage message = (EMMessage) event.getData();
-
                 // 提示新消息
-                HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+                DemoHelper.getInstance().getNotifier().onNewMsg(message);
 
-                refreshUI();
+                refreshUIWithMessage();
                 break;
-            }
-
             case EventOfflineMessage: {
-                refreshUI();
+                refreshUIWithMessage();
                 break;
             }
 
             case EventConversationListChanged: {
-                refreshUI();
+                refreshUIWithMessage();
                 break;
             }
-
+            case EventNewCMDMessage:
+                EMMessage cmdMessage = (EMMessage) event.getData();
+                //获取消息body
+                CmdMessageBody cmdMsgBody = (CmdMessageBody) cmdMessage.getBody();
+                final String action = cmdMsgBody.action;//获取自定义action
+                if (action.equals(EaseConstant.EASE_ATTR_REVOKE)) {
+                    EaseCommonUtils.receiveRevokeMessage(this, cmdMessage);
+                }
+                //red packet code : 处理红包回执透传消息
+                if (action.equals(RedPacketConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
+                    RedPacketUtil.receiveRedPacketAckMessage(cmdMessage);
+                }
+                //end of red packet code
+                refreshUIWithMessage();
+                break;
+            case EventReadAck:
+                // TODO 这里当此消息未加载到内存中时，ackMessage会为null，消息的删除会失败
+                EMMessage ackMessage = (EMMessage) event.getData();
+                EMConversation conversation = EMChatManager.getInstance().getConversation(ackMessage.getTo());
+                // 判断接收到ack的这条消息是不是阅后即焚的消息，如果是，则说明对方看过消息了，对方会销毁，这边也删除(现在只有txt iamge file三种消息支持 )
+                if (ackMessage.getBooleanAttribute(EaseConstant.EASE_ATTR_READFIRE, false)
+                        && (ackMessage.getType() == Type.TXT
+                        || ackMessage.getType() == Type.VOICE
+                        || ackMessage.getType() == Type.IMAGE)) {
+                    // 判断当前会话是不是只有一条消息，如果只有一条消息，并且这条消息也是阅后即焚类型，当对方阅读后，这边要删除，会话会被过滤掉，因此要加载上一条消息
+                    if (conversation.getAllMessages().size() == 1 && conversation.getLastMessage().getMsgId().equals(ackMessage.getMsgId())) {
+                        if (ackMessage.getChatType() == ChatType.Chat) {
+                            conversation.loadMoreMsgFromDB(ackMessage.getMsgId(), 1);
+                        } else {
+                            conversation.loadMoreGroupMsgFromDB(ackMessage.getMsgId(), 1);
+                        }
+                    }
+                    conversation.removeMessage(ackMessage.getMsgId());
+                }
+                refreshUIWithMessage();
+                break;
             default:
                 break;
         }
     }
 
-    private void refreshUI() {
+    private void refreshUIWithMessage() {
         runOnUiThread(new Runnable() {
             public void run() {
                 // 刷新bottom bar消息未读数
                 updateUnreadLabel();
-                if (currentTabIndex == 0 && chatHistoryFragment != null) {
+                if (currentTabIndex == 0) {
                     // 当前页面如果为聊天历史页面，刷新此页面
-                    chatHistoryFragment.refresh();
+                    if (conversationListFragment != null) {
+                        conversationListFragment.refresh();
+                    }
                 }
             }
         });
     }
+
 
     @Override
     public void back(View view) {
@@ -827,14 +692,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             conflictBuilder.create().dismiss();
             conflictBuilder = null;
         }
-
-        if (connectionListener != null) {
-            EMChatManager.getInstance().removeConnectionListener(connectionListener);
-        }
-
-        if (groupChangeListener != null) {
-            EMGroupManager.getInstance().removeGroupChangeListener(groupChangeListener);
-        }
+        unregisterBroadcastReceiver();
 
         try {
             unregisterReceiver(internalDebugReceiver);
@@ -893,9 +751,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
      */
     public int getUnreadAddressCountTotal() {
         int unreadAddressCountTotal = 0;
-        if (TuApplication.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME) != null)
-            unreadAddressCountTotal = TuApplication.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME)
-                    .getUnreadMsgCount();
+        unreadAddressCountTotal = inviteMessgeDao.getUnreadMessagesCount();
         return unreadAddressCountTotal;
     }
 
@@ -928,8 +784,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
                 break;
             case R.id.toolbar_tuyi:
-                startActivity(new Intent(MainActivity.this, TuMapActivity.class));
-                overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
+                startActivity(new Intent(MainActivity.this, UserMainActivity.class));
                 break;
             case R.id.my_Favorite:
                 startActivity(new Intent(MainActivity.this, FavoriteActivity.class));
@@ -1056,179 +911,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     }
 
 
-    /***
-     * 好友变化listener
-     */
-    public class MyContactListener implements EMContactListener {
-
-        @Override
-        public void onContactAdded(List<String> usernameList) {
-            // 保存增加的联系人
-            Map<String, User> localUsers = TuApplication.getInstance().getContactList();
-            Map<String, User> toAddUsers = new HashMap<>();
-            for (String username : usernameList) {
-                User user = setUserHead(username);
-                // 添加好友时可能会回调added方法两次
-                if (!localUsers.containsKey(username)) {
-                    userDao.saveContact(user);
-                }
-                toAddUsers.put(username, user);
-            }
-            localUsers.putAll(toAddUsers);
-            // 刷新ui
-            if (currentTabIndex == 1)
-                contactListFragment.refresh();
-
-        }
-
-        @Override
-        public void onContactDeleted(final List<String> usernameList) {
-            // 被删除
-            Map<String, User> localUsers = TuApplication.getInstance().getContactList();
-            for (String username : usernameList) {
-                localUsers.remove(username);
-                userDao.deleteContact(username);
-                inviteMessgeDao.deleteMessage(username);
-            }
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    // 如果正在与此用户的聊天页面
-                    String st10 = getResources().getString(R.string.have_you_removed);
-                    if (ChatActivity.activityInstance != null
-                            && usernameList.contains(ChatActivity.activityInstance.getToChatUsername())) {
-                        Toast.makeText(MainActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, Toast.LENGTH_SHORT)
-                                .show();
-                        ChatActivity.activityInstance.finish();
-                    }
-                    updateUnreadLabel();
-                    // 刷新ui
-                    contactListFragment.refresh();
-                    chatHistoryFragment.refresh();
-                }
-            });
-
-        }
-
-        @Override
-        public void onContactInvited(String username, String reason) {
-
-            // 接到邀请的消息，如果不处理(同意或拒绝)，掉线后，服务器会自动再发过来，所以客户端不需要重复提醒
-            List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
-
-            for (InviteMessage inviteMessage : msgs) {
-                if (inviteMessage.getGroupId() == null && inviteMessage.getFrom().equals(username)) {
-                    inviteMessgeDao.deleteMessage(username);
-                }
-            }
-            // 自己封装的javabean
-            InviteMessage msg = new InviteMessage();
-            msg.setFrom(username);
-            msg.setTime(System.currentTimeMillis());
-            msg.setReason(reason);
-            Log.d(TAG, username + "请求加你为好友,reason: " + reason);
-            // 设置相应status
-            msg.setStatus(InviteMessage.InviteMesageStatus.BEINVITEED);
-            notifyNewIviteMessage(msg);
-
-        }
-
-        @Override
-        public void onContactAgreed(String username) {
-            List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
-            for (InviteMessage inviteMessage : msgs) {
-                if (inviteMessage.getFrom().equals(username)) {
-                    return;
-                }
-            }
-            // 自己封装的javabean
-            InviteMessage msg = new InviteMessage();
-            msg.setFrom(username);
-            msg.setTime(System.currentTimeMillis());
-            Log.d(TAG, username + "同意了你的好友请求");
-            msg.setStatus(InviteMessage.InviteMesageStatus.BEAGREED);
-            notifyNewIviteMessage(msg);
-
-        }
-
-        @Override
-        public void onContactRefused(String username) {
-
-            // 参考同意，被邀请实现此功能,demo未实现
-            Log.d(username, username + "拒绝了你的好友请求");
-        }
-
-    }
-
-    /**
-     * 连接监听listener
-     */
-    public class MyConnectionListener implements EMConnectionListener {
-
-        @Override
-        public void onConnected() {
-            boolean groupSynced = HXSDKHelper.getInstance().isGroupsSyncedWithServer();
-            boolean contactSynced = HXSDKHelper.getInstance().isContactsSyncedWithServer();
-
-            // in case group and contact were already synced, we supposed to notify sdk we are ready to receive the events
-            if (groupSynced && contactSynced) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        HXSDKHelper.getInstance().notifyForRecevingEvents();
-                    }
-                }.start();
-            } else {
-                if (!groupSynced) {
-                    asyncFetchGroupsFromServer();
-                }
-
-                if (!contactSynced) {
-                    asyncFetchContactsFromServer();
-                }
-
-                if (!HXSDKHelper.getInstance().isBlackListSyncedWithServer()) {
-                    asyncFetchBlackListFromServer();
-                }
-            }
-
-            runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    net_tip.setVisibility(View.GONE);
-                }
-
-            });
-        }
-
-        @Override
-        public void onDisconnected(final int error) {
-            final String st1 = getResources().getString(R.string.can_not_connect_chat_server_connection);
-            final String st2 = getResources().getString(R.string.the_current_network);
-            runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    if (error == EMError.USER_REMOVED) {
-                        // 显示帐号已经被移除
-                        showAccountRemovedDialog();
-                    } else if (error == EMError.CONNECTION_CONFLICT) {
-                        // 显示帐号在其他设备登陆dialog
-                        showConflictDialog();
-                    } else {
-                        String s;
-                        if (NetUtils.hasNetwork(MainActivity.this))
-                            s = st1;
-                        else
-                            s = st2;
-                        net_tip.setVisibility(View.VISIBLE);
-                        net_tip.setText(s);
-                    }
-                }
-
-            });
-        }
-    }
 
     View.OnClickListener net_error = new View.OnClickListener() {
         @Override
@@ -1239,151 +921,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         }
     };
 
-    /**
-     * MyGroupChangeListener
-     */
-    public class MyGroupChangeListener implements EMGroupChangeListener {
-
-        @Override
-        public void onInvitationReceived(String groupId, String groupName, String inviter, String reason) {
-
-            boolean hasGroup = false;
-            for (EMGroup group : EMGroupManager.getInstance().getAllGroups()) {
-                if (group.getGroupId().equals(groupId)) {
-                    hasGroup = true;
-                    break;
-                }
-            }
-            if (!hasGroup)
-                return;
-
-            // 被邀请
-            String st3 = getResources().getString(R.string.Invite_you_to_join_a_group_chat);
-            EMMessage msg = EMMessage.createReceiveMessage(Type.TXT);
-            msg.setChatType(ChatType.GroupChat);
-            msg.setFrom(inviter);
-            msg.setTo(groupId);
-            msg.setMsgId(UUID.randomUUID().toString());
-            msg.addBody(new TextMessageBody(AES.decode(inviter) + " " + st3));
-            // 保存邀请消息
-            EMChatManager.getInstance().saveMessage(msg);
-            // 提醒新消息
-            HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    updateUnreadLabel();
-                    // 刷新ui
-                    if (currentTabIndex == 0)
-                        chatHistoryFragment.refresh();
-                    if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-                        GroupsActivity.instance.onResume();
-                    }
-                }
-            });
-
-        }
-
-        @Override
-        public void onInvitationAccpted(String groupId, String inviter, String reason) {
-
-        }
-
-        @Override
-        public void onInvitationDeclined(String groupId, String invitee, String reason) {
-
-        }
-
-        @Override
-        public void onUserRemoved(String groupId, String groupName) {
-
-            // 提示用户被T了，demo省略此步骤
-            // 刷新ui
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    try {
-                        updateUnreadLabel();
-                        if (currentTabIndex == 0)
-                            chatHistoryFragment.refresh();
-                        if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-                            GroupsActivity.instance.onResume();
-                        }
-                    } catch (Exception e) {
-                        EMLog.e(TAG, "refresh exception " + e.getMessage());
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onGroupDestroy(String groupId, String groupName) {
-
-            // 群被解散
-            // 提示用户群被解散,demo省略
-            // 刷新ui
-            Show(groupName + "  已被解散");
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    updateUnreadLabel();
-                    if (currentTabIndex == 0)
-                        chatHistoryFragment.refresh();
-                    if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-                        GroupsActivity.instance.onResume();
-                    }
-                }
-            });
-
-        }
-
-        @Override
-        public void onApplicationReceived(String groupId, String groupName, String applyer, String reason) {
-
-            // 用户申请加入群聊
-            InviteMessage msg = new InviteMessage();
-            msg.setFrom(applyer);
-            msg.setTime(System.currentTimeMillis());
-            msg.setGroupId(groupId);
-            msg.setGroupName(groupName);
-            msg.setReason(reason);
-            Log.d(TAG, applyer + " 申请加入群聊：" + groupName);
-            msg.setStatus(InviteMessage.InviteMesageStatus.BEAPPLYED);
-            notifyNewIviteMessage(msg);
-        }
-
-        @Override
-        public void onApplicationAccept(String groupId, String groupName, String accepter) {
-
-            String st4 = getResources().getString(R.string.Agreed_to_your_group_chat_application);
-            // 加群申请被同意
-            EMMessage msg = EMMessage.createReceiveMessage(Type.TXT);
-            msg.setChatType(ChatType.GroupChat);
-            msg.setFrom(accepter);
-            msg.setTo(groupId);
-            msg.setMsgId(UUID.randomUUID().toString());
-            msg.addBody(new TextMessageBody(accepter + " " + st4));
-            // 保存同意消息
-            EMChatManager.getInstance().saveMessage(msg);
-            // 提醒新消息
-            HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
-
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    updateUnreadLabel();
-                    // 刷新ui
-                    if (currentTabIndex == 0)
-                        chatHistoryFragment.refresh();
-                    if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
-                        GroupsActivity.instance.onResume();
-                    }
-                }
-            });
-        }
-
-        @Override
-        public void onApplicationDeclined(String groupId, String groupName, String decliner, String reason) {
-            // 加群申请被拒绝，demo未实现
-        }
-    }
 
     /**
      * 保存提示新消息
@@ -1393,7 +930,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private void notifyNewIviteMessage(InviteMessage msg) {
         saveInviteMsg(msg);
         // 提示有新消息
-        HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(null);
+        DemoHelper.getInstance().getNotifier().viberateAndPlayTone(null);
 
         // 刷新bottom bar消息未读数
         updateUnreadAddressLable();
@@ -1410,38 +947,10 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private void saveInviteMsg(InviteMessage msg) {
         // 保存msg
         inviteMessgeDao.saveMessage(msg);
-        // 未读数加1
-        User user = TuApplication.getInstance().getContactList().get(Constant.NEW_FRIENDS_USERNAME);
-        if (user.getUnreadMsgCount() == 0)
-            user.setUnreadMsgCount(user.getUnreadMsgCount() + 1);
+        //保存未读数，这里没有精确计算
+        inviteMessgeDao.saveUnreadMessageCount(1);
     }
 
-    /**
-     * set head
-     */
-    User setUserHead(String username) {
-        User user = new User();
-        user.setUsername(username);
-        String headerName;
-        if (!TextUtils.isEmpty(user.getNick())) {
-            headerName = user.getNick();
-        } else {
-            headerName = user.getUsername();
-        }
-        if (username.equals(Constant.NEW_FRIENDS_USERNAME)) {
-            user.setHeader("");
-        } else if (Character.isDigit(headerName.charAt(0))) {
-            user.setHeader("#");
-        } else {
-            user.setHeader(HanziToPinyin.getInstance().get(headerName.substring(0, 1)).get(0).target.substring(0, 1)
-                    .toUpperCase());
-            char header = user.getHeader().toLowerCase().charAt(0);
-            if (header < 'a' || header > 'z') {
-                user.setHeader("#");
-            }
-        }
-        return user;
-    }
 
     @Override
     protected void onResume() {
@@ -1450,6 +959,23 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             Lock.canPop = false;
             Lock.locking(MainActivity.this, findViewById(R.id.slide_Main), Lock.UNLOCK);
         }
+
+        DemoHelper sdkHelper = DemoHelper.getInstance();
+        sdkHelper.pushActivity(this);
+
+        EMChatManager.getInstance().registerEventListener(this,
+                new EMNotifierEvent.Event[]{
+                        EMNotifierEvent.Event.EventNewMessage,
+                        EMNotifierEvent.Event.EventOfflineMessage,
+                        EMNotifierEvent.Event.EventConversationListChanged,
+                        EMNotifierEvent.Event.EventNewCMDMessage,
+                        EMNotifierEvent.Event.EventReadAck
+                });
+
+        if (!EMChatManager.getInstance().isConnected() && NetUtils.hasNetwork(this)) {
+            EMChatManager.getInstance().reconnect();
+        }
+
         if (!isConflict && !isCurrentAccountRemoved) {
             updateUnreadLabel();
             updateUnreadAddressLable();
@@ -1459,14 +985,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         if (tipLayout.getVisibility() == View.VISIBLE && Config.tUser != null)
             tipLayout.setVisibility(View.GONE);
 
-        // unregister this event listener when this activity enters the
-        // background
-        DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
-        sdkHelper.pushActivity(this);
-
-        // register the event listener when enter the foreground
-        EMChatManager.getInstance().registerEventListener(this,
-                new EMNotifierEvent.Event[]{EMNotifierEvent.Event.EventNewMessage, EMNotifierEvent.Event.EventOfflineMessage, EMNotifierEvent.Event.EventConversationListChanged});
     }
 
 
@@ -1474,7 +992,7 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     protected void onStop() {
         Lock.unLock();
         EMChatManager.getInstance().unregisterEventListener(this);
-        DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper.getInstance();
+        DemoHelper sdkHelper = DemoHelper.getInstance();
         sdkHelper.popActivity(this);
         super.onStop();
     }
@@ -1621,6 +1139,13 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            case 601:
+                if (Build.VERSION.SDK_INT>=23 && !Settings.System.canWrite(this)) {
+                    new android.app.AlertDialog.Builder(this)
+                            .setMessage("不能读写系统设置。应用将不能正常运行")
+                            .show();
+                }
+                break;
             case 100:
                 Lock.canPop = false;
                 break;
@@ -1688,15 +1213,14 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
     private void uploadAvatar() {
         Show("头像地址：" + path);
         final BmobFile bmobFile = new BmobFile(new File(path));
-        bmobFile.upload(MainActivity.this, new UploadFileListener() {
+        bmobFile.upload(new UploadFileListener() {
             @Override
-            public void onSuccess() {
-                updateUserAvatar(bmobFile.getUrl());
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Show("头像上传失败：" + s);
+            public void done(BmobException e) {
+                if (e == null) {
+                    updateUserAvatar(bmobFile.getUrl());
+                } else {
+                    Show("头像上传失败：" + e.getMessage());
+                }
             }
         });
     }
@@ -1746,21 +1270,20 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
         TUser tUser = new TUser();
         tUser.setHead(url);
         tUser.setObjectId(id);
-        tUser.update(this, new UpdateListener() {
+        tUser.update(new UpdateListener() {
             @Override
-            public void onSuccess() {
-                Show("头像更新成功！");
-                refreshAvatar(path);
-                TuApplication.communitySDK.updateUserProtrait(BitmapFactory.decodeFile(path), new Listeners.SimpleFetchListener<PortraitUploadResponse>() {
-                    @Override
-                    public void onComplete(PortraitUploadResponse portraitUploadResponse) {
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(int code, String msg) {
-                Show("头像更新失败：" + msg);
+            public void done(BmobException e) {
+                if (e == null) {
+                    Show("头像更新成功！");
+                    refreshAvatar(path);
+                    CommunityFactory.getCommSDK(MainActivity.this).updateUserProtrait(BitmapFactory.decodeFile(path), new Listeners.SimpleFetchListener<PortraitUploadResponse>() {
+                        @Override
+                        public void onComplete(PortraitUploadResponse portraitUploadResponse) {
+                        }
+                    });
+                } else {
+                    Show("头像更新失败：" + e.toString());
+                }
             }
         });
     }
@@ -1770,16 +1293,67 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
      */
     private void refreshAvatar(String avatar) {
         if (avatar != null && !avatar.equals("")) {
-            Bitmap bitmap = PhotoUtil.toRoundBitmap(BitmapFactory.decodeFile(avatar));
+            final Bitmap bitmap = PhotoUtil.toRoundBitmap(BitmapFactory.decodeFile(avatar));
             ((ImageView) findViewById(R.id.user_head)).setImageBitmap(bitmap);
-            TuApplication.communitySDK.updateUserProtrait(bitmap, new Listeners.SimpleFetchListener<PortraitUploadResponse>() {
+            CommunityFactory.getCommSDK(MainActivity.this).updateUserProtrait(bitmap, new Listeners.SimpleFetchListener<PortraitUploadResponse>() {
                 @Override
                 public void onComplete(PortraitUploadResponse portraitUploadResponse) {
                 }
             });
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DemoHelper.getInstance().getUserProfileManager().uploadUserAvatar(PhotoUtil.Bitmap2Bytes(bitmap));
+                }
+            }).start();
         } else {
             ((ImageView) findViewById(R.id.user_head)).setImageResource(R.drawable.default_avatar);
         }
+    }
+
+
+    private void registerBroadcastReceiver() {
+        broadcastManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.ACTION_CONTACT_CHANAGED);
+        intentFilter.addAction(Constant.ACTION_GROUP_CHANAGED);
+        intentFilter.addAction(RedPacketConstant.REFRESH_GROUP_RED_PACKET_ACTION);
+        broadcastReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateUnreadLabel();
+                updateUnreadAddressLable();
+                if (currentTabIndex == 0) {
+                    // 当前页面如果为聊天历史页面，刷新此页面
+                    if (conversationListFragment != null) {
+                        conversationListFragment.refresh();
+                    }
+                } else if (currentTabIndex == 1) {
+                    if (contactListFragment != null) {
+                        contactListFragment.refresh();
+                    }
+                }
+                String action = intent.getAction();
+                if (action.equals(Constant.ACTION_GROUP_CHANAGED)) {
+                    if (EaseCommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
+                        GroupsActivity.instance.onResume();
+                    }
+                }
+                //red packet code : 会话列表页面刷新红包回执消息
+                if (action.equals(RedPacketConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
+                    if (conversationListFragment != null) {
+                        conversationListFragment.refresh();
+                    }
+                }
+                //end of red packet code
+            }
+        };
+        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private void unregisterBroadcastReceiver() {
+        broadcastManager.unregisterReceiver(broadcastReceiver);
     }
 
     @Override

@@ -329,6 +329,37 @@
                             android:textColor="#727171" />
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="64dp"
+                            android:layout_height="64dp" >
+
+                            <ImageView
+                                android:id="@+id/btn_redpack"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_centerInParent="true"
+                                android:clickable="true"
+                                android:onClick="onClick"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/em_chat_money_normal" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/send_redpack"
+                            android:textColor="#727171" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
