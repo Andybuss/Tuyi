@@ -13,8 +13,6 @@
  */
 package com.easemob.easeui.widget.chatrow;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
@@ -38,6 +36,8 @@ import com.easemob.easeui.controller.EaseUI;
 import com.easemob.easeui.utils.EaseACKUtil;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
+
+import java.io.File;
 
 /**
  * 语音row播放点击事件监听

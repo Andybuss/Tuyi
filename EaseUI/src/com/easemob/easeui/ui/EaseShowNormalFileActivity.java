@@ -1,9 +1,5 @@
 package com.easemob.easeui.ui;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.ProgressBar;
@@ -14,6 +10,10 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.FileMessageBody;
 import com.easemob.easeui.R;
 import com.easemob.util.FileUtils;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EaseShowNormalFileActivity extends EaseBaseActivity {
 	private ProgressBar progressBar;

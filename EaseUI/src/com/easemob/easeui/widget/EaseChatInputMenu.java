@@ -1,9 +1,5 @@
 package com.easemob.easeui.widget;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -23,6 +19,10 @@ import com.easemob.easeui.widget.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuList
 import com.easemob.easeui.widget.emojicon.EaseEmojiconMenu;
 import com.easemob.easeui.widget.emojicon.EaseEmojiconMenuBase;
 import com.easemob.easeui.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 聊天页面底部的聊天输入菜单栏 <br/>

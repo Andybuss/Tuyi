@@ -3,10 +3,7 @@ package com.easemob.easeui.widget.chatrow;
 import android.content.Context;
 import android.view.View;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Date;
 
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
@@ -15,6 +12,8 @@ import com.easemob.easeui.R;
 import com.easemob.easeui.widget.EaseChatMessageList;
 import com.easemob.easeui.widget.chatrow.EaseChatRow;
 import com.easemob.util.DateUtils;
+
+import java.util.Date;
 
 /**
  * 撤回消息的 ChatRow 类，实现撤回消息的内容显示

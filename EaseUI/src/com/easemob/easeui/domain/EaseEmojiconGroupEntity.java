@@ -1,8 +1,8 @@
 package com.easemob.easeui.domain;
 
-import java.util.List;
-
 import com.easemob.easeui.domain.EaseEmojicon.Type;
+
+import java.util.List;
 
 /**
  * 一组表情所对应的实体类

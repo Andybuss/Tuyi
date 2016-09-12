@@ -1,46 +1,19 @@
 package com.easemob.easeui.widget;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Pair;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.TextView.BufferType;
 
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMChatRoom;
 import com.easemob.chat.EMConversation;
-import com.easemob.chat.EMConversation.EMConversationType;
-import com.easemob.chat.EMGroup;
-import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.easeui.R;
 import com.easemob.easeui.adapter.EaseConversationAdapater;
-import com.easemob.easeui.domain.EaseUser;
-import com.easemob.easeui.utils.EaseCommonUtils;
-import com.easemob.easeui.utils.EaseSmileUtils;
-import com.easemob.easeui.utils.EaseUserUtils;
-import com.easemob.util.DateUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EaseConversationList extends ListView {
     

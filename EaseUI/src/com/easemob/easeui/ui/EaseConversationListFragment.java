@@ -1,11 +1,5 @@
 package com.easemob.easeui.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.List;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +26,12 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.easeui.R;
 import com.easemob.easeui.widget.EaseConversationList;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Hashtable;
+import java.util.List;
 
 /**
  * 会话列表fragment

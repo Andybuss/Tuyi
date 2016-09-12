@@ -1,7 +1,5 @@
 package com.easemob.easeui.adapter;
 
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,8 @@ import com.easemob.easeui.R;
 import com.easemob.easeui.domain.EaseEmojicon;
 import com.easemob.easeui.domain.EaseEmojicon.Type;
 import com.easemob.easeui.utils.EaseSmileUtils;
+
+import java.util.List;
 
 public class EmojiconGridAdapter extends ArrayAdapter<EaseEmojicon>{
 

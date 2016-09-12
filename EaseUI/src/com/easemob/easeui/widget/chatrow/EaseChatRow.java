@@ -1,7 +1,5 @@
 package com.easemob.easeui.widget.chatrow;
 
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -25,6 +23,8 @@ import com.easemob.easeui.utils.EaseUserUtils;
 import com.easemob.easeui.widget.EaseChatMessageList;
 import com.easemob.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
 import com.easemob.util.DateUtils;
+
+import java.util.Date;
 
 public abstract class EaseChatRow extends LinearLayout {
     protected static final String TAG = EaseChatRow.class.getSimpleName();

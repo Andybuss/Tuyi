@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMContactManager;
 import com.easemob.easeui.ui.EaseBaseActivity;
 import com.easemob.easeuisimpledemo.R;
 

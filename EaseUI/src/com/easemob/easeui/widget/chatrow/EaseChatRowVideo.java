@@ -1,7 +1,5 @@
 package com.easemob.easeui.widget.chatrow;
 
-import java.io.File;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +20,8 @@ import com.easemob.util.DateUtils;
 import com.easemob.util.EMLog;
 import com.easemob.util.ImageUtils;
 import com.easemob.util.TextFormater;
+
+import java.io.File;
 
 public class EaseChatRowVideo extends EaseChatRowFile{
 

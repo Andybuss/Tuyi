@@ -1,9 +1,5 @@
 package com.easemob.easeui.model;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-
 import android.content.Context;
 import android.media.MediaRecorder;
 import android.os.Handler;
@@ -14,6 +10,10 @@ import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 
 public class EaseVoiceRecorder {
     MediaRecorder recorder;

@@ -1,9 +1,5 @@
 package com.easemob.easeui.ui;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +16,10 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.easeui.R;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 展示视频内容

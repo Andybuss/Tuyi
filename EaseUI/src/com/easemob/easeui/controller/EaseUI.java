@@ -1,14 +1,8 @@
 package com.easemob.easeui.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
@@ -17,10 +11,14 @@ import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 import com.easemob.chat.EMMessage;
-import com.easemob.easeui.EaseConstant;
 import com.easemob.easeui.domain.EaseEmojicon;
 import com.easemob.easeui.domain.EaseUser;
 import com.easemob.easeui.model.EaseNotifier;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 public final class EaseUI {
 	private static final String TAG = EaseUI.class.getSimpleName();

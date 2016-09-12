@@ -1,7 +1,5 @@
 package com.easemob.easeui.widget.chatrow;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +10,15 @@ import android.widget.TextView;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.NormalFileMessageBody;
 import com.easemob.chat.EMMessage.ChatType;
+import com.easemob.chat.NormalFileMessageBody;
 import com.easemob.easeui.R;
 import com.easemob.easeui.ui.EaseShowNormalFileActivity;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.FileUtils;
 import com.easemob.util.TextFormater;
+
+import java.io.File;
 
 public class EaseChatRowFile extends EaseChatRow{
 

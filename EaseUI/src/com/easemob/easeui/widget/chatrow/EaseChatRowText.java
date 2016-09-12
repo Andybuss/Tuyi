@@ -12,9 +12,9 @@ import android.widget.TextView.BufferType;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Direct;
+import com.easemob.chat.TextMessageBody;
 import com.easemob.easeui.EaseConstant;
 import com.easemob.easeui.R;
 import com.easemob.easeui.adapter.EaseMessageAdapter;

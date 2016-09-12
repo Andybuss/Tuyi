@@ -1,5 +1,10 @@
 package com.easemob.easeui.utils;
 
+import android.content.Context;
+
+import com.easemob.chat.EMChatManager;
+import com.easemob.exceptions.EaseMobException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,20 +12,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.io.StreamCorruptedException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
-
-import com.easemob.chat.EMChatManager;
-import com.easemob.exceptions.EaseMobException;
-
-import android.content.Context;
+import java.util.Set;
 
 /**
  * 保存阅后即焚阅读后但是发送ack失败的消息id

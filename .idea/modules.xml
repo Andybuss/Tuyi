@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/EaseUI/EaseUI.iml" filepath="$PROJECT_DIR$/EaseUI/EaseUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tuyi.iml" filepath="$PROJECT_DIR$/Tuyi.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redpacketlibrary/redpacketlibrary.iml" filepath="$PROJECT_DIR$/redpacketlibrary/redpacketlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/umeng_community_simplify_library_project/umeng_community_simplify_library_project.iml" filepath="$PROJECT_DIR$/umeng_community_simplify_library_project/umeng_community_simplify_library_project.iml" />
     </modules>
   </component>
 </project>

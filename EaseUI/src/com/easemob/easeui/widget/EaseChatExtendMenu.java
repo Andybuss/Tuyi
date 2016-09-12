@@ -1,11 +1,7 @@
 package com.easemob.easeui.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -21,6 +17,9 @@ import android.widget.TextView;
 import com.easemob.easeui.R;
 import com.easemob.easeui.adapter.EaseViewsPagerAdapter;
 import com.easemob.util.DensityUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 按+按钮出来的扩展按钮

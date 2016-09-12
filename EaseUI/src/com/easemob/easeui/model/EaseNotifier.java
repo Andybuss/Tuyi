@@ -11,10 +11,6 @@
  */
 package com.easemob.easeui.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -35,6 +31,10 @@ import com.easemob.easeui.controller.EaseUI;
 import com.easemob.easeui.controller.EaseUI.EaseSettingsProvider;
 import com.easemob.util.EMLog;
 import com.easemob.util.EasyUtils;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * 新消息提醒class

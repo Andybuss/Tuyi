@@ -13,28 +13,27 @@
  */
 package com.easemob.easeui.utils;
 
-import java.util.List;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
-import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.EMMessage.Type;
+import com.easemob.chat.TextMessageBody;
 import com.easemob.easeui.EaseConstant;
 import com.easemob.easeui.R;
 import com.easemob.easeui.domain.EaseUser;
 import com.easemob.util.EMLog;
 import com.easemob.util.HanziToPinyin;
+
+import java.util.List;
 
 public class EaseCommonUtils {
 	private static final String TAG = "CommonUtils";

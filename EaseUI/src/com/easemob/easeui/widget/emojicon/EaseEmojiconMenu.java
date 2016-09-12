@@ -1,8 +1,5 @@
 package com.easemob.easeui.widget.emojicon;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,6 +13,9 @@ import com.easemob.easeui.domain.EaseEmojicon;
 import com.easemob.easeui.domain.EaseEmojiconGroupEntity;
 import com.easemob.easeui.widget.emojicon.EaseEmojiconPagerView.EaseEmojiconPagerViewListener;
 import com.easemob.easeui.widget.emojicon.EaseEmojiconScrollTabBar.EaseScrollTabBarItemClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 表情图片控件

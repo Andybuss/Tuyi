@@ -13,20 +13,14 @@
  */
 package com.easemob.easeui.ui;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
@@ -44,6 +38,10 @@ import com.easemob.easeui.widget.photoview.EasePhotoView;
 import com.easemob.util.EMLog;
 import com.easemob.util.ImageUtils;
 import com.easemob.util.PathUtil;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 下载显示大图

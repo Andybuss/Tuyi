@@ -22,7 +22,6 @@ import android.support.multidex.MultiDexApplication;
 import com.baidu.mapapi.SDKInitializer;
 import com.easemob.EMCallBack;
 import com.easemob.easeui.domain.EaseUser;
-import com.umeng.comm.core.impl.CommunityFactory;
 import com.umeng.comm.core.sdkmanager.LoginSDKManager;
 
 import java.util.Map;
@@ -53,7 +52,6 @@ public class TuApplication extends MultiDexApplication {
         DemoHelper.getInstance().init(applicationContext);
 
         Bmob.initialize(this, Constant.BmonAppID);
-        CommunityFactory.getCommSDK(this);
         LoginSDKManager.getInstance().addAndUse(MyUmengCommunityLogin.getInstance());
 
         SDKInitializer.initialize(this);

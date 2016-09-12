@@ -1,8 +1,5 @@
 package com.easemob.easeui.ui;
 
-import java.io.File;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -62,6 +59,9 @@ import com.easemob.easeui.widget.EaseVoiceRecorderView.EaseVoiceRecorderCallback
 import com.easemob.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * 可以直接new出来使用的聊天对话页面fragment，

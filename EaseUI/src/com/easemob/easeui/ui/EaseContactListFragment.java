@@ -13,14 +13,6 @@
  */
 package com.easemob.easeui.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +41,14 @@ import com.easemob.easeui.domain.EaseUser;
 import com.easemob.easeui.utils.EaseCommonUtils;
 import com.easemob.easeui.widget.EaseContactList;
 import com.easemob.exceptions.EaseMobException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * 联系人列表页

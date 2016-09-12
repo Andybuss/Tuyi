@@ -1,13 +1,8 @@
 package com.easemob.easeui.widget.chatrow;
 
-import java.io.File;
-
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.view.View;
@@ -22,7 +17,6 @@ import com.easemob.chat.EMMessage.Direct;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.easeui.EaseConstant;
 import com.easemob.easeui.R;
-import com.easemob.easeui.adapter.EaseMessageAdapter;
 import com.easemob.easeui.model.EaseImageCache;
 import com.easemob.easeui.ui.EaseShowBigImageActivity;
 import com.easemob.easeui.utils.EaseACKUtil;
@@ -30,6 +24,8 @@ import com.easemob.easeui.utils.EaseBlurUtils;
 import com.easemob.easeui.utils.EaseCommonUtils;
 import com.easemob.easeui.utils.EaseImageUtils;
 import com.easemob.exceptions.EaseMobException;
+
+import java.io.File;
 
 public class EaseChatRowImage extends EaseChatRowFile {
 

@@ -1,24 +1,22 @@
 package com.easemob.easeui.widget;
 
-import com.easemob.easeui.R;
-import com.easemob.util.EMLog;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.graphics.Bitmap.Config;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+
+import com.easemob.easeui.R;
 
 
 /**

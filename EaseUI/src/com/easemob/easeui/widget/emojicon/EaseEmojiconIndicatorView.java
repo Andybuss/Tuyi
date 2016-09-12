@@ -1,9 +1,5 @@
 package com.easemob.easeui.widget.emojicon;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,6 +13,9 @@ import android.widget.RelativeLayout;
 
 import com.easemob.easeui.R;
 import com.easemob.util.DensityUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressLint("NewApi")
 public class EaseEmojiconIndicatorView extends LinearLayout{

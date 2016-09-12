@@ -44,12 +44,12 @@
         "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\anim\\rp_right_out.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\anim\\rp_scale_in.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\anim\\rp_scale_in.xml"
-    },
-    {
         "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\anim\\push_top_out.xml",
         "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\exploded-aar\\Tuyi\\EaseUI\\unspecified\\res\\anim\\push_top_out.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\anim\\rp_scale_in.xml",
+        "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\anim\\rp_scale_in.xml"
     },
     {
         "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\anim\\push_top_out2.xml",

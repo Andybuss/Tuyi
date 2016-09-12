@@ -1,8 +1,5 @@
 package com.easemob.easeui.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -14,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -23,6 +19,9 @@ import com.easemob.easeui.domain.EaseUser;
 import com.easemob.easeui.utils.EaseUserUtils;
 import com.easemob.easeui.widget.EaseImageView;
 import com.easemob.util.EMLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements SectionIndexer {
 	private static final String TAG = "ContactAdapter";

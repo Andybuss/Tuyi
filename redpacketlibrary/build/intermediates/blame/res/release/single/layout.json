@@ -28,12 +28,12 @@
         "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_choose_pay_list_item.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\rp_divider.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_divider.xml"
-    },
-    {
         "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\ease_showvideo_activity.xml",
         "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\exploded-aar\\Tuyi\\EaseUI\\unspecified\\res\\layout\\ease_showvideo_activity.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\rp_divider.xml",
+        "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_divider.xml"
     },
     {
         "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\ease_row_received_voice.xml",
@@ -272,12 +272,12 @@
         "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_fragment_bind_bankcard.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\rp_activity_webview.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_activity_webview.xml"
-    },
-    {
         "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\rp_loading.xml",
         "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_loading.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\rp_activity_webview.xml",
+        "source": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\res\\layout\\rp_activity_webview.xml"
     },
     {
         "merged": "E:\\Android_Studio_Works\\Tuyi\\redpacketlibrary\\build\\intermediates\\res\\merged\\release\\layout\\ease_expression_gridview.xml",
