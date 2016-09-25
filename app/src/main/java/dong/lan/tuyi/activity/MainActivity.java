@@ -486,7 +486,6 @@ public class MainActivity extends dong.lan.tuyi.basic.BaseMainActivity implement
             public void run() {
                 if (Config.tUser == null) {
                     count++;
-                    if (BuildConfig.DEBUG) Log.d(TAG, Config.Tusername);
                     BmobQuery<TUser> query = new BmobQuery<TUser>();
                     query.addWhereEqualTo("username", Config.Tusername);
                     query.findObjects(new FindListener<TUser>() {

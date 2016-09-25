@@ -54,7 +54,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return tuyis.size();
+        return tuyis==null ? 0: tuyis.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{

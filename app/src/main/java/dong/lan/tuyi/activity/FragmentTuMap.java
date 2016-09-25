@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
+import com.easemob.easeui.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -350,19 +352,17 @@ public class FragmentTuMap extends Fragment implements View.OnClickListener,
     显示登陆用户的所有图忆到地图上
      */
     private void showMyAllTuyi() {
+        tuyiList = DemoDBManager.getInstance().getUserAllTuyi(Tusername);
         if (tuyiList == null)
             tuyiList = new ArrayList<>();
-        if (!tuyiList.isEmpty())
-            tuyiList.clear();
-        tuyiList = DemoDBManager.getInstance().getUserAllTuyi(Tusername);
-        if (tuyiList == null || tuyiList.isEmpty()) {
+        if (tuyiList.isEmpty()) {
             Show("本地记录啥纪录都没有撒，准备从网络后台获取");
             Config.preferences = getActivity().getSharedPreferences(Config.prefName, Context.MODE_PRIVATE);
             if (Config.tUser == null) {
                 Show("请等待用户数据刷新成功后再试");
             } else {
                 BmobQuery<UserTuyi> query = new BmobQuery<>();
-                query.addWhereEqualTo("tUser", Config.tUser);
+                query.addWhereEqualTo("tUser",Config.tUser);
                 query.order("-time,-createAt");
                 query.include("tUser");
                 query.findObjects(new FindListener<UserTuyi>() {
@@ -372,12 +372,13 @@ public class FragmentTuMap extends Fragment implements View.OnClickListener,
                             if (list.isEmpty()) {
                                 Show("无数据");
                             } else {
-                                showMarkerOfUser(list);
                                 tuyiList = list;
+                                showMarkerOfUser(list);
                                 DemoDBManager.getInstance().saveTuyiFromNet(list);
                             }
                         }else{
-                            Show(e.getMessage());
+                            if (BuildConfig.DEBUG) Log.d("FragmentTuMap", e.getMessage());
+                            Show("Exception:"+e.getMessage());
                         }
                     }
                 });

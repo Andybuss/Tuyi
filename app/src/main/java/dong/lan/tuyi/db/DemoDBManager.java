@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.easemob.easeui.BuildConfig;
 import com.easemob.easeui.domain.EaseUser;
 import com.easemob.util.HanziToPinyin;
 
@@ -614,6 +616,10 @@ public class DemoDBManager {
      */
 
     synchronized public TUser getTUserByName(String name) {
+        if(name==null) {
+            if (BuildConfig.DEBUG) Log.d("DemoDBManager", "name:" + name);
+            return null;
+        }
         TUser user = new TUser();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(TUserDao.TABLE_NAME, null, "username=?", new String[]{name}, null, null, null);

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.ViewFlipper;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.easeui.BuildConfig;
 import com.easemob.redpacketsdk.RedPacket;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -79,26 +81,28 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
                     e.printStackTrace();
                 }
             }
+            if (BuildConfig.DEBUG) Log.d("Welcome", "mainTu");
             //进入主页面
             TuApplication.getInstance().setUserName(DemoHelper.getInstance().getCurrentUsernName());
             startActivity(new Intent(Welcome.this, MainActivity.class));
             overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-            finish();
         } else {
             try {
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (BuildConfig.DEBUG) Log.d("Welcome", "loginAc");
             startActivity(new Intent(Welcome.this, LoginActivity.class));
             overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-            finish();
         }
+        finish();
     }
 
     private void login() {
         new Thread(new Runnable() {
             public void run() {
+                if (BuildConfig.DEBUG) Log.d("Welcome", "login");
                 jump();
             }
         }).start();
@@ -135,13 +139,13 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
         mGestureDetector = new GestureDetector(this);
         if (isFirst) {
             go.setOnClickListener(new View.OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                     login();
                 }
             });
             Config.preferences.edit().putBoolean(Config.LOAD_MODE, false).apply();
+            if (BuildConfig.DEBUG) Log.d("Welcome", "isFirst");
         } else {
             pic1.setImageResource(R.drawable.load_pic);
             AlphaAnimation animation = new AlphaAnimation(0.3f, 1.0f);
@@ -151,14 +155,16 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
 
                 startActivity(new Intent(this, OfflineTuyiActivity.class).putExtra("FROM_DESK", true));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-                finish();
             }
-            if (getIntent().hasExtra("ADD_TUYI") && getIntent().getBooleanExtra("ADD_TUYI", false)) {
+            else if (getIntent().hasExtra("ADD_TUYI") && getIntent().getBooleanExtra("ADD_TUYI", false)) {
 
                 startActivity(new Intent(this, TuMapActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-                finish();
+            }else {
+                startActivity(new Intent(Welcome.this,MainActivity.class));
             }
+            finish();
+
         }
 
     }
