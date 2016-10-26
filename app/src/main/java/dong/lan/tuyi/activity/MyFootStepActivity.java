@@ -1,6 +1,7 @@
 package dong.lan.tuyi.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +17,10 @@ import dong.lan.tuyi.bean.UserTuyi;
 import dong.lan.tuyi.db.DemoDBManager;
 
 /**
- * Created by Dooze on 2015/8/28.
+ * Created by 梁桂栋 on 2015/8/28 ： 下午10:59.
+ * Email:       760625325@qq.com
+ * GitHub:      github.com/donlan
+ * description: Tuyi
  */
 public class MyFootStepActivity extends BaseActivity {
 
@@ -70,8 +74,7 @@ public class MyFootStepActivity extends BaseActivity {
             else {
                 adapter=new RecyclerViewAdapter(this,likes);
                 recyclerView.setAdapter(adapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setLayoutManager(new GridLayoutManager(this,1));
             }
         }
     }

@@ -10,7 +10,10 @@ import android.widget.Button;
 import dong.lan.tuyi.R;
 
 /**
- * Created by 桂栋 on 2015/8/21.
+ * Created by 梁桂栋 on 2015/8/21 ： 下午12:20.
+ * Email:       760625325@qq.com
+ * GitHub:      github.com/donlan
+ * description: Tuyi
  */
 public class OfflineTuyiActivity extends dong.lan.tuyi.basic.BaseActivity {
 
@@ -26,8 +29,10 @@ public class OfflineTuyiActivity extends dong.lan.tuyi.basic.BaseActivity {
         RecoderOfflineTuyiFragment recoderOfflineTuyiFragment = new RecoderOfflineTuyiFragment();
         UploadOfflineTuyiFragment uploadOfflineTuyiFragment = new UploadOfflineTuyiFragment();
         fragments = new Fragment[]{recoderOfflineTuyiFragment, uploadOfflineTuyiFragment};
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_offline_container, recoderOfflineTuyiFragment)
-                .add(R.id.fragment_offline_container, uploadOfflineTuyiFragment).hide(uploadOfflineTuyiFragment)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_offline_container, recoderOfflineTuyiFragment)
+                .add(R.id.fragment_offline_container, uploadOfflineTuyiFragment)
+                .hide(uploadOfflineTuyiFragment)
                 .show(recoderOfflineTuyiFragment).commit();
         initView();
     }

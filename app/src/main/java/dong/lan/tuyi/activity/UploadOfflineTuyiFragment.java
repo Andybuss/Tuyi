@@ -30,18 +30,20 @@ import dong.lan.tuyi.utils.Config;
 import dong.lan.tuyi.xlist.XListView;
 
 /**
- * Created by Dooze on 2015/8/22.
+ * Created by 梁桂栋 on 2015/8/22 ： 下午12:23.
+ * Email:       760625325@qq.com
+ * GitHub:      github.com/donlan
+ * description: Tuyi
  */
 public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXListViewListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
 
     private XListView mListView;
-    private TextView upload, null_tip;
+    private TextView null_tip;
     private List<UserTuyi> offTuyis = new ArrayList<>();
     private OfflineAdapter adapter;
     private LinearLayout uploadLayout;
     private TextView tip;
     public static boolean hasChange = false;
-    private TextView bar_left, bar_center, bar_right;
     private Map<Integer, Integer> map = new HashMap<>();
 
     @Override
@@ -62,11 +64,11 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
         mListView.pullRefreshing();
-        upload = (TextView) getView().findViewById(R.id.offline_upload);
+        TextView upload = (TextView) getView().findViewById(R.id.offline_upload);
         null_tip = (TextView) getView().findViewById(R.id.offline_null_tip);
-        bar_center = (TextView) getView().findViewById(R.id.bar_center);
-        bar_left = (TextView) getView().findViewById(R.id.bar_left);
-        bar_right = (TextView) getView().findViewById(R.id.bar_right);
+        TextView bar_center = (TextView) getView().findViewById(R.id.bar_center);
+        TextView bar_left = (TextView) getView().findViewById(R.id.bar_left);
+        TextView bar_right = (TextView) getView().findViewById(R.id.bar_right);
         uploadLayout = (LinearLayout) getView().findViewById(R.id.upload_tip_layout);
         tip = (TextView) getView().findViewById(R.id.upload_tip_text);
         uploadLayout.setVisibility(View.GONE);
@@ -100,6 +102,9 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
 
     }
 
+    /**
+     * 重新从数据库加载没有上传的图忆
+     */
     private void initData() {
         offTuyis = DemoDBManager.getInstance().getAllOfflineTuyi();
         if (offTuyis == null) {
@@ -289,7 +294,15 @@ public class UploadOfflineTuyiFragment extends Fragment implements XListView.IXL
     public void onDestroy() {
         run = false;
         load = false;
-        thread = null;
+        if(thread!=null && !thread.isInterrupted()) {
+            try {
+                thread.interrupt();
+            }catch (Exception e){
+                return;
+            }finally {
+                thread = null;
+            }
+        }
         UserMainAdapter.FLAG = UserMainAdapter.USERMAIN;
         super.onDestroy();
     }

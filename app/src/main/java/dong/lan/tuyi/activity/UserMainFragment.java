@@ -193,12 +193,6 @@ public class UserMainFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (((MainActivity) getActivity()).isConflict) {
-            outState.putBoolean("isConflict", true);
-        } else if (((MainActivity) getActivity()).getCurrentAccountRemoved()) {
-            outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
-        }
-
     }
 
 

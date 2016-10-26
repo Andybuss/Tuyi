@@ -252,7 +252,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
                 Show("添加桌面快捷方式成功");
                 break;
             case R.id.ll_change:
-                RedPacketUtil.startChangeActivity(getActivity());
+                RedPacketUtil.startChangeActivity(getContext());
                 break;
             case R.id.rl_switch_notification:
                 if (notifiSwitch.isSwitchOpen()) {
