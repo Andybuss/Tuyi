@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         minSdkVersion 14
@@ -43,8 +43,9 @@ android {
 }
 
 dependencies {
-	//release时需要把easemobchatsdk的依赖注释掉，sdk已经被打成jar包放在libs底下
-	//compile project(':easemobchatsdk')
-    compile 'com.android.support:support-v4:23.3.0'
-    compile fileTree(dir: 'libs', include: '*.jar')
+    //release时需要把easemobchatsdk的依赖注释掉，sdk已经被打成jar包放在libs底下
+    //compile project(':easemobchatsdk')
+    compile 'com.android.support:support-v4:24.2.1'
+    compile fileTree(include: '*.jar', dir: 'libs')
+    compile files('libs/easemobchat_2.3.2.jar')
 }

@@ -1,62 +1,62 @@
 [
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\fade_out.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\fade_out.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/push_top_out.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/push_top_out.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\push_top_in2.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\push_top_in2.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/push_top_in.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/push_top_in.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_right.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\slide_in_from_right.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/slide_out_to_left.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/slide_out_to_left.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\push_top_out2.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\push_top_out2.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/fade_in.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/fade_in.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\push_bottom_out.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\push_bottom_out.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/head_in.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/head_in.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\head_out.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\head_out.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/push_bottom_in.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/push_bottom_in.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\push_top_in.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\push_top_in.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/slide_out_to_right.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/slide_out_to_right.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_right.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\slide_out_to_right.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/slide_in_from_right.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/slide_in_from_right.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\push_top_out.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\push_top_out.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/push_top_in2.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/push_top_in2.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\push_bottom_in.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\push_bottom_in.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/push_top_out2.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/push_top_out2.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\hold.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\hold.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/hold.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/hold.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\head_in.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\head_in.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/head_out.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/head_out.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\fade_in.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\fade_in.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/slide_in_from_left.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/slide_in_from_left.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\slide_in_from_left.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\slide_in_from_left.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/fade_out.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/fade_out.xml"
     },
     {
-        "merged": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\build\\intermediates\\res\\merged\\release\\anim\\slide_out_to_left.xml",
-        "source": "E:\\Android_Studio_Works\\Tuyi\\EaseUI\\res\\anim\\slide_out_to_left.xml"
+        "merged": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/intermediates/res/merged/release/anim/push_bottom_out.xml",
+        "source": "/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/res/anim/push_bottom_out.xml"
     }
 ]

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\Android_Studio_Works\Tuyi\EaseUI\assets"/><source path="E:\Android_Studio_Works\Tuyi\EaseUI\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\Android_Studio_Works\Tuyi\EaseUI\build-types\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/assets"/><source path="/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/home/dooze/AndroidStudioProjects/Tuyi/EaseUI/build-types/release/assets"/></dataSet></merger>
