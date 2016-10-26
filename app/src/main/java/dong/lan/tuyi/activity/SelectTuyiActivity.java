@@ -1,6 +1,7 @@
 package dong.lan.tuyi.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -65,8 +66,7 @@ public class SelectTuyiActivity extends BaseActivity {
             }
         });
         recyclerView = (RecyclerView) findViewById(R.id.selectTuyiList);
-        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(llm);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,1));
         tuyis = DemoDBManager.getInstance().getUserAllTuyi(TuApplication.getInstance().getUserName());
         if (tuyis == null) {
             Show("您没有图忆记录");
