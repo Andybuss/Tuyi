@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\Android_Studio_Works\Tuyi\redpacketlibrary\src\main\shaders"/></dataSet><dataSet config="release"><source path="E:\Android_Studio_Works\Tuyi\redpacketlibrary\build-types\release\shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/dooze/AndroidStudioProjects/Tuyi/redpacketlibrary/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/dooze/AndroidStudioProjects/Tuyi/redpacketlibrary/build-types/release/shaders"/></dataSet></merger>

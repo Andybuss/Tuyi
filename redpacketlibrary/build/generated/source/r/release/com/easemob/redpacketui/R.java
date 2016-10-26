@@ -42,167 +42,16 @@ public final class R {
         public static int greetings=0x7f080000;
     }
     public static final class attr {
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcardBackgroundColor=0x7f01001f;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcardCornerRadius=0x7f010020;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcardElevation=0x7f010021;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcardMaxElevation=0x7f010022;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcardPreventCornerOverlap=0x7f010024;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcardUseCompatPadding=0x7f010023;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcontentPadding=0x7f010025;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcontentPaddingBottom=0x7f010029;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcontentPaddingLeft=0x7f010026;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcontentPaddingRight=0x7f010027;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPcontentPaddingTop=0x7f010028;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPlayoutManager=0x7f01002a;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static int RPleftImage=0x7f01002f;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPmytitle=0x7f01002e;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPreverseLayout=0x7f01002c;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-         */
-        public static int RPrightImage=0x7f010030;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static int RPrightText=0x7f010031;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static int RPrightTextColor=0x7f010032;
-        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
+        public static int RPCardBgColor=0x7f010024;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
-        public static int RPrightTextSize=0x7f010033;
+        public static int RPCardBgImg=0x7f010023;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -210,15 +59,17 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int RPspanCount=0x7f01002b;
-        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+        public static int RPCardBgType=0x7f010026;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int RPstackFromEnd=0x7f01002d;
+        public static int RPCardRadius=0x7f010025;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -226,13 +77,45 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int RPsubTitleText=0x7f010034;
+        public static int RPlayoutManager=0x7f01001f;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static int RPleftImage=0x7f010028;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPmytitle=0x7f010027;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPreverseLayout=0x7f010021;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static int RPrightImage=0x7f010029;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPrightText=0x7f01002a;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static int RPsubTitleTextColor=0x7f010035;
+        public static int RPrightTextColor=0x7f01002b;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -242,19 +125,37 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int RPsubTitleTextSize=0x7f010036;
+        public static int RPrightTextSize=0x7f01002c;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPspanCount=0x7f010020;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPstackFromEnd=0x7f010022;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPsubTitleText=0x7f01002d;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static int RPtitleBackground=0x7f010039;
-        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
-or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-         */
-        public static int RPtitleTextColor=0x7f010037;
+        public static int RPsubTitleTextColor=0x7f01002e;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -264,7 +165,29 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int RPtitleTextSize=0x7f010038;
+        public static int RPsubTitleTextSize=0x7f01002f;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static int RPtitleBackground=0x7f010032;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static int RPtitleTextColor=0x7f010030;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static int RPtitleTextSize=0x7f010031;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -446,7 +369,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int gpvGridColor=0x7f01003d;
+        public static int gpvGridColor=0x7f010036;
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
 <p>This may also be a reference to a resource (in the form
@@ -455,7 +378,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int gpvLineColor=0x7f01003c;
+        public static int gpvLineColor=0x7f010035;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -465,7 +388,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int gpvLineWidth=0x7f01003e;
+        public static int gpvLineWidth=0x7f010037;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -473,7 +396,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int gpvPasswordLength=0x7f01003f;
+        public static int gpvPasswordLength=0x7f010038;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -481,7 +404,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int gpvPasswordTransformation=0x7f010040;
+        public static int gpvPasswordTransformation=0x7f010039;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -494,13 +417,13 @@ containing a value of this type.
 <tr><td><code>textWebPassword</code></td><td>3</td><td></td></tr>
 </table>
          */
-        public static int gpvPasswordType=0x7f010041;
+        public static int gpvPasswordType=0x7f01003a;
         /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
-        public static int gpvTextColor=0x7f01003a;
+        public static int gpvTextColor=0x7f010033;
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
@@ -510,7 +433,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int gpvTextSize=0x7f01003b;
+        public static int gpvTextSize=0x7f010034;
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
@@ -639,27 +562,23 @@ containing a value of this type.
         public static int money_white=0x7f090032;
         public static int msg_red=0x7f090033;
         public static int orange=0x7f090034;
-        public static int rp_cardview_dark_background=0x7f090035;
-        public static int rp_cardview_light_background=0x7f090036;
-        public static int rp_cardview_shadow_end_color=0x7f090037;
-        public static int rp_cardview_shadow_start_color=0x7f090038;
-        public static int text_all_black=0x7f090039;
-        public static int text_black=0x7f09003a;
-        public static int text_blue=0x7f09003b;
-        public static int text_dark_grey=0x7f09003c;
-        public static int text_grey=0x7f09003d;
-        public static int text_light_black=0x7f09003e;
-        public static int text_light_grey=0x7f09003f;
-        public static int text_red_color=0x7f090040;
-        public static int text_transparent_black=0x7f090041;
-        public static int text_unselected=0x7f090042;
-        public static int text_yellow=0x7f090043;
-        public static int title_color=0x7f090044;
-        public static int title_transparent_color=0x7f090045;
-        public static int top_bar_normal_bg=0x7f090046;
-        public static int top_bar_red_bg=0x7f090047;
-        public static int top_red_color=0x7f090048;
-        public static int voip_interface_text_color=0x7f090049;
+        public static int text_all_black=0x7f090035;
+        public static int text_black=0x7f090036;
+        public static int text_blue=0x7f090037;
+        public static int text_dark_grey=0x7f090038;
+        public static int text_grey=0x7f090039;
+        public static int text_light_black=0x7f09003a;
+        public static int text_light_grey=0x7f09003b;
+        public static int text_red_color=0x7f09003c;
+        public static int text_transparent_black=0x7f09003d;
+        public static int text_unselected=0x7f09003e;
+        public static int text_yellow=0x7f09003f;
+        public static int title_color=0x7f090040;
+        public static int title_transparent_color=0x7f090041;
+        public static int top_bar_normal_bg=0x7f090042;
+        public static int top_bar_red_bg=0x7f090043;
+        public static int top_red_color=0x7f090044;
+        public static int voip_interface_text_color=0x7f090045;
     }
     public static final class dimen {
         public static int activity_horizontal_margin=0x7f050002;
@@ -696,60 +615,57 @@ containing a value of this type.
         public static int item_touch_helper_max_drag_scroll_per_frame=0x7f05001f;
         public static int margin_chat_activity=0x7f050020;
         public static int padding_search_bar=0x7f050021;
-        public static int rp_cardview_compat_inset_shadow=0x7f050022;
-        public static int rp_cardview_default_elevation=0x7f050023;
-        public static int rp_cardview_default_radius=0x7f050024;
-        public static int sidebar_text_size=0x7f050025;
-        public static int size102px=0x7f050026;
-        public static int size105px=0x7f050027;
-        public static int size108px=0x7f050028;
-        public static int size114px=0x7f050029;
-        public static int size120px=0x7f05002a;
-        public static int size129px=0x7f05002b;
-        public static int size12px=0x7f05002c;
-        public static int size132px=0x7f05002d;
-        public static int size135px=0x7f05002e;
-        public static int size138px=0x7f05002f;
-        public static int size141px=0x7f050030;
-        public static int size144px=0x7f050031;
-        public static int size15px=0x7f050032;
-        public static int size165px=0x7f050033;
-        public static int size174px=0x7f050034;
-        public static int size180px=0x7f050035;
-        public static int size186px=0x7f050036;
-        public static int size18px=0x7f050037;
-        public static int size192px=0x7f050038;
-        public static int size198px=0x7f050039;
-        public static int size201px=0x7f05003a;
-        public static int size204px=0x7f05003b;
-        public static int size216px=0x7f05003c;
-        public static int size21px=0x7f05003d;
-        public static int size225px=0x7f05003e;
-        public static int size24px=0x7f05003f;
-        public static int size27px=0x7f050040;
-        public static int size303px=0x7f050041;
-        public static int size30px=0x7f050042;
-        public static int size36px=0x7f050043;
-        public static int size39px=0x7f050044;
-        public static int size42px=0x7f050045;
-        public static int size45px=0x7f050046;
-        public static int size48px=0x7f050047;
-        public static int size51px=0x7f050048;
-        public static int size57px=0x7f050049;
-        public static int size60px=0x7f05004a;
-        public static int size63px=0x7f05004b;
-        public static int size66px=0x7f05004c;
-        public static int size69px=0x7f05004d;
-        public static int size72px=0x7f05004e;
-        public static int size75px=0x7f05004f;
-        public static int size81px=0x7f050050;
-        public static int size84px=0x7f050051;
-        public static int size90px=0x7f050052;
-        public static int size93px=0x7f050053;
-        public static int size96px=0x7f050054;
-        public static int size99px=0x7f050055;
-        public static int size9px=0x7f050056;
-        public static int size_avatar=0x7f050057;
+        public static int sidebar_text_size=0x7f050022;
+        public static int size102px=0x7f050023;
+        public static int size105px=0x7f050024;
+        public static int size108px=0x7f050025;
+        public static int size114px=0x7f050026;
+        public static int size120px=0x7f050027;
+        public static int size129px=0x7f050028;
+        public static int size12px=0x7f050029;
+        public static int size132px=0x7f05002a;
+        public static int size135px=0x7f05002b;
+        public static int size138px=0x7f05002c;
+        public static int size141px=0x7f05002d;
+        public static int size144px=0x7f05002e;
+        public static int size15px=0x7f05002f;
+        public static int size165px=0x7f050030;
+        public static int size174px=0x7f050031;
+        public static int size180px=0x7f050032;
+        public static int size186px=0x7f050033;
+        public static int size18px=0x7f050034;
+        public static int size192px=0x7f050035;
+        public static int size198px=0x7f050036;
+        public static int size201px=0x7f050037;
+        public static int size204px=0x7f050038;
+        public static int size216px=0x7f050039;
+        public static int size21px=0x7f05003a;
+        public static int size225px=0x7f05003b;
+        public static int size24px=0x7f05003c;
+        public static int size27px=0x7f05003d;
+        public static int size303px=0x7f05003e;
+        public static int size30px=0x7f05003f;
+        public static int size36px=0x7f050040;
+        public static int size39px=0x7f050041;
+        public static int size42px=0x7f050042;
+        public static int size45px=0x7f050043;
+        public static int size48px=0x7f050044;
+        public static int size51px=0x7f050045;
+        public static int size57px=0x7f050046;
+        public static int size60px=0x7f050047;
+        public static int size63px=0x7f050048;
+        public static int size66px=0x7f050049;
+        public static int size69px=0x7f05004a;
+        public static int size72px=0x7f05004b;
+        public static int size75px=0x7f05004c;
+        public static int size81px=0x7f05004d;
+        public static int size84px=0x7f05004e;
+        public static int size90px=0x7f05004f;
+        public static int size93px=0x7f050050;
+        public static int size96px=0x7f050051;
+        public static int size99px=0x7f050052;
+        public static int size9px=0x7f050053;
+        public static int size_avatar=0x7f050054;
     }
     public static final class drawable {
         public static int chatfrom_bg=0x7f020000;
@@ -1034,8 +950,9 @@ containing a value of this type.
         public static int rp_upload_success=0x7f020117;
         public static int rp_user=0x7f020118;
         public static int rp_verify_identity=0x7f020119;
-        public static int voice_from_icon=0x7f02011a;
-        public static int voice_to_icon=0x7f02011b;
+        public static int rp_wxpay_icon=0x7f02011a;
+        public static int voice_from_icon=0x7f02011b;
+        public static int voice_to_icon=0x7f02011c;
     }
     public static final class id {
         public static int alert_message=0x7f0a0012;
@@ -1073,7 +990,6 @@ containing a value of this type.
         public static int btn_sms_closed=0x7f0a0162;
         public static int btn_submit_review=0x7f0a0121;
         public static int bubble=0x7f0a0033;
-        public static int cardView=0x7f0a008a;
         public static int change_fragment_container=0x7f0a0078;
         public static int change_title_bar=0x7f0a0077;
         public static int change_top_ll=0x7f0a00cd;
@@ -1265,6 +1181,7 @@ containing a value of this type.
         public static int rl_face=0x7f0a0058;
         public static int root=0x7f0a0066;
         public static int round=0x7f0a0003;
+        public static int roundCard=0x7f0a008a;
         public static int scroll_view=0x7f0a0062;
         public static int search_bar_view=0x7f0a001f;
         public static int search_clear=0x7f0a004c;
@@ -1646,39 +1563,37 @@ containing a value of this type.
         public static int agree=0x7f060016;
         public static int ali_pay=0x7f060134;
         public static int answer=0x7f060017;
-        public static int app_name=0x7f060135;
         public static int are_empty_group_of_news=0x7f0600cc;
         public static int attach_file=0x7f060018;
         public static int attach_location=0x7f060019;
         public static int attach_picture=0x7f06001a;
-        public static int attach_red_packet=0x7f060136;
+        public static int attach_red_packet=0x7f060135;
         public static int attach_smile=0x7f06001b;
         public static int attach_take_pic=0x7f06001c;
         public static int attach_video=0x7f0600cd;
         public static int attach_video_call=0x7f0600ce;
         public static int attach_voice_call=0x7f06001d;
         public static int back=0x7f06001e;
-        public static int bank_card_number=0x7f060137;
+        public static int bank_card_number=0x7f060136;
         public static int be_removing=0x7f0600cf;
-        public static int before_tomorrow_24_hour_to_account=0x7f060138;
+        public static int before_tomorrow_24_hour_to_account=0x7f060137;
         public static int being_added=0x7f0600d0;
-        public static int best_count=0x7f060139;
-        public static int best_luck=0x7f06013a;
+        public static int best_count=0x7f060138;
+        public static int best_luck=0x7f060139;
         public static int black_item=0x7f06001f;
         public static int blacklist=0x7f060020;
         public static int book_black=0x7f060021;
-        public static int btn_cancel=0x7f06013b;
-        public static int btn_know=0x7f06013c;
-        public static int btn_next_step=0x7f06013d;
-        public static int btn_ok=0x7f06013e;
-        public static int btn_put_money=0x7f06013f;
-        public static int btn_retry=0x7f060140;
-        public static int btn_secretly_look=0x7f060141;
-        public static int btn_silence_turn_off=0x7f060142;
-        public static int btn_str_forget_pwd=0x7f060143;
-        public static int btn_str_resend=0x7f060144;
-        public static int btn_str_send_sms_code=0x7f060145;
-        public static int btn_text_open_money=0x7f060146;
+        public static int btn_cancel=0x7f06013a;
+        public static int btn_know=0x7f06013b;
+        public static int btn_next_step=0x7f06013c;
+        public static int btn_ok=0x7f06013d;
+        public static int btn_put_money=0x7f06013e;
+        public static int btn_retry=0x7f06013f;
+        public static int btn_secretly_look=0x7f060140;
+        public static int btn_silence_turn_off=0x7f060141;
+        public static int btn_str_resend=0x7f060142;
+        public static int btn_str_send_sms_code=0x7f060143;
+        public static int btn_text_open_money=0x7f060144;
         public static int button_add=0x7f060022;
         public static int button_cancel=0x7f060023;
         public static int button_logout=0x7f060024;
@@ -1691,39 +1606,38 @@ containing a value of this type.
         public static int can_not_connect_chat_server_connection=0x7f0600d2;
         public static int cancel=0x7f06002a;
         public static int cant_find_pictures=0x7f0600d3;
-        public static int captcha_send_phone=0x7f060147;
-        public static int change=0x7f060148;
-        public static int change_default=0x7f060149;
-        public static int change_detail=0x7f06014a;
-        public static int change_limit_msg=0x7f06014b;
-        public static int change_password=0x7f06014c;
-        public static int change_recharge=0x7f06014d;
+        public static int captcha_send_phone=0x7f060145;
+        public static int change=0x7f060146;
+        public static int change_default=0x7f060147;
+        public static int change_detail=0x7f060148;
+        public static int change_limit_msg=0x7f060149;
+        public static int change_recharge=0x7f06014a;
         public static int change_the_group_name_failed_please=0x7f0600d4;
-        public static int change_withdraw=0x7f06014e;
-        public static int change_withdraw_all=0x7f06014f;
+        public static int change_withdraw=0x7f06014b;
+        public static int change_withdraw_all=0x7f06014c;
         public static int chat_room=0x7f0600d5;
         public static int chatroom_allow_owner_leave=0x7f0600d6;
         public static int chatset=0x7f06002b;
         public static int chatting_is_dissolution=0x7f0600d7;
-        public static int check_lucky=0x7f060150;
-        public static int check_money=0x7f060151;
-        public static int check_money_records=0x7f060152;
-        public static int choose_bank_branch_name_plz=0x7f060153;
-        public static int choose_bank_branch_title=0x7f060154;
-        public static int choose_city_plz=0x7f060155;
-        public static int choose_city_title=0x7f060156;
-        public static int choose_pay_jd_limit=0x7f060157;
-        public static int choose_pay_no_limit=0x7f060158;
-        public static int choose_pay_type_title=0x7f060159;
-        public static int choose_province_plz=0x7f06015a;
-        public static int choose_province_title=0x7f06015b;
+        public static int check_lucky=0x7f06014d;
+        public static int check_money=0x7f06014e;
+        public static int check_money_records=0x7f06014f;
+        public static int choose_bank_branch_name_plz=0x7f060150;
+        public static int choose_bank_branch_title=0x7f060151;
+        public static int choose_city_plz=0x7f060152;
+        public static int choose_city_title=0x7f060153;
+        public static int choose_pay_jd_limit=0x7f060154;
+        public static int choose_pay_no_limit=0x7f060155;
+        public static int choose_pay_type_title=0x7f060156;
+        public static int choose_province_plz=0x7f060157;
+        public static int choose_province_title=0x7f060158;
         public static int clear_all_records=0x7f06002c;
         public static int clear_records=0x7f06002d;
-        public static int common_empty_msg=0x7f06015c;
-        public static int common_error_msg=0x7f06015d;
-        public static int common_loading_message=0x7f06015e;
-        public static int common_no_network_msg=0x7f06015f;
-        public static int complete_card_information=0x7f060160;
+        public static int common_empty_msg=0x7f060159;
+        public static int common_error_msg=0x7f06015a;
+        public static int common_loading_message=0x7f06015b;
+        public static int common_no_network_msg=0x7f06015c;
+        public static int complete_card_information=0x7f06015d;
         public static int confirm_forward_to=0x7f06002e;
         public static int confirm_resend=0x7f06002f;
         public static int confirm_the_members=0x7f0600d8;
@@ -1732,9 +1646,9 @@ containing a value of this type.
         public static int connect_failuer_toast=0x7f060032;
         public static int copy=0x7f060033;
         public static int copy_message=0x7f060034;
-        public static int count_unit=0x7f060161;
-        public static int debit_card=0x7f060162;
-        public static int default_money_greeting=0x7f060163;
+        public static int count_unit=0x7f06015e;
+        public static int debit_card=0x7f06015f;
+        public static int default_money_greeting=0x7f060160;
         public static int delete=0x7f060035;
         public static int delete_conversation=0x7f0600d9;
         public static int delete_conversation_messages=0x7f0600da;
@@ -1742,10 +1656,10 @@ containing a value of this type.
         public static int delete_video=0x7f060037;
         public static int delete_voice=0x7f060038;
         public static int deleting=0x7f0600db;
-        public static int detail_money_sign=0x7f060164;
+        public static int detail_money_sign=0x7f060161;
         public static int diagnose=0x7f060039;
-        public static int dialog_title_pay=0x7f060165;
-        public static int dialog_title_tips=0x7f060166;
+        public static int dialog_title_pay=0x7f060162;
+        public static int dialog_title_tips=0x7f060163;
         public static int did_not_answer=0x7f0600dc;
         public static int direct_call=0x7f0600dd;
         public static int dismiss_group=0x7f06003a;
@@ -1758,101 +1672,100 @@ containing a value of this type.
         public static int dl_update_nick=0x7f0600e3;
         public static int dl_update_photo=0x7f0600e4;
         public static int dl_waiting=0x7f0600e5;
-        public static int document_add_bankcard=0x7f060167;
-        public static int document_add_bankcard_verify_identity=0x7f060168;
-        public static int document_add_pay_bankcard=0x7f060169;
-        public static int document_recover_pwd=0x7f06016a;
+        public static int document_add_bankcard=0x7f060164;
+        public static int document_add_bankcard_verify_identity=0x7f060165;
+        public static int document_add_pay_bankcard=0x7f060166;
+        public static int document_recover_pwd=0x7f060167;
         public static int downwaiting=0x7f06003c;
         public static int dynamic_expression=0x7f0600e6;
         public static int ease_user_remove=0x7f06003d;
-        public static int easemob_red_packet=0x7f06016b;
-        public static int ed_search_word=0x7f06016c;
-        public static int edit_bankcard_hint=0x7f06016d;
-        public static int edit_card_name_hint=0x7f06016e;
-        public static int edit_id_card_number_hint=0x7f06016f;
-        public static int edit_phone_number_hint=0x7f060170;
-        public static int error_is_bankcard_number=0x7f060171;
-        public static int error_is_id_card_number=0x7f060172;
-        public static int error_is_phone_number=0x7f060173;
-        public static int error_name_isnull=0x7f060174;
-        public static int error_not_find_picture=0x7f060175;
-        public static int error_not_net_connect=0x7f060176;
-        public static int error_sd_card=0x7f060177;
+        public static int easemob_red_packet=0x7f060168;
+        public static int ed_search_word=0x7f060169;
+        public static int edit_bankcard_hint=0x7f06016a;
+        public static int edit_card_name_hint=0x7f06016b;
+        public static int edit_id_card_number_hint=0x7f06016c;
+        public static int edit_phone_number_hint=0x7f06016d;
+        public static int error_is_bankcard_number=0x7f06016e;
+        public static int error_is_id_card_number=0x7f06016f;
+        public static int error_is_phone_number=0x7f060170;
+        public static int error_name_isnull=0x7f060171;
+        public static int error_not_find_picture=0x7f060172;
+        public static int error_not_net_connect=0x7f060173;
+        public static int error_sd_card=0x7f060174;
         public static int error_send_in_blacklist=0x7f0600e7;
         public static int error_send_invalid_content=0x7f0600e8;
         public static int error_send_not_in_the_group=0x7f0600e9;
-        public static int exclusive_red_packet=0x7f060178;
+        public static int exclusive_red_packet=0x7f060175;
         public static int exit_group=0x7f06003e;
         public static int exit_group_hint=0x7f06003f;
         public static int expression=0x7f0600ea;
         public static int failed_to_load_data=0x7f0600eb;
         public static int failed_to_move_into=0x7f0600ec;
         public static int file=0x7f060040;
-        public static int forget_pay_pwd=0x7f060179;
-        public static int forget_pwd_title=0x7f06017a;
+        public static int forget_pwd_title=0x7f060176;
         public static int forward=0x7f060041;
         public static int get_failed_please_check=0x7f0600ed;
-        public static int give_up_add_bankcard=0x7f06017b;
-        public static int give_up_recover_pwd=0x7f06017c;
-        public static int give_up_set_pay_pwd=0x7f06017d;
-        public static int go_real_name=0x7f06017e;
+        public static int give_up_add_bankcard=0x7f060177;
+        public static int give_up_recover_pwd=0x7f060178;
+        public static int give_up_set_pay_pwd=0x7f060179;
+        public static int go_real_name=0x7f06017a;
         public static int gorup_not_found=0x7f0600ee;
-        public static int greetings_hint=0x7f06017f;
-        public static int group_change_normal=0x7f060180;
-        public static int group_change_random=0x7f060181;
+        public static int greetings_hint=0x7f06017b;
+        public static int group_change_normal=0x7f06017c;
+        public static int group_change_random=0x7f06017d;
         public static int group_chat=0x7f060042;
-        public static int group_choose_few_person=0x7f060182;
-        public static int group_choose_few_person2=0x7f060183;
+        public static int group_choose_few_person=0x7f06017e;
+        public static int group_choose_few_person2=0x7f06017f;
         public static int group_id=0x7f0600ef;
         public static int group_is_blocked=0x7f0600f0;
-        public static int group_member_count=0x7f060184;
-        public static int group_money_available_receiver=0x7f060185;
-        public static int group_money_available_sender=0x7f060186;
-        public static int group_money_count=0x7f060187;
-        public static int group_money_every=0x7f060188;
-        public static int group_money_expired=0x7f060189;
-        public static int group_money_total=0x7f06018a;
-        public static int group_money_unavailable_avg_receiver=0x7f06018b;
-        public static int group_money_unavailable_avg_sender=0x7f06018c;
-        public static int group_money_unavailable_rand_receiver=0x7f06018d;
-        public static int group_money_unavailable_rand_sender=0x7f06018e;
+        public static int group_member_count=0x7f060180;
+        public static int group_money_available_receiver=0x7f060181;
+        public static int group_money_available_sender=0x7f060182;
+        public static int group_money_count=0x7f060183;
+        public static int group_money_every=0x7f060184;
+        public static int group_money_expired=0x7f060185;
+        public static int group_money_total=0x7f060186;
+        public static int group_money_unavailable_avg_receiver=0x7f060187;
+        public static int group_money_unavailable_avg_sender=0x7f060188;
+        public static int group_money_unavailable_rand_receiver=0x7f060189;
+        public static int group_money_unavailable_rand_sender=0x7f06018a;
         public static int group_name=0x7f060043;
         public static int group_not_existed=0x7f0600f1;
         public static int group_of_shielding=0x7f0600f2;
-        public static int group_rule_tips_normal=0x7f06018f;
-        public static int group_rule_tips_random=0x7f060190;
+        public static int group_rule_tips_normal=0x7f06018b;
+        public static int group_rule_tips_random=0x7f06018c;
         public static int group_search_failed=0x7f0600f3;
         public static int hang_up=0x7f060044;
         public static int hanging_up=0x7f0600f4;
         public static int have_connected_with=0x7f0600f5;
         public static int have_you_removed=0x7f0600f6;
-        public static int hint_money_amount=0x7f060191;
-        public static int hint_money_count=0x7f060192;
-        public static int hint_title=0x7f060193;
-        public static int id_card=0x7f060194;
-        public static int id_card_digit=0x7f060195;
+        public static int hint_money_amount=0x7f06018d;
+        public static int hint_money_count=0x7f06018e;
+        public static int hint_title=0x7f06018f;
+        public static int id_card=0x7f060190;
+        public static int id_card_digit=0x7f060191;
         public static int illegal_user_name=0x7f0600f7;
-        public static int input_money_amount=0x7f060196;
-        public static int input_money_limited=0x7f060197;
-        public static int input_money_limited_minimum=0x7f060198;
-        public static int input_money_zero=0x7f060199;
+        public static int input_money_amount=0x7f060192;
+        public static int input_money_limited=0x7f060193;
+        public static int input_money_limited_minimum=0x7f060194;
+        public static int input_money_zero=0x7f060195;
         public static int input_new_nick_hint=0x7f0600f8;
-        public static int input_pay_pwd=0x7f06019a;
-        public static int input_sms_captcha=0x7f06019b;
-        public static int input_sms_code=0x7f06019c;
-        public static int insurance_agreement_hint=0x7f06019d;
+        public static int input_pay_pwd=0x7f060196;
+        public static int input_sms_captcha=0x7f060197;
+        public static int input_sms_code=0x7f060198;
+        public static int insurance_agreement_hint=0x7f060199;
         public static int is_down_please_wait=0x7f060045;
         public static int is_modify_the_group_name=0x7f0600f9;
         public static int is_quit_the_group_chat=0x7f0600fa;
-        public static int jd_limit_msg=0x7f06019e;
-        public static int jd_pay=0x7f06019f;
-        public static int jd_pay_agreement_hint=0x7f0601a0;
-        public static int jd_pay_title=0x7f0601a1;
-        public static int join_public_group=0x7f060230;
-        public static int limit_hint_title=0x7f0601a2;
+        public static int jd_limit_msg=0x7f06019a;
+        public static int jd_pay=0x7f06019b;
+        public static int jd_pay_agreement_hint=0x7f06019c;
+        public static int jd_pay_title=0x7f06019d;
+        public static int join_public_group=0x7f06022d;
+        public static int limit_hint_title=0x7f06019e;
         public static int list_is_for=0x7f0600fb;
-        public static int load_more_end=0x7f0601a3;
-        public static int loading_msg=0x7f0601a4;
+        public static int load_more_end=0x7f06019f;
+        public static int loading_msg=0x7f0601a0;
         public static int location_message=0x7f060046;
         public static int location_prefix=0x7f060047;
         public static int location_recv=0x7f060048;
@@ -1860,52 +1773,53 @@ containing a value of this type.
         public static int login_failure_failed=0x7f0600fc;
         public static int logout=0x7f06004a;
         public static int logout_hint=0x7f06004b;
-        public static int money_amount=0x7f0601a5;
-        public static int money_detail_money_unit=0x7f0601a6;
-        public static int money_detail_nickname=0x7f0601a7;
-        public static int money_detail_use=0x7f0601a8;
-        public static int money_expired_str=0x7f0601a9;
-        public static int money_is_out=0x7f0601aa;
-        public static int money_is_out_avg=0x7f0601ab;
-        public static int money_msg_someone_take_money=0x7f0601ac;
-        public static int money_msg_take_money=0x7f0601ad;
-        public static int money_msg_take_someone_money=0x7f0601ae;
-        public static int money_qa_title=0x7f0601af;
-        public static int money_received=0x7f0601b0;
-        public static int money_received_text=0x7f0601b1;
-        public static int money_record_status=0x7f0601b2;
-        public static int money_record_status_all=0x7f0601b3;
-        public static int money_record_title=0x7f0601b4;
-        public static int money_send=0x7f0601b5;
-        public static int money_send_text=0x7f0601b6;
-        public static int money_status_expired=0x7f0601b7;
-        public static int money_status_no_taken=0x7f0601b8;
-        public static int money_status_taken=0x7f0601b9;
-        public static int money_unit=0x7f0601ba;
-        public static int money_username_format=0x7f0601bb;
+        public static int money_amount=0x7f0601a1;
+        public static int money_detail_money_unit=0x7f0601a2;
+        public static int money_detail_nickname=0x7f0601a3;
+        public static int money_detail_use=0x7f0601a4;
+        public static int money_expired_str=0x7f0601a5;
+        public static int money_is_out=0x7f0601a6;
+        public static int money_is_out_avg=0x7f0601a7;
+        public static int money_msg_someone_take_money=0x7f06022e;
+        public static int money_msg_take_money=0x7f06022f;
+        public static int money_msg_take_someone_money=0x7f060230;
+        public static int money_qa_title=0x7f0601a8;
+        public static int money_received=0x7f0601a9;
+        public static int money_received_text=0x7f0601aa;
+        public static int money_record_status=0x7f0601ab;
+        public static int money_record_status_all=0x7f0601ac;
+        public static int money_record_title=0x7f0601ad;
+        public static int money_send=0x7f0601ae;
+        public static int money_send_text=0x7f0601af;
+        public static int money_status_expired=0x7f0601b0;
+        public static int money_status_no_taken=0x7f0601b1;
+        public static int money_status_taken=0x7f0601b2;
+        public static int money_unit=0x7f0601b3;
+        public static int money_username_format=0x7f0601b4;
         public static int move_out_backlist=0x7f0600fd;
         public static int move_up_to_cancel=0x7f06004c;
-        public static int msg_captcha_has_sent=0x7f0601bc;
-        public static int msg_change_you_balance=0x7f0601bd;
-        public static int msg_choose_few_person_red_packet=0x7f0601be;
-        public static int msg_error_page_hint=0x7f0601bf;
-        public static int msg_error_retry=0x7f0601c0;
-        public static int msg_no_receive_captcha_hint=0x7f0601c1;
-        public static int msg_phone_hint=0x7f0601c2;
-        public static int msg_remove_bankcard_success=0x7f0601c3;
-        public static int msg_remove_other_bankcard=0x7f0601c4;
-        public static int msg_review_going=0x7f0601c5;
-        public static int msg_upload_card_hint=0x7f0601c6;
-        public static int msg_withdraw_success=0x7f0601c7;
-        public static int msg_you_are_exit=0x7f0601c8;
-        public static int msg_you_are_remove_bankcard=0x7f0601c9;
+        public static int msg_captcha_has_sent=0x7f0601b5;
+        public static int msg_choose_few_person_red_packet=0x7f0601b6;
+        public static int msg_error_page_hint=0x7f0601b7;
+        public static int msg_error_retry=0x7f0601b8;
+        public static int msg_no_receive_captcha_hint=0x7f0601b9;
+        public static int msg_phone_hint=0x7f0601ba;
+        public static int msg_remove_bankcard_success=0x7f0601bb;
+        public static int msg_review_going=0x7f0601bc;
+        public static int msg_someone_take_red_packet=0x7f0601bd;
+        public static int msg_take_red_packet=0x7f0601be;
+        public static int msg_take_someone_red_packet=0x7f0601bf;
+        public static int msg_upload_card_hint=0x7f0601c0;
+        public static int msg_withdraw_success=0x7f0601c1;
+        public static int msg_you_are_exit=0x7f0601c2;
+        public static int msg_you_are_remove_bankcard=0x7f0601c3;
         public static int mute=0x7f06004d;
-        public static int my_bank_card=0x7f0601ca;
-        public static int my_change=0x7f0601cb;
-        public static int my_money=0x7f0601cc;
-        public static int my_money_records=0x7f0601cd;
-        public static int name_str_format_received=0x7f0601ce;
-        public static int name_str_format_send=0x7f0601cf;
+        public static int my_bank_card=0x7f0601c4;
+        public static int my_change=0x7f0601c5;
+        public static int my_money=0x7f0601c6;
+        public static int my_money_records=0x7f0601c7;
+        public static int name_str_format_received=0x7f0601c8;
+        public static int name_str_format_send=0x7f0601c9;
         public static int network_anomalies=0x7f0600fe;
         public static int network_isnot_available=0x7f06004e;
         public static int network_unavailable=0x7f06004f;
@@ -1914,8 +1828,8 @@ containing a value of this type.
         public static int nickname=0x7f0600ff;
         public static int nickname_description=0x7f060100;
         public static int no_more_messages=0x7f060101;
-        public static int no_network_connected=0x7f0601d0;
-        public static int no_verify=0x7f0601d1;
+        public static int no_network_connected=0x7f0601ca;
+        public static int no_verify=0x7f0601cb;
         public static int not_add_myself=0x7f060102;
         public static int not_connect_to_server=0x7f060103;
         public static int not_delete_myself=0x7f060104;
@@ -1923,14 +1837,15 @@ containing a value of this type.
         public static int notify=0x7f060053;
         public static int now_refresh_list=0x7f060054;
         public static int ok=0x7f060105;
-        public static int operation_tpy_agreement=0x7f0601d2;
-        public static int operation_user_agreement=0x7f0601d3;
+        public static int operation_tpy_agreement=0x7f0601cc;
+        public static int operation_user_agreement=0x7f0601cd;
+        public static int operation_user_agreement_default=0x7f0601ce;
         public static int password=0x7f060055;
-        public static int pay_bank_card=0x7f0601d4;
-        public static int pay_card=0x7f0601d5;
-        public static int pay_no_pwd=0x7f0601d6;
+        public static int pay_bank_card=0x7f0601cf;
+        public static int pay_card=0x7f0601d0;
+        public static int pay_no_pwd=0x7f0601d1;
         public static int people=0x7f060106;
-        public static int phone_number=0x7f0601d7;
+        public static int phone_number=0x7f0601d2;
         public static int picture=0x7f060056;
         public static int please_check=0x7f060107;
         public static int please_set_the_current=0x7f060108;
@@ -1939,16 +1854,16 @@ containing a value of this type.
         public static int readfire_message=0x7f060058;
         public static int readfire_message_content=0x7f06010a;
         public static int readfire_message_title=0x7f06010b;
-        public static int real_name=0x7f0601d8;
+        public static int real_name=0x7f0601d3;
         public static int receive_the_passthrough=0x7f06010c;
-        public static int recharge_amount=0x7f0601d9;
-        public static int recharge_money_limit=0x7f0601da;
-        public static int recharge_money_not_null=0x7f0601db;
-        public static int recharge_money_not_zero=0x7f0601dc;
-        public static int recharge_success=0x7f0601dd;
+        public static int recharge_amount=0x7f0601d4;
+        public static int recharge_money_limit=0x7f0601d5;
+        public static int recharge_money_not_null=0x7f0601d6;
+        public static int recharge_money_not_zero=0x7f0601d7;
+        public static int recharge_success=0x7f0601d8;
         public static int recoding_fail=0x7f060059;
         public static int recording_video=0x7f06005a;
-        public static int red_money=0x7f0601de;
+        public static int red_money=0x7f0601d9;
         public static int refreshing_group_list=0x7f06010d;
         public static int register=0x7f06005b;
         public static int registration_failed_without_permission=0x7f06010e;
@@ -1956,8 +1871,8 @@ containing a value of this type.
         public static int release_to_cancel=0x7f06005c;
         public static int remove_group_of=0x7f060110;
         public static int resend=0x7f06005d;
-        public static int resend_sms_code=0x7f0601df;
-        public static int retry_str=0x7f0601e0;
+        public static int resend_sms_code=0x7f0601da;
+        public static int retry_str=0x7f0601db;
         public static int revoke_message_by_self=0x7f060111;
         public static int revoke_message_by_user=0x7f060112;
         public static int robot_chat=0x7f060113;
@@ -1972,67 +1887,69 @@ containing a value of this type.
         public static int select_contacts=0x7f060061;
         public static int send_fail=0x7f060062;
         public static int send_failure_please=0x7f060119;
-        public static int send_money_bottom_text=0x7f0601e1;
-        public static int send_money_title=0x7f0601e2;
+        public static int send_money_bottom_text=0x7f0601dc;
+        public static int send_money_title=0x7f0601dd;
         public static int send_successful=0x7f06011a;
         public static int send_the_request_is=0x7f06011b;
-        public static int send_who_money=0x7f0601e3;
-        public static int send_you_money=0x7f0601e4;
-        public static int server_response_error=0x7f0601e5;
-        public static int server_time_out=0x7f0601e6;
+        public static int send_who_money=0x7f0601de;
+        public static int send_you_money=0x7f0601df;
+        public static int server_response_error=0x7f0601e0;
+        public static int server_time_out=0x7f0601e1;
         public static int session=0x7f060063;
         public static int set=0x7f060064;
-        public static int set_pay_password=0x7f0601e7;
-        public static int set_pay_pwd_for_safe=0x7f0601e8;
+        public static int set_pay_password=0x7f0601e2;
+        public static int set_pay_pwd_for_safe=0x7f0601e3;
         public static int setting=0x7f060065;
         public static int setting_nickname=0x7f06011c;
         public static int shake=0x7f060066;
-        public static int single_day_pay_quota=0x7f0601e9;
-        public static int single_limit=0x7f0601ea;
-        public static int single_limit_msg=0x7f0601eb;
-        public static int single_out_msg=0x7f0601ec;
-        public static int single_pay_quota=0x7f0601ed;
-        public static int small_change=0x7f0601ee;
-        public static int small_change_balance=0x7f0601ef;
-        public static int sms_error_msg=0x7f0601f0;
-        public static int sms_error_title=0x7f0601f1;
-        public static int str_add_bank_hint=0x7f0601f2;
-        public static int str_choose_album=0x7f0601f3;
-        public static int str_choose_camera=0x7f0601f4;
-        public static int str_forget_pay_pwd=0x7f0601f5;
-        public static int str_format_send_sms=0x7f0601f6;
-        public static int str_input_sms_code=0x7f0601f7;
-        public static int str_me_agreement=0x7f0601f8;
-        public static int str_my_change=0x7f0601f9;
-        public static int str_open_bank_name=0x7f0601fa;
-        public static int str_select_city=0x7f0601fb;
-        public static int str_select_province=0x7f0601fc;
-        public static int str_send_sms_code=0x7f0601fd;
-        public static int str_set_psd_success=0x7f0601fe;
-        public static int str_upload=0x7f0601ff;
-        public static int str_withdraw=0x7f060200;
-        public static int str_your_withdraw_cash_card=0x7f060201;
-        public static int subtitle_content=0x7f060202;
+        public static int single_day_pay_quota=0x7f0601e4;
+        public static int single_limit=0x7f0601e5;
+        public static int single_limit_msg=0x7f0601e6;
+        public static int single_out_msg=0x7f0601e7;
+        public static int single_pay_quota=0x7f0601e8;
+        public static int single_withdraw_max_limit=0x7f0601e9;
+        public static int single_withdraw_min_limit=0x7f0601ea;
+        public static int small_change=0x7f0601eb;
+        public static int small_change_balance=0x7f0601ec;
+        public static int sms_error_msg=0x7f0601ed;
+        public static int sms_error_title=0x7f0601ee;
+        public static int str_add_bank_hint=0x7f0601ef;
+        public static int str_choose_album=0x7f0601f0;
+        public static int str_choose_camera=0x7f0601f1;
+        public static int str_forget_pay_pwd=0x7f0601f2;
+        public static int str_format_send_sms=0x7f0601f3;
+        public static int str_input_sms_code=0x7f0601f4;
+        public static int str_me_agreement=0x7f0601f5;
+        public static int str_my_change=0x7f0601f6;
+        public static int str_open_bank_name=0x7f0601f7;
+        public static int str_select_city=0x7f0601f8;
+        public static int str_select_province=0x7f0601f9;
+        public static int str_send_sms_code=0x7f0601fa;
+        public static int str_set_psd_success=0x7f0601fb;
+        public static int str_upload=0x7f0601fc;
+        public static int str_withdraw=0x7f0601fd;
+        public static int str_your_withdraw_cash_card=0x7f0601fe;
+        public static int subtitle_content=0x7f0601ff;
         public static int sure_to_empty_this=0x7f06011d;
         public static int temporary_does_not=0x7f06011e;
         public static int text_ack_msg=0x7f060067;
         public static int text_delivered_msg=0x7f060068;
         public static int the_current_group=0x7f06011f;
         public static int the_current_network=0x7f060120;
-        public static int tip_money_count_limit=0x7f060203;
-        public static int tip_money_count_zero=0x7f060204;
-        public static int title_add_bankcard=0x7f060205;
-        public static int title_amount_agreement=0x7f060206;
-        public static int title_change_withdraw=0x7f060207;
-        public static int title_close=0x7f060208;
-        public static int title_common_problem=0x7f060209;
-        public static int title_factory_agreement=0x7f06020a;
-        public static int title_forget_pay_pwd=0x7f06020b;
-        public static int title_normal_money=0x7f06020c;
-        public static int title_random_money=0x7f06020d;
-        public static int title_send_group_money=0x7f06020e;
-        public static int title_set_pay_pwd=0x7f06020f;
-        public static int title_small_change=0x7f060210;
+        public static int tip_money_count_limit=0x7f060200;
+        public static int tip_money_count_zero=0x7f060201;
+        public static int title_add_bankcard=0x7f060202;
+        public static int title_amount_agreement=0x7f060203;
+        public static int title_change_withdraw=0x7f060204;
+        public static int title_close=0x7f060205;
+        public static int title_common_problem=0x7f060206;
+        public static int title_factory_agreement=0x7f060207;
+        public static int title_forget_pay_pwd=0x7f060208;
+        public static int title_normal_money=0x7f060209;
+        public static int title_random_money=0x7f06020a;
+        public static int title_send_group_money=0x7f06020b;
+        public static int title_set_pay_pwd=0x7f06020c;
+        public static int title_small_change=0x7f06020d;
         public static int title_user_profile=0x7f060121;
         public static int toast_nick_not_isnull=0x7f060122;
         public static int toast_no_support=0x7f060123;
@@ -2042,21 +1959,21 @@ containing a value of this type.
         public static int toast_updatenick_success=0x7f060127;
         public static int toast_updatephoto_fail=0x7f060128;
         public static int toast_updatephoto_success=0x7f060129;
-        public static int tv_all_person=0x7f060211;
-        public static int tv_flash_strong=0x7f060212;
-        public static int tv_frame_lack=0x7f060213;
-        public static int tv_id_card_photo_requirement=0x7f060214;
-        public static int tv_id_card_requirement=0x7f060215;
-        public static int tv_identity_msg_right=0x7f060216;
-        public static int tv_not_receive_message=0x7f060217;
-        public static int tv_password_hint_one=0x7f060218;
-        public static int tv_password_hint_two=0x7f060219;
-        public static int tv_picture_vague=0x7f06021a;
-        public static int tv_shooting_example=0x7f06021b;
-        public static int tv_standard=0x7f06021c;
-        public static int tv_submit_review=0x7f06021d;
-        public static int tv_who_can_receive=0x7f06021e;
-        public static int two_password_not=0x7f06021f;
+        public static int tv_all_person=0x7f06020e;
+        public static int tv_flash_strong=0x7f06020f;
+        public static int tv_frame_lack=0x7f060210;
+        public static int tv_id_card_photo_requirement=0x7f060211;
+        public static int tv_id_card_requirement=0x7f060212;
+        public static int tv_identity_msg_right=0x7f060213;
+        public static int tv_not_receive_message=0x7f060214;
+        public static int tv_password_hint_one=0x7f060215;
+        public static int tv_password_hint_two=0x7f060216;
+        public static int tv_picture_vague=0x7f060217;
+        public static int tv_shooting_example=0x7f060218;
+        public static int tv_standard=0x7f060219;
+        public static int tv_submit_review=0x7f06021a;
+        public static int tv_who_can_receive=0x7f06021b;
+        public static int two_password_not=0x7f06021c;
         public static int unable_to_connect=0x7f060069;
         public static int unable_to_get_loaction=0x7f06012a;
         public static int update_black_list=0x7f06012b;
@@ -2065,30 +1982,30 @@ containing a value of this type.
         public static int update_contact_list_failed=0x7f06012e;
         public static int update_groups=0x7f06012f;
         public static int update_groups_failed=0x7f060130;
-        public static int upload_success_review_going=0x7f060220;
+        public static int upload_success_review_going=0x7f06021d;
         public static int user_card=0x7f06006a;
         public static int user_name=0x7f06006b;
-        public static int verify_fail=0x7f060221;
-        public static int verify_going=0x7f060222;
-        public static int verify_identity=0x7f060223;
+        public static int verify_fail=0x7f06021e;
+        public static int verify_going=0x7f06021f;
+        public static int verify_identity=0x7f060220;
         public static int video=0x7f06006c;
         public static int voice=0x7f06006d;
         public static int voice_call=0x7f06006e;
         public static int voice_prefix=0x7f060131;
-        public static int withdraw_amount=0x7f060224;
-        public static int withdraw_bankcard=0x7f060225;
-        public static int withdraw_bankcard_name=0x7f060226;
-        public static int withdraw_card=0x7f060227;
-        public static int withdraw_change_balance=0x7f060228;
-        public static int withdraw_money_not_max_change=0x7f060229;
-        public static int withdraw_money_not_max_five_thousand=0x7f06022a;
-        public static int withdraw_money_not_null=0x7f06022b;
-        public static int withdraw_money_not_zero=0x7f06022c;
-        public static int withdraw_not_psd_msg=0x7f06022d;
+        public static int withdraw_amount=0x7f060221;
+        public static int withdraw_bankcard=0x7f060222;
+        public static int withdraw_bankcard_name=0x7f060223;
+        public static int withdraw_card=0x7f060224;
+        public static int withdraw_change_balance=0x7f060225;
+        public static int withdraw_money_not_max_change=0x7f060226;
+        public static int withdraw_money_not_null=0x7f060227;
+        public static int withdraw_money_not_zero=0x7f060228;
+        public static int withdraw_not_psd_msg=0x7f060229;
+        public static int wx_pay=0x7f06022a;
         public static int yangshengqi=0x7f06006f;
-        public static int yes_verify=0x7f06022e;
+        public static int yes_verify=0x7f06022b;
         public static int you_are_group=0x7f060132;
-        public static int your_no_bankcard=0x7f06022f;
+        public static int your_no_bankcard=0x7f06022c;
     }
     public static final class style {
         public static int AddBankCardTextViewStyle=0x7f070003;
@@ -2136,34 +2053,30 @@ containing a value of this type.
          */
         public static int MyDialogStyleTop=0x7f070027;
         public static int PayTypeIconStyle=0x7f070028;
-        public static int RPBase_CardView=0x7f070029;
-        public static int RPCardView=0x7f07002a;
-        public static int RPCardView_Dark=0x7f07002b;
-        public static int RPCardView_Light=0x7f07002c;
-        public static int ReceivedMoneyStyle=0x7f07002d;
-        public static int RecordReceivedCountStyle=0x7f07002e;
-        public static int RecordReceivedCountTextStyle=0x7f07002f;
-        public static int RedPacketCheckStyle=0x7f070030;
-        public static int RedPacketGreetingStyle=0x7f070031;
-        public static int RedPacketIconStyle=0x7f070032;
-        public static int RedPacketSponsorIconStyle=0x7f070033;
-        public static int RedPacketSponsorStyle=0x7f070034;
-        public static int SendMoneyBottomTextStyle=0x7f070035;
-        public static int SendMoneyButtonStyle=0x7f070036;
-        public static int SendMoneyEditTextStyle=0x7f070037;
-        public static int SendMoneyGreetingsStyle=0x7f070038;
-        public static int SendMoneyGroupRuleTipsStyle=0x7f070039;
-        public static int SendMoneyLeftTextViewStyle=0x7f07003a;
-        public static int SendMoneyRLayoutStyle=0x7f07003b;
-        public static int SendMoneyRightTextViewStyle=0x7f07003c;
-        public static int UserNameStyle=0x7f07003d;
-        public static int YzhMoneyIconStyle=0x7f07003e;
-        public static int bottom_line_edit_text_style=0x7f07003f;
-        public static int chat_content_date_style=0x7f070040;
-        public static int chat_text_date_style=0x7f070041;
-        public static int chat_text_name_style=0x7f070042;
-        public static int devide_line_eee=0x7f070043;
-        public static int dialog_animation=0x7f070044;
+        public static int ReceivedMoneyStyle=0x7f070029;
+        public static int RecordReceivedCountStyle=0x7f07002a;
+        public static int RecordReceivedCountTextStyle=0x7f07002b;
+        public static int RedPacketCheckStyle=0x7f07002c;
+        public static int RedPacketGreetingStyle=0x7f07002d;
+        public static int RedPacketIconStyle=0x7f07002e;
+        public static int RedPacketSponsorIconStyle=0x7f07002f;
+        public static int RedPacketSponsorStyle=0x7f070030;
+        public static int SendMoneyBottomTextStyle=0x7f070031;
+        public static int SendMoneyButtonStyle=0x7f070032;
+        public static int SendMoneyEditTextStyle=0x7f070033;
+        public static int SendMoneyGreetingsStyle=0x7f070034;
+        public static int SendMoneyGroupRuleTipsStyle=0x7f070035;
+        public static int SendMoneyLeftTextViewStyle=0x7f070036;
+        public static int SendMoneyRLayoutStyle=0x7f070037;
+        public static int SendMoneyRightTextViewStyle=0x7f070038;
+        public static int UserNameStyle=0x7f070039;
+        public static int YzhMoneyIconStyle=0x7f07003a;
+        public static int bottom_line_edit_text_style=0x7f07003b;
+        public static int chat_content_date_style=0x7f07003c;
+        public static int chat_text_date_style=0x7f07003d;
+        public static int chat_text_name_style=0x7f07003e;
+        public static int devide_line_eee=0x7f07003f;
+        public static int dialog_animation=0x7f070040;
         public static int horizontal_slide=0x7f070001;
         public static int nornal_style=0x7f070002;
     }
@@ -2753,229 +2666,6 @@ containing a value of this type.
           @attr name com.easemob.redpacketui:titleBarTitle
         */
         public static int EaseTitleBar_titleBarTitle = 0;
-        /** Attributes that can be used with a RPCardView.
-           <p>Includes the following attributes:</p>
-           <table>
-           <colgroup align="left" />
-           <colgroup align="left" />
-           <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #RPCardView_RPcardBackgroundColor com.easemob.redpacketui:RPcardBackgroundColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcardCornerRadius com.easemob.redpacketui:RPcardCornerRadius}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcardElevation com.easemob.redpacketui:RPcardElevation}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcardMaxElevation com.easemob.redpacketui:RPcardMaxElevation}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcardPreventCornerOverlap com.easemob.redpacketui:RPcardPreventCornerOverlap}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcardUseCompatPadding com.easemob.redpacketui:RPcardUseCompatPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcontentPadding com.easemob.redpacketui:RPcontentPadding}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcontentPaddingBottom com.easemob.redpacketui:RPcontentPaddingBottom}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcontentPaddingLeft com.easemob.redpacketui:RPcontentPaddingLeft}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcontentPaddingRight com.easemob.redpacketui:RPcontentPaddingRight}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_RPcontentPaddingTop com.easemob.redpacketui:RPcontentPaddingTop}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_android_minHeight android:minHeight}</code></td><td></td></tr>
-           <tr><td><code>{@link #RPCardView_android_minWidth android:minWidth}</code></td><td></td></tr>
-           </table>
-           @see #RPCardView_RPcardBackgroundColor
-           @see #RPCardView_RPcardCornerRadius
-           @see #RPCardView_RPcardElevation
-           @see #RPCardView_RPcardMaxElevation
-           @see #RPCardView_RPcardPreventCornerOverlap
-           @see #RPCardView_RPcardUseCompatPadding
-           @see #RPCardView_RPcontentPadding
-           @see #RPCardView_RPcontentPaddingBottom
-           @see #RPCardView_RPcontentPaddingLeft
-           @see #RPCardView_RPcontentPaddingRight
-           @see #RPCardView_RPcontentPaddingTop
-           @see #RPCardView_android_minHeight
-           @see #RPCardView_android_minWidth
-         */
-        public static final int[] RPCardView = {
-            0x0101013f, 0x01010140, 0x7f01001f, 0x7f010020,
-            0x7f010021, 0x7f010022, 0x7f010023, 0x7f010024,
-            0x7f010025, 0x7f010026, 0x7f010027, 0x7f010028,
-            0x7f010029
-        };
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcardBackgroundColor}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcardBackgroundColor
-        */
-        public static int RPCardView_RPcardBackgroundColor = 2;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcardCornerRadius}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcardCornerRadius
-        */
-        public static int RPCardView_RPcardCornerRadius = 3;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcardElevation}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcardElevation
-        */
-        public static int RPCardView_RPcardElevation = 4;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcardMaxElevation}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcardMaxElevation
-        */
-        public static int RPCardView_RPcardMaxElevation = 5;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcardPreventCornerOverlap}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcardPreventCornerOverlap
-        */
-        public static int RPCardView_RPcardPreventCornerOverlap = 7;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcardUseCompatPadding}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcardUseCompatPadding
-        */
-        public static int RPCardView_RPcardUseCompatPadding = 6;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcontentPadding}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcontentPadding
-        */
-        public static int RPCardView_RPcontentPadding = 8;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcontentPaddingBottom}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcontentPaddingBottom
-        */
-        public static int RPCardView_RPcontentPaddingBottom = 12;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcontentPaddingLeft}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcontentPaddingLeft
-        */
-        public static int RPCardView_RPcontentPaddingLeft = 9;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcontentPaddingRight}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcontentPaddingRight
-        */
-        public static int RPCardView_RPcontentPaddingRight = 10;
-        /**
-          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPcontentPaddingTop}
-          attribute's value can be found in the {@link #RPCardView} array.
-
-
-          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
-Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
-in (inches), mm (millimeters).
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name com.easemob.redpacketui:RPcontentPaddingTop
-        */
-        public static int RPCardView_RPcontentPaddingTop = 11;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#minHeight}
-          attribute's value can be found in the {@link #RPCardView} array.
-          @attr name android:minHeight
-        */
-        public static int RPCardView_android_minHeight = 1;
-        /**
-          <p>This symbol is the offset where the {@link android.R.attr#minWidth}
-          attribute's value can be found in the {@link #RPCardView} array.
-          @attr name android:minWidth
-        */
-        public static int RPCardView_android_minWidth = 0;
         /** Attributes that can be used with a RPRecyclerView.
            <p>Includes the following attributes:</p>
            <table>
@@ -2995,8 +2685,8 @@ containing a value of this type.
            @see #RPRecyclerView_android_orientation
          */
         public static final int[] RPRecyclerView = {
-            0x010100c4, 0x7f01002a, 0x7f01002b, 0x7f01002c,
-            0x7f01002d
+            0x010100c4, 0x7f01001f, 0x7f010020, 0x7f010021,
+            0x7f010022
         };
         /**
           <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPlayoutManager}
@@ -3060,6 +2750,77 @@ containing a value of this type.
           @attr name android:orientation
         */
         public static int RPRecyclerView_android_orientation = 0;
+        /** Attributes that can be used with a RPRoundCard.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #RPRoundCard_RPCardBgColor com.easemob.redpacketui:RPCardBgColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #RPRoundCard_RPCardBgImg com.easemob.redpacketui:RPCardBgImg}</code></td><td></td></tr>
+           <tr><td><code>{@link #RPRoundCard_RPCardBgType com.easemob.redpacketui:RPCardBgType}</code></td><td></td></tr>
+           <tr><td><code>{@link #RPRoundCard_RPCardRadius com.easemob.redpacketui:RPCardRadius}</code></td><td></td></tr>
+           </table>
+           @see #RPRoundCard_RPCardBgColor
+           @see #RPRoundCard_RPCardBgImg
+           @see #RPRoundCard_RPCardBgType
+           @see #RPRoundCard_RPCardRadius
+         */
+        public static final int[] RPRoundCard = {
+            0x7f010023, 0x7f010024, 0x7f010025, 0x7f010026
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPCardBgColor}
+          attribute's value can be found in the {@link #RPRoundCard} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name com.easemob.redpacketui:RPCardBgColor
+        */
+        public static int RPRoundCard_RPCardBgColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPCardBgImg}
+          attribute's value can be found in the {@link #RPRoundCard} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.easemob.redpacketui:RPCardBgImg
+        */
+        public static int RPRoundCard_RPCardBgImg = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPCardBgType}
+          attribute's value can be found in the {@link #RPRoundCard} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.easemob.redpacketui:RPCardBgType
+        */
+        public static int RPRoundCard_RPCardBgType = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPCardRadius}
+          attribute's value can be found in the {@link #RPRoundCard} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.easemob.redpacketui:RPCardRadius
+        */
+        public static int RPRoundCard_RPCardRadius = 2;
         /** Attributes that can be used with a app.
            <p>Includes the following attributes:</p>
            <table>
@@ -3093,9 +2854,9 @@ containing a value of this type.
            @see #app_RPtitleTextSize
          */
         public static final int[] app = {
-            0x7f01002e, 0x7f01002f, 0x7f010030, 0x7f010031,
-            0x7f010032, 0x7f010033, 0x7f010034, 0x7f010035,
-            0x7f010036, 0x7f010037, 0x7f010038, 0x7f010039
+            0x7f010027, 0x7f010028, 0x7f010029, 0x7f01002a,
+            0x7f01002b, 0x7f01002c, 0x7f01002d, 0x7f01002e,
+            0x7f01002f, 0x7f010030, 0x7f010031, 0x7f010032
         };
         /**
           <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#RPleftImage}
@@ -3280,8 +3041,8 @@ containing a value of this type.
            @see #gridPasswordView_gpvTextSize
          */
         public static final int[] gridPasswordView = {
-            0x7f01003a, 0x7f01003b, 0x7f01003c, 0x7f01003d,
-            0x7f01003e, 0x7f01003f, 0x7f010040, 0x7f010041
+            0x7f010033, 0x7f010034, 0x7f010035, 0x7f010036,
+            0x7f010037, 0x7f010038, 0x7f010039, 0x7f01003a
         };
         /**
           <p>This symbol is the offset where the {@link com.easemob.redpacketui.R.attr#gpvGridColor}
