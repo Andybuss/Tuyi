@@ -31,13 +31,26 @@
             android:textSize="20sp"
             android:maxLines="5"
             android:typeface="serif" />
+
+        <EditText
+            android:visibility="gone"
+            android:layout_gravity="bottom"
+            android:textSize="@dimen/text_big18_size"
+            android:hint="来个描述吧..."
+            android:background="@drawable/em_app_pref_bg"
+            android:id="@+id/play_desc_et"
+            android:minHeight="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </FrameLayout>
 
     <LinearLayout
+        android:orientation="horizontal"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
 
         <Button
             android:id="@+id/addPlay"
@@ -46,6 +59,17 @@
             android:layout_gravity="center"
             android:background="@drawable/add_tu"
             android:gravity="center"
+            android:textColor="@color/md_white_1000" />
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/addDescription"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_orange"
+            android:gravity="center"
+            android:text="@string/description"
             android:textColor="@color/md_white_1000" />
         <Button
             android:layout_marginLeft="20dp"

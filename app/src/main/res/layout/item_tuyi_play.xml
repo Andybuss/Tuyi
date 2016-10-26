@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dong.lan.tuyi.widget.XSwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/item_play_delete"
+            android:background="@color/md_red_400"
+            android:text="@string/delete"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/md_white_1000"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_margin="8dp"
+            android:src="@drawable/logo"
+            android:id="@+id/item_play_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:id="@+id/item_play_tittle"
+            android:layout_toRightOf="@id/item_play_img"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
+            android:textColor="#222"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/item_play_info"
+            android:layout_toRightOf="@id/item_play_img"
+            android:layout_below="@id/item_play_tittle"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</dong.lan.tuyi.widget.XSwipeLayout>

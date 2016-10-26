@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="12dp"
+    android:background="@drawable/circle_rect_green_4"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_margin="12dp"
+        android:text="添加一个途忆"
+        android:textColor="#fff"
+        android:textSize="24sp"
+        android:id="@+id/item_to_add_play"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp" />
+
+</LinearLayout>

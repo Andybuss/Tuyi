@@ -184,10 +184,6 @@
                         android:text="其他设置"
                         android:textColor="@color/btn_gray_pressed" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dip"
-                        android:background="@color/btn_gray_normal" />
                 </LinearLayout>
 
 
