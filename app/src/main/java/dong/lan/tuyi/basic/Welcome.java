@@ -38,7 +38,10 @@ import dong.lan.tuyi.activity.TuMapActivity;
 import dong.lan.tuyi.utils.Config;
 
 /**
- * Created by 桂栋 on 2015/7/14.
+ * Created by 梁桂栋 on 2015/7/14 ： 下午2:31.
+ * Email:       760625325@qq.com
+ * GitHub:      github.com/donlan
+ * description: Tuyi
  */
 public class Welcome extends Activity implements GestureDetector.OnGestureListener {
 
@@ -67,8 +70,6 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
     }
 
     private void jump() {
-        RedPacket.getInstance().initContext(TuApplication.applicationContext);
-        RedPacket.getInstance().setDebugMode(true);
         if (DemoHelper.getInstance().isLoggedIn()) {
             long start = System.currentTimeMillis();
             EMGroupManager.getInstance().loadAllGroups();
@@ -108,13 +109,23 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
         }).start();
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        if(Build.VERSION.SDK_INT<23)
+        {
+            RedPacket.getInstance().initContext(TuApplication.applicationContext);
+            RedPacket.getInstance().setDebugMode(true);
+            Log.d("TAG", "onStart: ");
+            if (!isFirst)
+                login();
+            return;
+        }
         if (Build.VERSION.SDK_INT >= 23 && ((ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
                 .WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED) ||
                 ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
-                        .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)||
+                        .READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) ||
                 ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
                         .WRITE_SECURE_SETTINGS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(Welcome.this, new String[]{
@@ -128,7 +139,11 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.WRITE_SECURE_SETTINGS
             }, 1);
-        } else if (!isFirst) {
+        } else {
+            RedPacket.getInstance().initContext(TuApplication.applicationContext);
+            RedPacket.getInstance().setDebugMode(true);
+            Log.d("TAG", "onStart: ");
+            if (!isFirst)
                 login();
         }
     }
@@ -155,13 +170,12 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
 
                 startActivity(new Intent(this, OfflineTuyiActivity.class).putExtra("FROM_DESK", true));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-            }
-            else if (getIntent().hasExtra("ADD_TUYI") && getIntent().getBooleanExtra("ADD_TUYI", false)) {
+            } else if (getIntent().hasExtra("ADD_TUYI") && getIntent().getBooleanExtra("ADD_TUYI", false)) {
 
                 startActivity(new Intent(this, TuMapActivity.class));
                 overridePendingTransition(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-            }else {
-                startActivity(new Intent(Welcome.this,MainActivity.class));
+            } else {
+                startActivity(new Intent(Welcome.this, MainActivity.class));
             }
             finish();
 
@@ -226,11 +240,12 @@ public class Welcome extends Activity implements GestureDetector.OnGestureListen
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1 && ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
-                .READ_PHONE_STATE)==PackageManager.PERMISSION_GRANTED &&
+                .READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(Welcome.this, Manifest.permission
-                        .WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+                        .WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 ) {
-            jump();
+            RedPacket.getInstance().initContext(TuApplication.applicationContext);
+            RedPacket.getInstance().setDebugMode(true);
         } else {
             new AlertDialog.Builder(Welcome.this)
                     .setMessage("为了使用红包功能我们需要读取您手机的状态，以获取唯一的设备ID。")
