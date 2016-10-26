@@ -507,4 +507,5 @@
     <string name="group_owner">圈子的主人</string>
     <string name="messages_are_empty">消息是空的</string>
     <string name="adaptive_video_encode">视频编码</string>
+    <string name="description">说明</string>
 </resources>
