@@ -24,15 +24,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private LayoutInflater inflater;
     private Context context;
     private List<UserTuyi> tuyis;
-    public RecyclerViewAdapter(Context context,List<UserTuyi> tuyis)
-    {
+
+    public RecyclerViewAdapter(Context context, List<UserTuyi> tuyis) {
         this.context = context;
-        this.tuyis  =tuyis;
+        this.tuyis = tuyis;
         inflater = LayoutInflater.from(context);
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int pos) {
-        View view = inflater.inflate(R.layout.item_like_tuyi,viewGroup,false);
+        View view = inflater.inflate(R.layout.item_like_tuyi, null);
         return new MyViewHolder(view);
     }
 
@@ -41,8 +42,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
         viewHolder.time.setText(tuyis.get(pos).getTime());
         viewHolder.content.setText(tuyis.get(pos).gettContent());
         viewHolder.tag.setText(tuyis.get(pos).getTAG());
-            viewHolder.locDes.setText(tuyis.get(pos).getLocDes());
-        PicassoHelper.load(context,tuyis.get(pos).gettPic())
+        viewHolder.locDes.setText(tuyis.get(pos).getLocDes());
+        PicassoHelper.load(context, tuyis.get(pos).gettPic())
                 .placeholder(R.drawable.logo)
                 .error(R.drawable.login_error_icon)
                 .into(viewHolder.pic);
@@ -55,20 +56,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 }
 
- class MyViewHolder extends RecyclerView.ViewHolder
-{
+class MyViewHolder extends RecyclerView.ViewHolder {
     TextView time;
     ImageView pic;
     TextView content;
     TextView locDes;
     TextView tag;
-    public MyViewHolder(View view)
-    {
+
+    public MyViewHolder(View view) {
         super(view);
         time = (TextView) view.findViewById(R.id.item_like_tuyi_time);
         pic = (ImageView) view.findViewById(R.id.item_like_tuyi_pic);
         content = (TextView) view.findViewById(R.id.item_like_tuyi_content);
-        locDes  = (TextView) view.findViewById(R.id.item_like_locDes);
+        locDes = (TextView) view.findViewById(R.id.item_like_locDes);
         tag = (TextView) view.findViewById(R.id.tuyi_tag);
     }
 }

@@ -38,7 +38,21 @@ public class SelectTuyiAdapter extends RecyclerView.Adapter<SelectHolder> {
     }
     @Override
     public SelectHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        return new SelectHolder(inflater.inflate(R.layout.item_select_tuyi,null));
+        View v = inflater.inflate(R.layout.item_select_tuyi,null);
+        final SelectHolder holder = new SelectHolder(v);
+        holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    set.add(holder.getLayoutPosition());
+                }else if(set.contains(holder.getLayoutPosition()))
+                {
+                    set.remove(holder.getLayoutPosition());
+                }
+            }
+        });
+        return holder;
     }
 
     @Override
@@ -47,25 +61,15 @@ public class SelectTuyiAdapter extends RecyclerView.Adapter<SelectHolder> {
         s.append("<html><body><h3>");
         s.append(tuyis.get(i).getTime().substring(0,10));
         s.append("</h3><p>");
-        s.append(tuyis.get(i).gettContent());
+        s.append(tuyis.get(holder.getLayoutPosition()).gettContent());
         s.append("</p></body></html>");
+        holder.check.setChecked(set.contains(i));
         holder.content.setText(Html.fromHtml(s.toString()));
         PicassoHelper.load(context,tuyis.get(i).gettPic())
                 .placeholder(R.drawable.logo)
                 .resize(100,100)
                 .into(holder.pic);
-        holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    set.add(i);
-                }else if(set.contains(i))
-                {
-                    set.remove(i);
-                }
-            }
-        });
+
     }
 
     @Override
