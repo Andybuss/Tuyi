@@ -25,7 +25,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -68,10 +68,11 @@
 
         <activity android:name=".activity.MyInterestedActivity" />
         <activity android:name=".activity.UserMainActivity" />
+        <activity android:name=".activity.SelectTuyiActivity" />
         <activity
-            android:name=".activity.SelectTuyiActivity"
-            android:theme="@style/DialogActivity" />
-        <activity android:name=".activity.TuyiPlayActivity" />
+            android:name=".activity.AddTuyiPlayActivity"
+            android:label="添加途忆"
+            android:theme="@style/normalStyle" />
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.FavoriteActivity" />
         <activity android:name=".activity.AddTuyiActivity" />
@@ -95,10 +96,16 @@
         <activity android:name=".activity.TuMapActivity" />
         <activity android:name=".activity.UserCenter" />
         <activity
+            android:name=".activity.TuyiPlayActivity"
+            android:label="我的途忆"
+            android:theme="@style/normalStyle" />
+        <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name="dong.lan.tuyi.basic.Welcome">
+        <activity
+            android:name="dong.lan.tuyi.basic.Welcome"
+            android:theme="@style/splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
@@ -108,12 +115,11 @@
 
         </activity>
 
-        <activity android:name="com.easemob.easeui.ui.EaseBaiduMapActivity"/>
+        <activity android:name="com.easemob.easeui.ui.EaseBaiduMapActivity" />
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
-        <activity android:name=".activity.UserProfileActivity"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <activity android:name=".activity.UserProfileActivity" />
         <!-- 登陆 -->
         <activity
             android:name=".activity.LoginActivity"
@@ -252,58 +258,50 @@
             android:name="com.easemob.redpacketui.ui.activity.RPRedPacketActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan|stateVisible"
-            />
+            android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
             android:name="com.easemob.redpacketui.ui.activity.RPDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name="com.easemob.redpacketui.ui.activity.RPRecordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name="com.easemob.redpacketui.ui.activity.RPWebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.easemob.redpacketui.ui.activity.RPChangeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name="com.easemob.redpacketui.ui.activity.RPBankCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name="com.easemob.redpacketui.ui.activity.RPGroupMemberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!--红包相关界面end-->
 
 
@@ -311,8 +309,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
-        </service>
+            android:process=":remote"></service>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -341,7 +338,6 @@
 
 
         <activity android:name="com.umeng.common.ui.activities.SettingActivity" />
-
 
 
         <activity android:name="com.umeng.common.ui.activities.AlbumActivity" />
