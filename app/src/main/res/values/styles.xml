@@ -12,6 +12,11 @@
         -->
     </style>
 
+    <style name="normalStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/md_red_300</item>
+        <item name="colorPrimaryDark">@color/md_red_300</item>
+        <item name="android:windowAnimationStyle">@style/windowAnim</item>
+    </style>
     <!-- Application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
@@ -25,13 +30,20 @@
         <item name="colorPrimaryDark">@color/md_red_300</item>
         <item name="android:windowBackground">@color/md_grey_100</item>
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_out_to_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_left</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_in_from_right</item>
+        <item name="android:windowAnimationStyle">@style/windowAnim</item>
     </style>
 
+    <style name="windowAnim">
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_to_left</item>
+    </style>
 
+    <style name="splash" parent="BaseAppTheme">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@android:color/white</item>
 
@@ -41,21 +53,22 @@
     <style name="DialogMDStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:textColorPrimary">@color/md_white_1000</item>
         <item name="android:background">@color/md_green_500</item>
+        <item name="android:windowAnimationStyle">@style/windowAnim</item>
     </style>
 
 
     <!--  自定义的弹出框式activity 样式 -->
-    <style name="DialogActivity" parent="Base.Theme.AppCompat.Dialog">
+    <style name="DialogActivity" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowEnterAnimation">@anim/abc_slide_in_top</item>
         <item name="android:windowExitAnimation">@anim/abc_slide_out_top</item>
         <item name="android:windowFrame">@null</item>
+        <item name="actionBarSize">0dp</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
         <item name="android:textColor">@color/md_grey_900</item>
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowBackground">@color/md_white_1000</item>
+        <item name="android:windowAnimationStyle">@style/windowAnim</item>
 
     </style>
 
