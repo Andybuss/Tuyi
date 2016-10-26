@@ -1,148 +1,169 @@
 package dong.lan.tuyi.activity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.UserManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.FindListener;
 import dong.lan.tuyi.R;
-import dong.lan.tuyi.TuApplication;
 import dong.lan.tuyi.bean.Album;
-import dong.lan.tuyi.bean.UserTuyi;
-import dong.lan.tuyi.db.DemoDBManager;
 import dong.lan.tuyi.utils.Config;
-import dong.lan.tuyi.utils.ImgPlayAsyn;
+import dong.lan.tuyi.utils.PicassoHelper;
+import dong.lan.tuyi.utils.UserUtils;
+import dong.lan.tuyi.widget.RecycleViewDivider;
+import dong.lan.tuyi.widget.XSwipeLayout;
 
 /**
- * Created by 梁桂栋 on 2015/11/5.
+ * Created by 梁桂栋 on 16-10-23 ： 下午2:50.
+ * Email:       760625325@qq.com
+ * GitHub:      github.com/donlan
+ * description: Tuyi
  */
-public class TuyiPlayActivity extends BaseActivity implements View.OnClickListener,SelectTuyiActivity.onTuyiSelectListener {
 
-    private ImageView img;
-    private TextView palyText;
-    private Button prePlay,addPaly,savePlay;
-    private Timer timer;
-    private List<UserTuyi> tuyis = new ArrayList<>();
-    private MediaPlayer player;
-    private int index;
-    private int size;
-    private int tag=0;
+public class TuyiPlayActivity extends BaseActivity {
+
+    private static final String TAG = "TuyiPlayActivity";
+    List<Album> albumList;
+    RecyclerView playLists;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tuyi_play);
-        tuyis = (ArrayList<UserTuyi>) DemoDBManager.getInstance().getUserAllTuyi(TuApplication.getInstance().getUserName());
-        initView();
-    }
-
-    private void initView() {
-        img = (ImageView) findViewById(R.id.playImg);
-        palyText = (TextView) findViewById(R.id.playText);
-        prePlay = (Button) findViewById(R.id.prePlay);
-        addPaly= (Button) findViewById(R.id.addPlay);
-        savePlay = (Button) findViewById(R.id.savePlay);
-        prePlay.setOnClickListener(this);
-        addPaly.setOnClickListener(this);
-        savePlay.setOnClickListener(this);
-        SelectTuyiActivity.setTuyiSelectListener(this);
-    }
-
-    private void addPlay()
-    {
-        startActivity(new Intent(this,SelectTuyiActivity.class));
-        overridePendingTransition(R.anim.abc_slide_in_top,R.anim.abc_slide_out_bottom);
-    }
-
-    private void savePlay()
-    {
-        if(tuyis==null || tuyis.size()==0){
-            Show("没有选择图忆呢");
+        setContentView(R.layout.tuyi_play);
+        playLists = (RecyclerView) findViewById(R.id.tuyi_plays);
+        playLists.setLayoutManager(new GridLayoutManager(this, 1));
+        playLists.addItemDecoration(new RecycleViewDivider(this, LinearLayout.VERTICAL, R.drawable.rect_divider));
+        if (Config.tUser == null) {
+            Show("用户信息未初始化");
             return;
         }
-        savePlay.setEnabled(false);
-        Album album = new Album();
-        album.setMusicType("0");
-        album.setUser(Config.tUser);
-        album.addAllUnique("tuyis",tuyis);
-        album.save(new SaveListener<String>() {
+        albumList = new ArrayList<>();
+        BmobQuery<Album> q = new BmobQuery<>();
+        q.addWhereEqualTo("user", Config.tUser);
+        q.order("-createdAt");
+        q.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
+        q.findObjects(new FindListener<Album>() {
             @Override
-            public void done(String s, BmobException e) {
-                if(e==null){
-                    Show("哈哈~保存成功");
-                    savePlay.setEnabled(true);
-                }else{
-                    Show("保存失败");
-                    savePlay.setEnabled(true);
+            public void done(List<Album> list, BmobException e) {
+                if (e == null && list != null && !list.isEmpty()) {
+                    if(!albumList.isEmpty())
+                        albumList.clear();
+                    albumList.addAll(list);
+                    playLists.setAdapter(new Adapter());
+                } else {
+                    Show("你没有保存有图忆相册");
                 }
-
             }
         });
+    }
 
-    }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.addPlay:
-                addPlay();
-                break;
-            case R.id.savePlay:
-                savePlay();
-                break;
-            case R.id.prePlay:
-                if(tuyis==null)
-                    return;
-                if(tag==0) {
-                    if(player==null) {
-                        player = MediaPlayer.create(getBaseContext(), R.raw.happy);
-                        player.setLooping(true);
-                    }
-                    prePlay.setText("预览");
-                    player.start();
-                    size = tuyis.size();
-                    timer = new Timer(true);
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            if (index >= size)
-                                index = 0;
-                            new ImgPlayAsyn(img, palyText, tuyis.get(index).gettContent()).execute(tuyis.get(index).gettPic());
-                            index++;
-                        }
-                    }, 0, 3000);
-                    tag=1;
-                }else if(tag==1)
-                {
-                    timer.cancel();
-                    player.pause();
-                    prePlay.setText("停止");
-                    tag=0;
-                }
-                break;
-        }
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(timer!=null)
-        timer.cancel();
-        if(player!=null)
-        player.stop();
     }
 
-    @Override
-    public void onTuyiSelected(List<UserTuyi> Tuyis) {
-     this.tuyis = (ArrayList<UserTuyi>) Tuyis;
+
+
+    class Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int i) {
+            View v;
+            if (getItemViewType(i) == 1) {
+                final Holder holder;
+                v = LayoutInflater.from(TuyiPlayActivity.this).inflate(R.layout.item_tuyi_play, null);
+                holder = new Holder(v);
+                holder.content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(TuyiPlayActivity.this, AddTuyiPlayActivity.class);
+                        intent.putExtra("album", albumList.get(holder.getLayoutPosition() - 1));
+                        startActivity(intent);
+                    }
+                });
+                holder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        albumList.remove(holder.getLayoutPosition()-1);
+                        notifyItemRemoved(holder.getLayoutPosition());
+                    }
+                });
+                return holder;
+            } else {
+                v = LayoutInflater.from(TuyiPlayActivity.this).inflate(R.layout.item_add_tuyi_play, null);
+                RecyclerView.ViewHolder holder = new RecyclerView.ViewHolder(v) {
+                    @Override
+                    public String toString() {
+                        return super.toString();
+                    }
+                };
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(TuyiPlayActivity.this, AddTuyiPlayActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                return holder;
+            }
+
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder h, int i) {
+            if (getItemViewType(h.getLayoutPosition()) == 1) {
+                Holder holder = (Holder) h;
+                Album album = albumList.get(h.getLayoutPosition() - 1);
+                holder.tittle.setText(album.getDescription());
+                holder.info.setText("此途忆总共有 " + album.getTuyis().size() + " 个图忆\n" + album.getCreatedAt());
+                PicassoHelper.load(TuyiPlayActivity.this, album.getTuyis().get(0).gettPic()).into(holder.img);
+            }
+        }
+
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0)
+                return 0;
+            return 1;
+        }
+
+        @Override
+        public int getItemCount() {
+            return albumList == null ? 1 : albumList.size() + 1;
+        }
+
+        class Holder extends RecyclerView.ViewHolder {
+            TextView delete;
+            TextView tittle;
+            TextView info;
+            ImageView img;
+            View content;
+
+            public Holder(View itemView) {
+                super(itemView);
+                delete = (TextView) itemView.findViewById(R.id.item_play_delete);
+                tittle = (TextView) itemView.findViewById(R.id.item_play_tittle);
+                info = (TextView) itemView.findViewById(R.id.item_play_info);
+                img = (ImageView) itemView.findViewById(R.id.item_play_img);
+                content = itemView.findViewById(R.id.content);
+            }
+        }
     }
 }
