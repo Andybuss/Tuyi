@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
     dexOptions {
         dexInProcess false
     }
@@ -19,7 +19,7 @@ android {
     }
     signingConfigs {
         releaseSign {
-            storeFile file("E:\\Android_Studio_Works\\nomonkey.jks")
+            storeFile file("/home/dooze/keystore/nomonkey.jks")
             storePassword "766476lan"
             keyAlias "defaultkey"
             keyPassword "766476lan,."
@@ -46,14 +46,12 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     compile files('libs/httpmime-4.1.3.jar')
     compile files('libs/xUtils-2.6.14.jar')
-    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:cardview-v7:24.2.1'
     compile files('libs/okhttp-urlconnection-2.7.5.jar')
     compile files('libs/picasso-2.5.2.jar')
-    compile files('libs/Parse-1.9.4.jar')
-    compile files('libs/bolts-android-1.2.0.jar')
     compile 'com.umeng.analytics:analytics:6.0.1'
     compile files('libs/BmobSDK_3.5.0_20160627.jar')
     compile files('libs/gson-2.6.2.jar')
@@ -65,4 +63,6 @@ dependencies {
     compile project(':EaseUI')
     compile project(':umeng_community_simplify_library_project')
     compile files('libs/okio-1.7.0.jar')
+    compile files('libs/bolts-tasks-1.4.0.jar')
+    compile files('libs/parse-android-1.13.0.jar')
 }
