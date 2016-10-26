@@ -1,6 +1,7 @@
 package dong.lan.tuyi.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
