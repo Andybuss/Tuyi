@@ -17,7 +17,7 @@
 
 
 
-##未合并的修改请前往  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi)
+## 未合并的修改请前往  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi)
 
 ## Click  [newTuyi](https://github.com/donlan/Tuyi/tree/newTuyi) to see the latest merge 
 ___

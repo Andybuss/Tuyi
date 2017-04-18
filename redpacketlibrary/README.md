@@ -17,7 +17,7 @@
 
 ## 3. 集成步骤
 
-###3.1 添加对红包工程的依赖
+### 3.1 添加对红包工程的依赖
 * ChatDemo的build.gradle中
 
 ```
@@ -37,7 +37,7 @@
 include ':EaseUI', ':redpacketlibrary'
 
 ```
-###3.2 ChatDemo清单文件中注册红包相关组件
+### 3.2 ChatDemo清单文件中注册红包相关组件
 ```
 
         <uses-sdk
@@ -106,7 +106,7 @@ include ':EaseUI', ':redpacketlibrary'
         <!--红包相关界面end-->    
 ```
 
-###3.3 初始化红包上下文
+### 3.3 初始化红包上下文
 * DemoApplication中初始化红包上下文
 
 ```
@@ -280,7 +280,7 @@ include ':EaseUI', ':redpacketlibrary'
         }
     }
 ```
-###3.5 群红包领取回执的全局处理
+### 3.5 群红包领取回执的全局处理
 
 
 * DemoHelper中
@@ -344,7 +344,7 @@ include ':EaseUI', ':redpacketlibrary'
         
 ```
 
-###3.6 ConversationListFragment中对红包回执消息的处理
+### 3.6 ConversationListFragment中对红包回执消息的处理
 
 ```
    import com.easemob.redpacketui.RedPacketConstant;
@@ -377,7 +377,7 @@ include ':EaseUI', ':redpacketlibrary'
     }
 ```
 
-###3.7 添加零钱页的入口
+### 3.7 添加零钱页的入口
 
 * 在需要添加零钱的页面调用下面的方法
 
